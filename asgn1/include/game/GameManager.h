@@ -25,6 +25,11 @@ public:
     void executeStep();
     void logState() const;
     void doAction(Action act, std::shared_ptr<Tank> tank);
+    bool shoot(std::shared_ptr<Tank> tank);
+    void move(std::shared_ptr<MovingElement> elem, bool bkwd = false);
+    bool moveFwd(std::shared_ptr<Tank> tank);
+    bool moveBkwd(std::shared_ptr<Tank> tank);
+    void checkMovingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
 };
 
 #endif // GAME_MANAGER_H

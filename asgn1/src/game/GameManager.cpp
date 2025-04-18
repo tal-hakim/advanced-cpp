@@ -62,7 +62,11 @@ GameManager::GameManager(const std::string& inputFile)
 
 void GameManager::runGame() {
     while (stepCount < 1000) {
-        executeStep();
+        for shell in shells : move
+        check if collision
+        if(stepCount % 2 == 0){
+            executeStep();
+        }
         ++stepCount;
 
         // Example condition: both tanks still alive?
@@ -86,13 +90,7 @@ void GameManager::executeStep() {
     Action action1 = algo1->getNextAction(board, *tank1, *tank2);
     Action action2 = algo2->getNextAction(board, *tank2, *tank1);
 
-    // TODO: validate and apply actions here
-    // Examples:
-    // - moveForward() if allowed
-    // - shoot() if not in cooldown
-    // - rotate if allowed
-    // - log invalid actions with logger.logBadStep()
-
+    check if collision
     logger.logStep(stepCount, "Action1", "Action2");
 }
 
@@ -101,30 +99,92 @@ void GameManager::logState() const {
     board.printBoard();
 }
 
-void GameManager::doAction(Action act, std::shared_ptr<Tank> tank) {
-    switch (act) {
-        case Action::MoveFwd: {Position newPos = board.wrap(tank->getNextPos());
-        board.removeObjectAt(tank->getPosition());  // move tank
-        tank->setPosition(newPos);
-        board.placeObject(tank);
+void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
+    Position newPos = board.wrap(elem->getNextPos(bkwd));
+    board.removeObjectAt(elem->getPosition());  // move tank
+    elem->setPrevPos();
+    elem->setPosition(newPos);
+    board.placeObject(elem);
+}
+
+void GameManager::checkMovingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2){
+    if (!elem1 || !elem2) return;
+
+    Position p1 = elem1->getPosition();
+    Position p2 = elem2->getPosition();
+
+    Position prev1 = elem1->getPrevPos();
+    Position prev2 = elem2->getPrevPos();
+
+    // If they swapped positions between last turn and now
+    if (p1 == prev2 && p2 == prev1) {
+        logger.logBadStep("Moving collision detected between two elements at (" +
+                   std::to_string(p1.x) + ", " + std::to_string(p1.y) + ")");
+
+        // Remove both from the board
+        board.removeObjectAt(p1);
+        board.removeObjectAt(p2);
+
+        // Optionally: mark them as destroyed if needed
+        // elem1->destroy();
+        // elem2->destroy();
+    }
+}
+}
+
+bool GameManager::moveFwd(std::shared_ptr<Tank> tank){
+    if(!tank->isGoingBack()){
+        move(tank);
         tank->setForward();
-        break;}
-        case Action::MoveBack: {Position newPos = board.wrap(tank->getNextPos(true));
-            board.removeObjectAt(tank->getPosition());  // move tank
-            tank->setPosition(newPos);
-            board.placeObject(tank);
-            tank->setBackwards();
-            tank->setBackwardTimer(BACKWARDS_STEP_COUNT);
-            break;}
+    }
+    else{
+
+    }
+
+}
+
+bool GameManager::moveBkwd(std::shared_ptr<Tank> tank){
+    move(tank, true);
+    tank->setBackwards();
+    tank->setBackwardTimer(BACKWARDS_STEP_COUNT);
+}
+
+void GameManager::doAction(Action act, std::shared_ptr<Tank> tank) {
+    bool legalStep;
+    switch (act) {
+        case Action::MoveFwd: legalStep=moveFwd(tank); break;
+        case Action::MoveBack: legalStep=moveBkwd(tank); break;
         case Action::RotateLeft_1_4: tank->rotate(LEFT_ANGLE_1_4);
             break;
         case Action::RotateRight_1_4: tank->rotate(RIGHT_ANGLE_1_4); break;
         case Action::RotateLeft_1_8: tank->rotate(LEFT_ANGLE_1_8); break;
         case Action::RotateRight_1_8: tank->rotate(RIGHT_ANGLE_1_8); break;
-        case Action::Shoot: {
-            Shell 
-        }
-
-
+        case Action::Shoot: legalStep=shoot(tank);break;
+        default:break;
     }
+    tank->setPrevAction(act);
+}
+
+bool GameManager::shoot(std::shared_ptr<Tank> tank) {
+    if (!tank) return;
+
+    if (!tank->canShoot()) {
+        logger.logBadStep(tank->getPlayerId(), "Tried to shoot but cannot (cooldown or out of shells)");
+        return;
+    }
+
+    // Create shell
+    Position start = tank->getPosition();
+    Direction dir = tank->getDirection();
+    int shooterId = tank->getPlayerId();
+
+    auto shell = std::make_shared<Shell>(start, dir, shooterId);
+
+    // Add shell to game state
+    shells.push_back(shell);
+
+    // Optionally: place it on the board (if you want it visible on the grid)
+    board.placeObject(shell);
+
+    tank->shoot();
 }

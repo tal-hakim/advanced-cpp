@@ -25,7 +25,6 @@ add_executable(asgn1 src/main.cpp
         include/game/Action.h
         src/objects/GameObject.cpp
         src/objects/Tank.cpp
-        src/objects/Shell.cpp
         include/objects/MovingElement.h
         src/objects/MovingElement.cpp
         include/definitions.h

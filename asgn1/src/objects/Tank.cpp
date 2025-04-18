@@ -2,7 +2,11 @@
 
 void Tank::shoot() {
     shellsRemaining--;
-    shootCooldown = 4;
+    shootCooldown = SHOOTING_COOLDOWN;
+}
+
+bool Tank::canShoot() {
+    return shootCooldown==0;
 }
 
 void Tank::rotate(int angle) {

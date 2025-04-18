@@ -2,6 +2,7 @@
 #define GAME_OBJECT_H
 
 #include "game/Position.h"
+#include "definitions.h"
 
 class GameObject {
 protected:

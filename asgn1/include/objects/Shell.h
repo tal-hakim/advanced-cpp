@@ -6,7 +6,7 @@
 class Shell : public MovingElement {
 
 public:
-    Shell(Position p, Direction d) : MovingElement(p, ' ', d){};
+    Shell(Position p, Direction d, int playerId) : MovingElement(p, ' ', d, playerId){};
 
 };
 
