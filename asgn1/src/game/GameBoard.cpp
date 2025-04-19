@@ -29,13 +29,6 @@ void GameBoard::printBoard() const {
     }
 }
 
-int GameBoard::getWidth() const {
-    return width;
-}
-
-int GameBoard::getHeight() const {
-    return height;
-}
 
 // TUNNEL wrap-around behavior
 Position GameBoard::wrap(Position p) const {

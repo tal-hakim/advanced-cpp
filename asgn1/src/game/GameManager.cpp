@@ -89,9 +89,62 @@ void GameManager::runGame() {
 void GameManager::executeStep() {
     Action action1 = algo1->getNextAction(board, *tank1, *tank2);
     Action action2 = algo2->getNextAction(board, *tank2, *tank1);
+    std::vector<std::shared_ptr<Tank>> tanks = {tank1, tank2};
 
-    check if collision
-    logger.logStep(stepCount, "Action1", "Action2");
+    // 1. Handle tank actions
+    for (size_t i = 0; i < tanks.size(); ++i) {
+        auto tank = tanks[i];
+        Action action = (i == 0) ? action1 : action2;
+
+        if (!isActionLegal(action, tank)) {
+            logger.logBadStep(tank->getPlayerId(), "Bad Step");
+            continue;
+        }
+
+        if ( tank->getBackwardTimer() == 0 && tank->isGoingBack()) {
+            move(tank, true);
+            tank->resetBackwardTimer();
+            continue;
+        }
+
+        switch (action) {
+            case Action::MoveFwd: {
+                if(!tank->getBackwardTimer() < )
+                moveTank(tank, false);
+                break;
+            }
+            case Action::MoveBack: {
+                if()
+                moveTank(tank, true);
+                break;
+            }
+            case Action::Shoot: {
+                shoot(tank);
+                break;
+            }
+            case Action::RotateLeft_1_8:
+            case Action::RotateRight_1_8:
+            case Action::RotateLeft_1_4:
+            case Action::RotateRight_1_4: {
+                tank->rotate(static_cast<int>(action));
+                break;
+            }
+            case Action::None:
+            default:
+                break;
+        }
+    }
+
+    // 2. Move all shells
+    updateShells();
+
+    // 3. Update tank cooldowns
+    for (auto& tank : tanks) {
+        tank->tickCooldown();  // assuming this reduces shootCooldown each turn
+    }
+
+    // 4. Check victory condition (optional)
+    checkGameOver();
 }
 
 void GameManager::logState() const {
@@ -99,8 +152,21 @@ void GameManager::logState() const {
     board.printBoard();
 }
 
+Position GameManager::getPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd) {
+    return board.wrap(elem->getNextPos(bkwd));
+}
+
+bool GameManager::canMove(std::shared_ptr<MovingElement> elem, bool bkwd) {
+    Position next = getPosOnBoard(elem, bkwd);
+    auto target = board.getObjectAt(next);
+    if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(target)) {
+        return false;
+    }
+    return true;
+}
+
 void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
-    Position newPos = board.wrap(elem->getNextPos(bkwd));
+    Position newPos = getPosOnBoard(elem, bkwd);
     board.removeObjectAt(elem->getPosition());  // move tank
     elem->setPrevPos();
     elem->setPosition(newPos);
@@ -132,21 +198,27 @@ void GameManager::checkMovingCollision(std::shared_ptr<MovingElement> elem1, std
 }
 }
 
-bool GameManager::moveFwd(std::shared_ptr<Tank> tank){
-    if(!tank->isGoingBack()){
-        move(tank);
-        tank->setForward();
-    }
-    else{
-
-    }
-
+void GameManager::moveFwd(std::shared_ptr<Tank> tank){
+    move(tank, false);
+    tank->setForward();
 }
 
 bool GameManager::moveBkwd(std::shared_ptr<Tank> tank){
     move(tank, true);
     tank->setBackwards();
     tank->setBackwardTimer(BACKWARDS_STEP_COUNT);
+}
+
+bool GameManager::isActionLegal(Action act, std::shared_ptr<Tank> tank) {
+    if(tank->getBackwardTimer() > 0 && tank->isGoingBack() && act != Action::MoveFwd){
+        return false;
+    }
+    switch (act) {
+        case Action::MoveFwd: return canMove(tank, false);
+        case Action::MoveBack: return canMove(tank, true);
+        case Action::Shoot: return tank->canShoot();
+        default: return true;
+    }
 }
 
 void GameManager::doAction(Action act, std::shared_ptr<Tank> tank) {
@@ -166,11 +238,11 @@ void GameManager::doAction(Action act, std::shared_ptr<Tank> tank) {
 }
 
 bool GameManager::shoot(std::shared_ptr<Tank> tank) {
-    if (!tank) return;
+    if (!tank) return false;
 
     if (!tank->canShoot()) {
         logger.logBadStep(tank->getPlayerId(), "Tried to shoot but cannot (cooldown or out of shells)");
-        return;
+        return false;
     }
 
     // Create shell
@@ -187,4 +259,5 @@ bool GameManager::shoot(std::shared_ptr<Tank> tank) {
     board.placeObject(shell);
 
     tank->shoot();
+    return true;
 }

@@ -1,5 +1,6 @@
 
 #ifndef MOVINGELEMENT_H
+#define MOVINGELEMENT_H
 
 #include "GameObject.h"
 #include "game/Direction.h"
@@ -20,6 +21,5 @@ public:
     void setPrevPos() { prevPos = pos; }
     Position getPrevPos() const { return prevPos; }
 };
-#define MOVINGELEMENT_H
 
 #endif //MOVINGELEMENT_H

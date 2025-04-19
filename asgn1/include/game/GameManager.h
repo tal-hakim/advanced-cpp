@@ -26,10 +26,13 @@ public:
     void logState() const;
     void doAction(Action act, std::shared_ptr<Tank> tank);
     bool shoot(std::shared_ptr<Tank> tank);
-    void move(std::shared_ptr<MovingElement> elem, bool bkwd = false);
+    void move(std::shared_ptr<MovingElement> elem, bool bkwd);
+    Position getPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);
     bool moveFwd(std::shared_ptr<Tank> tank);
     bool moveBkwd(std::shared_ptr<Tank> tank);
     void checkMovingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
+    bool canMove(std::shared_ptr<MovingElement> elem, bool bkwd);
+    bool isActionLegal(Action act, std::shared_ptr<Tank> tank);
 };
 
 #endif // GAME_MANAGER_H

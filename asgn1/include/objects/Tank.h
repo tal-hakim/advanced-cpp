@@ -11,7 +11,7 @@ protected:
     int shellsRemaining = INITIAL_SHELLS_AMOUNT;
     int shootCooldown = 0;
     bool goingBack = false;
-    int backwardTimer = 0;
+    int backwardTimer = UNINITIALIZED;
     Action prevAction;
 
 public:
@@ -23,11 +23,10 @@ public:
     int getShellsLeft() const{
         return shellsRemaining;
     };
-    bool isGoingBack () const {return goingBack;}
-    void setForward() {goingBack = false;}
-    void setBackwards() {goingBack = true;}
+    bool isGoingBack () const {return backwardTimer != UNINITIALIZED;}
+    void setForward() {backwardTimer = UNINITIALIZED;}
+    void setBackwards() { backwardTimer = BACKWARDS_STEP_COUNT;}
     int getBackwardTimer() const {return  backwardTimer;}
-    void setBackwardTimer(int newTimer){backwardTimer = newTimer;}
     void decreaseShootCooldown() { shootCooldown--; }
     int getPlayerId() const{return playerId;}
     Action getPrevAction() const { return prevAction; }
