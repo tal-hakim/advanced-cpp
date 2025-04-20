@@ -6,7 +6,7 @@ void Tank::shoot() {
 }
 
 bool Tank::canShoot() {
-    return shootCooldown==0;
+    return shootCooldown < 0;
 }
 
 void Tank::rotate(int angle) {

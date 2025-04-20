@@ -12,7 +12,7 @@ protected:
     int shootCooldown = 0;
     bool goingBack = false;
     int backwardTimer = UNINITIALIZED;
-    Action prevAction;
+    int lastBackwardStep = INT_MIN;
 
 public:
     Tank(Position p, Direction dir, int id): MovingElement(p, '0' + id , dir, id){};
@@ -28,10 +28,11 @@ public:
     void setBackwards() { backwardTimer = BACKWARDS_STEP_COUNT;}
     int getBackwardTimer() const {return  backwardTimer;}
     void decreaseShootCooldown() { shootCooldown--; }
+    void decreaseBackwardTimer() { if(backwardTimer > 0) backwardTimer--; }
     int getPlayerId() const{return playerId;}
-    Action getPrevAction() const { return prevAction; }
-    void setPrevAction(Action action) { prevAction = action; }
     bool canShoot();
+    void setLastBackwardStep(int step) { lastBackwardStep = step; }
+    bool isLastStepBack(int step) { return step - lastBackwardStep == 2; }
 };
 
 #endif // TANK_H

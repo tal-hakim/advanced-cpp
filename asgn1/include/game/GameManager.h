@@ -18,21 +18,35 @@ private:
 //    std::unique_ptr<IAlgorithm> algo2;
     int stepCount;
     std::vector<std::shared_ptr<Shell>> shells;
+    std::vector<std::shared_ptr<Tank>> tanks;
 
 public:
     GameManager(const std::string& inputFile);
     void runGame();
-    void executeStep();
+    void executeTanksStep();
     void logState() const;
     void doAction(Action act, std::shared_ptr<Tank> tank);
     bool shoot(std::shared_ptr<Tank> tank);
     void move(std::shared_ptr<MovingElement> elem, bool bkwd);
     Position getPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);
+    void moveShells();
     bool moveFwd(std::shared_ptr<Tank> tank);
     bool moveBkwd(std::shared_ptr<Tank> tank);
-    void checkMovingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
+    void checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
     bool canMove(std::shared_ptr<MovingElement> elem, bool bkwd);
     bool isActionLegal(Action act, std::shared_ptr<Tank> tank);
+
+    void checkCollision();
+
+    void updateBoard();
+
+    void moveObjects(const std::vector<std::shared_ptr<MovingElement>> &objects);
+
+    void updateTanks();
+
+    void updateShells();
+
+    bool isPlayerTurn();
 };
 
 #endif // GAME_MANAGER_H

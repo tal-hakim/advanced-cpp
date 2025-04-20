@@ -10,13 +10,16 @@ class GameObject {
 protected:
     Position pos;
     char symbol;
+    bool destroyed = false;
 
 public:
     GameObject(Position p, char s);
     virtual ~GameObject() = default;
     Position getPosition() const {return pos;}
     void setPosition(Position p);
-    virtual void destroy(GameBoard& board) { board.removeObjectAt(pos); }
+    virtual void destroy(GameBoard& board) { board.removeObjectAt(pos);
+        destroyed = true; }
+    bool isDestroyed() { return destroyed; }
     virtual char getSymbol();
 
 };

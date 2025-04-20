@@ -2,6 +2,7 @@
 #define GAME_BOARD_H
 
 #include "objects/GameObject.h"
+#include "objects/MovingElement.h"
 #include "game/Position.h"
 #include <vector>
 #include <memory>
@@ -23,6 +24,7 @@ public:
     void placeObject(const GameObjectPtr& obj);
     GameObjectPtr getObjectAt(Position p) const;
     void removeObjectAt(Position p);
+    void moveObj(const std::shared_ptr<MovingElement>& elem) {removeObjectAt(elem->getPrevPos()); placeObject(elem);}
     void printBoard() const;
     int getWidth() const {return width;}
     int getHeight() const {return height;}
