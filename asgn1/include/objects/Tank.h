@@ -31,6 +31,7 @@ public:
     void decreaseBackwardTimer() { if(backwardTimer > 0) backwardTimer--; }
     int getPlayerId() const{return playerId;}
     bool canShoot();
+    bool isOutOfAmmo() { return shellsRemaining == 0; }
     void setLastBackwardStep(int step) { lastBackwardStep = step; }
     bool isLastStepBack(int step) { return step - lastBackwardStep == 2; }
 };

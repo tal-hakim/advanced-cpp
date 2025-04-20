@@ -1,15 +1,4 @@
 #include "game/GameManager.h"
-#include "objects/Tank.h"
-#include "objects/Wall.h"
-#include "objects/Shell.h"
-#include "objects/Mine.h"
-#include "game/Action.h"
-#include "definitions.h"
-
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <memory>
 
 GameManager::GameManager(const std::string& inputFile)
         : board(20, 20), logger(inputFile), stepCount(0) // default size, replace with parsed size
@@ -68,21 +57,38 @@ bool GameManager::isPlayerTurn() {
     return stepCount % 2 == 0;
 }
 
+bool GameManager::isGameOver() const {
+    if (stepsRemaining <= 0) return true;
+
+    for (const auto& tank : tanks) {
+        if (!tank) return true;  // a tank was destroyed
+    }
+
+    return false;  // game continues
+}
+
 void GameManager::runGame() {
-    while (stepCount < 1000) {
-        std::vector<GameObjectPtr> markedForDestruction;
+
+    while (!isGameOver()) {
+        std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
-        //TODO: check if collision
-        if(isPlayerTurn()){
-            executeTanksStep();
-            //TODO: check if collision
+        // check shells collisions
+        for (const auto& shell : shells) {
+            checkShellCollisions(shell, markedForDestruction);
         }
-        for (const auto& obj : markedForDestruction) {
-            if (obj) {
-                obj->destroy(board);
+        if(isPlayerTurn()){
+            if (areAllTanksOutOfAmmo()) stepsRemaining--;
+            executeTanksStep();
+            // check tanks collisions
+            for (const auto& tank : tanks) {
+                checkTankCollisions(tank, markedForDestruction);
             }
         }
+        for (const auto& obj : markedForDestruction) {
+            destroyAndRemove(obj);
+        }
         // TODO: check if game over
+
 
         ++stepCount;
 
@@ -101,6 +107,16 @@ void GameManager::runGame() {
         logger.logResult("Tie - Step limit reached");
 
     logger.finalize();
+}
+
+
+bool GameManager::areAllTanksOutOfAmmo() const {
+    for (const auto& tank : tanks) {
+        if (tank && !tank->isOutOfAmmo()) {
+            return false;  // At least one tank has ammo
+        }
+    }
+    return true;  // ✅ All tanks are out of ammo
 }
 
 void GameManager::moveShells() {
@@ -205,17 +221,21 @@ Position GameManager::getPosOnBoard(std::shared_ptr<MovingElement> elem, bool bk
 
 bool GameManager::canMove(std::shared_ptr<MovingElement> elem, bool bkwd) {
     Position next = getPosOnBoard(elem, bkwd);
-    auto target = board.getObjectAt(next);
-    if (std::shared_ptr<Wall> wall = std::dynamic_pointer_cast<Wall>(target)) {
-        return false;
+    auto objects = board.getObjectsAt(next);
+
+    for (const auto& obj : objects) {
+        if (std::dynamic_pointer_cast<Wall>(obj)) {
+            return false;  // 🚧 Wall is in the way!
+        }
     }
-    return true;
+
+    return true;  // ✅ No wall → we can move
 }
 
 
 void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
     Position newPos = getPosOnBoard(elem, bkwd);
-    board.removeObjectAt(elem->getPosition());  // move tank
+    board.removeSpecificObject(elem);  // move tank
     elem->setPrevPos();
     elem->setPosition(newPos);
     board.placeObject(elem);
@@ -227,9 +247,7 @@ void GameManager::checkCollisions() {
 }
 
 
-void GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2){
-    if (!elem1 || !elem2) return;
-
+bool GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2){
     Position p1 = elem1->getPosition();
     Position p2 = elem2->getPosition();
 
@@ -237,20 +255,70 @@ void GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, st
     Position prev2 = elem2->getPrevPos();
 
     // If they swapped positions between last turn and now
-    if (p1 == prev2 && p2 == prev1) {
-        logger.logBadStep("Moving collision detected between two elements at (" +
-                   std::to_string(p1.x) + ", " + std::to_string(p1.y) + ")");
+    return (p1 == prev2 && p2 == prev1);
+}
 
-        // Remove both from the board
-        board.removeObjectAt(p1);
-        board.removeObjectAt(p2);
+void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr>& marked) {
+    if (!tank) return;
 
-        // Optionally: mark them as destroyed if needed
-        // elem1->destroy();
-        // elem2->destroy();
+    Position currPos = tank->getPosition();
+
+    // 1. Passing collision with other tanks
+    for (const auto& other : tanks) {
+        if (!other || other == tank) continue;
+
+        if (checkPassingCollision(tank, other)) {
+            marked.insert(tank);
+            marked.insert(other);
+        }
+    }
+
+    // 2. Passing collision with shells
+    for (const auto& shell : shells) {
+        if (!shell) continue;
+
+        if (checkPassingCollision(tank, shell)) {
+            marked.insert(tank);
+            marked.insert(shell);
+        }
+    }
+
+    // 3. Static collision at current position (excluding self)
+    for (const auto& obj : board.getObjectsAt(currPos)) {
+        if (!obj || obj == tank) continue;
+
+        marked.insert(obj);
+        marked.insert(tank);
     }
 }
+
+
+void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr>& marked) {
+    if (!shell) return;
+
+    Position currPos = shell->getPosition();
+
+    // 1. Check passing collisions with other shells
+    for (const auto& other : shells) {
+        if (!other || other == shell) continue;
+
+        if (checkPassingCollision(shell, other)) {
+            marked.insert(other);
+        }
+    }
+
+    // 2. Check for non-mine, non-self collisions in current position
+    for (const auto& obj : board.getObjectsAt(currPos)) {
+        if (!obj || obj == shell) continue;
+        if (std::dynamic_pointer_cast<Mine>(obj)) continue;
+
+        marked.insert(obj);
+        marked.insert(shell);  // also mark the shell itself if it collided
+    }
 }
+
+
+
 
 void GameManager::moveFwd(std::shared_ptr<Tank> tank){
     move(tank, false);
@@ -304,3 +372,14 @@ bool GameManager::shoot(std::shared_ptr<Tank> tank) {
     tank->shoot();
     return true;
 }
+
+void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
+    if (!obj) return;
+
+    obj->destroy(board);  // calls GameObject's destroy logic
+
+    if (obj->isDestroyed()) {
+        board.removeSpecificObject(obj);  // ✅ remove only if marked destroyed
+    }
+}
+

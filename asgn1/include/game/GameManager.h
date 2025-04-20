@@ -8,6 +8,19 @@
 #include "objects/Shell.h"
 #include "game/Logger.h"
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <memory>
+#include <unordered_set>
+
+#include "objects/Tank.h"
+#include "objects/Wall.h"
+#include "objects/Shell.h"
+#include "objects/Mine.h"
+#include "game/Action.h"
+#include "definitions.h"
+
 class GameManager {
 private:
     GameBoard board;
@@ -19,6 +32,7 @@ private:
     int stepCount;
     std::vector<std::shared_ptr<Shell>> shells;
     std::vector<std::shared_ptr<Tank>> tanks;
+    int stepsRemaining = STALEMATE_STEPS;
 
 public:
     GameManager(const std::string& inputFile);
@@ -32,7 +46,7 @@ public:
     void moveShells();
     bool moveFwd(std::shared_ptr<Tank> tank);
     bool moveBkwd(std::shared_ptr<Tank> tank);
-    void checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
+    bool checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
     bool canMove(std::shared_ptr<MovingElement> elem, bool bkwd);
     bool isActionLegal(Action act, std::shared_ptr<Tank> tank);
 
@@ -47,6 +61,18 @@ public:
     void updateShells();
 
     bool isPlayerTurn();
+
+    void destroyAndRemove(const GameObjectPtr &obj);
+
+    std::vector<GameObjectPtr> checkShellCollisions(std::shared_ptr<Shell> shell);
+
+    void checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr> &marked);
+
+    void checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr> &marked);
+
+    bool areAllTanksOutOfAmmo() const;
+
+    bool isGameOver() const;
 };
 
 #endif // GAME_MANAGER_H
