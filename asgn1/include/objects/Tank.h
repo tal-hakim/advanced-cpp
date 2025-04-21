@@ -29,7 +29,6 @@ public:
     int getBackwardTimer() const {return  backwardTimer;}
     void decreaseShootCooldown() { shootCooldown--; }
     void decreaseBackwardTimer() { if(backwardTimer > 0) backwardTimer--; }
-    int getPlayerId() const{return playerId;}
     bool canShoot();
     bool isOutOfAmmo() { return shellsRemaining == 0; }
     void setLastBackwardStep(int step) { lastBackwardStep = step; }

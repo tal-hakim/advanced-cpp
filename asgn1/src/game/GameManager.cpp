@@ -68,9 +68,10 @@ std::string GameManager::actionToString(Action action) const {
 }
 
 
-bool GameManager::isPlayerTurn() {
+bool GameManager::isPlayerTurn() const {
     return stepCount % 2 == 0;
 }
+
 
 bool GameManager::isGameOver() const {
     if (stepsRemaining <= 0) {
@@ -78,12 +79,40 @@ bool GameManager::isGameOver() const {
         return true;
     }
 
+    std::shared_ptr<Tank> tank1 = nullptr;
+    std::shared_ptr<Tank> tank2 = nullptr;
+
     for (const auto& tank : tanks) {
-        if (!tank) return true;  // a tank was destroyed
+        if (!tank) continue;
+        if (tank->getPlayerId() == PLAYER_1_ID) tank1 = tank;
+        if (tank->getPlayerId() == PLAYER_2_ID) tank2 = tank;
+    }
+
+    bool tank1Dead = tank1->isDestroyed();
+    bool tank2Dead = tank2->isDestroyed();
+
+    if (tank1Dead && tank2Dead) {
+        logger.logResult(std::string("Tie - Both tanks destroyed\n") +
+        "Player 1: tank destroyed by " + tank1->getCollisionType() + "\n" +
+        "Player 2: tank destroyed by " + tank2->getCollisionType()
+        );
+        return true;
+    }
+
+    if (tank1Dead) {
+        logger.logResult("Player 2 wins - Player 1 tank destroyed by " + tank1->getCollisionType());
+        return true;
+    }
+
+    if (tank2Dead) {
+        logger.logResult("Player 1 wins - Player 2 tank destroyed by " + tank2->getCollisionType());
+        return true;
     }
 
     return false;  // game continues
 }
+
+
 
 void GameManager::runGame() {
 
@@ -106,23 +135,9 @@ void GameManager::runGame() {
             destroyAndRemove(obj);
         }
         // TODO: check if game over
-
-
         ++stepCount;
-
-        // Example condition: both tanks still alive?
-        if (!tank1 || !tank2)
-            break;
     }
 
-    if (!tank1 && !tank2)
-        logger.logResult("Tie - Both tanks destroyed");
-    else if (!tank1)
-        logger.logResult("Player 2 wins - Player 1 destroyed");
-    else if (!tank2)
-        logger.logResult("Player 1 wins - Player 2 destroyed");
-    else
-        logger.logResult("Tie - Step limit reached");
 
     logger.finalize();
 }
@@ -326,7 +341,8 @@ void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unorde
 // TODO: log the bad steps
 bool GameManager::isActionLegal(Action act, std::shared_ptr<Tank> tank) {
     switch (act) {
-        case Action::MoveFwd: return canMove(tank, false);
+        case Action::MoveFwd: if (!canMove(tank, false))
+        {logger.logBadStep(tank->getPlayerId(), "Can't do: " + actionToString(act) + " because " + tank.);};
         case Action::MoveBack: return canMove(tank, true);
         case Action::Shoot: return tank->canShoot();
         default: return true;
