@@ -289,6 +289,8 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
         if (!other || other == tank) continue;
 
         if (checkPassingCollision(tank, other)) {
+            tank->setCollisionType(other->toString());
+            other->setCollisionType(tank->toString());
             marked.insert(tank);
             marked.insert(other);
         }
@@ -299,6 +301,7 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
         if (!shell) continue;
 
         if (checkPassingCollision(tank, shell)) {
+            tank->setCollisionType(shell->toString());
             marked.insert(tank);
             marked.insert(shell);
         }
@@ -307,7 +310,7 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
     // 3. Static collision at current position (excluding self)
     for (const auto& obj : board.getObjectsAt(currPos)) {
         if (!obj || obj == tank) continue;
-
+        tank->setCollisionType(obj->toString());
         marked.insert(obj);
         marked.insert(tank);
     }
@@ -332,7 +335,10 @@ void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unorde
     for (const auto& obj : board.getObjectsAt(currPos)) {
         if (!obj || obj == shell) continue;
         if (std::dynamic_pointer_cast<Mine>(obj)) continue;
-
+        if (std::dynamic_pointer_cast<Tank>(obj)) {
+            auto tempTank = std::dynamic_pointer_cast<Tank>(obj);
+            tempTank->setCollisionType(shell->toString());
+        }
         marked.insert(obj);
         marked.insert(shell);  // also mark the shell itself if it collided
     }

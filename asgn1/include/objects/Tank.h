@@ -12,7 +12,7 @@ protected:
     int shootCooldown = 0;
     int backwardTimer = UNINITIALIZED;
     int lastBackwardStep = INT_MIN;
-    std::string collisionType;
+    std::string collisionType = "";
 
 public:
     Tank(Position p, Direction dir, int id): MovingElement(p, '0' + id , dir, id){};
@@ -34,7 +34,10 @@ public:
     void setLastBackwardStep(int step) { lastBackwardStep = step; }
     bool isLastStepBack(int step) { return step - lastBackwardStep == 2; }
     std::string getCollisionType() const { return collisionType; }
-    void setCollisionType(std::string colType) {collisionType = colType;}
+    void setCollisionType(std::string colType) {if(collisionType == "") collisionType = colType;}
+    std::string toString() const override {
+        return "Tank "+ std::to_string(playerId);
+    }
 };
 
 #endif // TANK_H

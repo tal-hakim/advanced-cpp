@@ -20,7 +20,6 @@ public:
     virtual void destroy(GameBoard& board) { destroyed = true; }
     bool isDestroyed() const{ return destroyed; }
     virtual char getSymbol();
-
-};
+    virtual std::string toString() const = 0;
 
 #endif // GAME_OBJECT_H
