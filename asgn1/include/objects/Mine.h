@@ -6,6 +6,9 @@
 class Mine : public GameObject {
 public:
     Mine(Position p): GameObject(p, '@'){};
+    std::string toString() const override {
+        return "Mine";
+    }
 
 };
 

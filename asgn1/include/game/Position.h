@@ -33,6 +33,10 @@ struct Position {
         os << "(" << pos.x << ", " << pos.y << ")";
         return os;
     }
+
+    std::string toString() const {
+        return "(" + std::to_string(x) + "," + std::to_string(y)+")";
+    }
 };
 
 #endif // POSITION_H
