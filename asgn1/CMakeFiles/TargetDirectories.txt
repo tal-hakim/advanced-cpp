@@ -1,3 +1,0 @@
-/root/advanced_cpp/advanced-cpp/asgn1/CMakeFiles/asgn1.dir
-/root/advanced_cpp/advanced-cpp/asgn1/CMakeFiles/edit_cache.dir
-/root/advanced_cpp/advanced-cpp/asgn1/CMakeFiles/rebuild_cache.dir

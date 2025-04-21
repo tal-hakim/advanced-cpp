@@ -49,8 +49,8 @@ GameManager::GameManager(const std::string& inputFile)
         ++y;
     }
     // Plug in your two algorithms
-    algo1 = std::make_unique<AlgorithmChaser>();
-    algo2 = std::make_unique<AlgorithmEvader>();
+    algo1 = std::make_unique<Chaser>();
+    algo2 = std::make_unique<Evader>();
 }
 
 std::string GameManager::actionToString(Action action) const {
@@ -134,7 +134,6 @@ void GameManager::runGame() {
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
-        // TODO: check if game over
         ++stepCount;
     }
 
@@ -175,12 +174,11 @@ void GameManager::executeTanksStep() {
         auto tank = tanks[i];
         Action action = (tank->getPlayerId() == 1) ? action1 : action2;
         tank->decreaseShootCooldown();
-        // TODO: update which bad step!!
+
         if (!isActionLegal(action, tank)) {
-            logger.logBadStep(tank->getPlayerId(), "Bad Step");
             continue;
         }
-        //TODO: Add logger stuff
+
         if (tank->isGoingBack()) {
             tank->decreaseBackwardTimer();
             if(!tank->isLastStepBack(stepCount) || action != Action::MoveBack) {
@@ -250,6 +248,13 @@ bool GameManager::canMove(std::shared_ptr<MovingElement> elem, bool bkwd) {
 
     for (const auto& obj : objects) {
         if (std::dynamic_pointer_cast<Wall>(obj)) {
+            if (bkwd) {
+                logger.logBadStep(elem->getPlayerId(), "Can't move back because wall in position " + obj->getPosition().toString());
+
+            }
+            else {
+                logger.logBadStep(elem->getPlayerId(), "Can't move forward because wall in position " + obj->getPosition().toString());
+            }
             return false;  // 🚧 Wall is in the way!
         }
     }
@@ -347,12 +352,19 @@ void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unorde
 // TODO: log the bad steps
 bool GameManager::isActionLegal(Action act, std::shared_ptr<Tank> tank) {
     switch (act) {
-        case Action::MoveFwd: if (!canMove(tank, false))
-        {logger.logBadStep(tank->getPlayerId(), "Can't do: " + actionToString(act) + " because " + tank.);};
+        case Action::MoveFwd: return canMove(tank, false);
         case Action::MoveBack: return canMove(tank, true);
-        case Action::Shoot: return tank->canShoot();
+        case Action::Shoot: return canTankShoot(tank);
         default: return true;
     }
+}
+
+bool GameManager::canTankShoot(std::shared_ptr<Tank> tank){
+    if (!tank->canShoot()){
+        logger.logBadStep(tank->getPlayerId(), "Tried to shoot before cooldown ended.");
+        return false;
+    }
+    return true;
 }
 
 bool GameManager::shoot(std::shared_ptr<Tank> tank) {

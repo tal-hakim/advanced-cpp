@@ -5,7 +5,7 @@ void Tank::shoot() {
     shootCooldown = SHOOTING_COOLDOWN;
 }
 
-bool Tank::canShoot() {
+bool Tank::canShoot() const {
     return shootCooldown < 0 && shellsRemaining > 0;
 }
 

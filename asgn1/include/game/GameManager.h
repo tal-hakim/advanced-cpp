@@ -3,7 +3,9 @@
 
 
 #include "GameBoard.h"
-//#include "../algorithms/IAlgorithm.h"
+#include "algorithms/Algorithm.h"
+#include "algorithms/Evader.h"
+#include "algorithms/Chaser.h"
 #include "objects/Tank.h"
 #include "objects/Shell.h"
 #include "game/Logger.h"
@@ -19,14 +21,15 @@
 #include "objects/Shell.h"
 #include "objects/Mine.h"
 #include "game/Action.h"
+#include "objects/MovingElement.h"
 #include "definitions.h"
 
 class GameManager {
 private:
     GameBoard board;
     Logger logger;
-//    std::unique_ptr<IAlgorithm> algo1;
-//    std::unique_ptr<IAlgorithm> algo2;
+    std::unique_ptr<Algorithm> algo1;
+    std::unique_ptr<Algorithm> algo2;
     int stepCount;
     std::vector<std::shared_ptr<Shell>> shells;
     std::vector<std::shared_ptr<Tank>> tanks;
@@ -58,6 +61,8 @@ public:
     std::string actionToString(Action action) const;
 
     bool hasAliveTank(int playerId) const;
+
+    bool canTankShoot(std::shared_ptr<Tank> tank);
 };
 
 #endif // GAME_MANAGER_H
