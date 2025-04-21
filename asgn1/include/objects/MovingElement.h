@@ -13,7 +13,7 @@ protected:
 
 public:
     MovingElement(Position p, char symbol, Direction dir, int playerId): GameObject(p, symbol),
-        dir(dir), playerId(playerId){};
+        dir(dir), playerId(playerId) {};
     int getPlayerId() const{return playerId;}
     Direction getDirection() const {return dir;}
     void setDirection(Direction newDir){dir = newDir;}

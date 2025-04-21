@@ -7,9 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories(include)
 add_executable(asgn1 src/main.cpp
         include/game/Position.h
-        include/game/Position.h
-        include/game/Position.h
-        include/game/Position.h
         include/objects/GameObject.h
         include/game/GameBoard.h
         include/game/GameManager.h
@@ -28,4 +25,9 @@ add_executable(asgn1 src/main.cpp
         include/objects/MovingElement.h
         src/objects/MovingElement.cpp
         include/definitions.h
+        include/algorithms/Algorithm.h
+        include/algorithms/Chaser.h
+        include/algorithms/Evader.h
+        src/algorithms/Evader.cpp
+        src/algorithms/Chaser.cpp
 )

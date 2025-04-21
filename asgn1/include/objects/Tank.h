@@ -29,7 +29,7 @@ public:
     int getBackwardTimer() const {return  backwardTimer;}
     void decreaseShootCooldown() { shootCooldown--; }
     void decreaseBackwardTimer() { if(backwardTimer > 0) backwardTimer--; }
-    bool canShoot();
+    bool canShoot() const;
     bool isOutOfAmmo() { return shellsRemaining == 0; }
     void setLastBackwardStep(int step) { lastBackwardStep = step; }
     bool isLastStepBack(int step) { return step - lastBackwardStep == 2; }
