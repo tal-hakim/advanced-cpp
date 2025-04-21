@@ -10,9 +10,9 @@ class Tank : public MovingElement {
 protected:
     int shellsRemaining = INITIAL_SHELLS_AMOUNT;
     int shootCooldown = 0;
-    bool goingBack = false;
     int backwardTimer = UNINITIALIZED;
     int lastBackwardStep = INT_MIN;
+    std::string collisionType;
 
 public:
     Tank(Position p, Direction dir, int id): MovingElement(p, '0' + id , dir, id){};
@@ -34,6 +34,8 @@ public:
     bool isOutOfAmmo() { return shellsRemaining == 0; }
     void setLastBackwardStep(int step) { lastBackwardStep = step; }
     bool isLastStepBack(int step) { return step - lastBackwardStep == 2; }
+    std::string getCollisionType() const { return collisionType; }
+    void setCollisionType(std::string colType) {collisionType = colType;}
 };
 
 #endif // TANK_H

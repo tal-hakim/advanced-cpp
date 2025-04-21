@@ -15,16 +15,18 @@ Logger::~Logger() {
     if (inputErrorLog.is_open()) inputErrorLog.close();
 }
 
-void Logger::logStep(int stepNumber, const std::string& player1Action, const std::string& player2Action) {
+void Logger::logStep(int stepNumber, int playerId, const std::string& action) {
     stepLogs.push_back("Step " + std::to_string(stepNumber) +
-                       ": P1 - " + player1Action + ", P2 - " + player2Action);
+                       ": Player " + std::to_string(playerId) +
+                       " - " + action);
 }
+
 
 void Logger::logBadStep(int playerId, const std::string& reason) {
     stepLogs.push_back("Bad Step by Player " + std::to_string(playerId) + ": " + reason);
 }
 
-void Logger::logResult(const std::string& result) {
+void Logger::logResult(const std::string& result) const {
     stepLogs.push_back("Game Over: " + result);
 }
 

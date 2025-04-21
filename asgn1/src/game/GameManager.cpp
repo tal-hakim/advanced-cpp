@@ -53,12 +53,30 @@ GameManager::GameManager(const std::string& inputFile)
     algo2 = std::make_unique<AlgorithmEvader>();
 }
 
+std::string GameManager::actionToString(Action action) const {
+    switch (action) {
+        case Action::MoveFwd: return "Move Forward";
+        case Action::MoveBack: return "Move Backwards";
+        case Action::Shoot: return "Shoot";
+        case Action::RotateLeft_1_8: return "RotateLeft 1/8";
+        case Action::RotateRight_1_8: return "RotateRight 1/8";
+        case Action::RotateLeft_1_4: return "RotateLeft 1/4";
+        case Action::RotateRight_1_4: return "RotateRight 1/4";
+        case Action::None: return "None";
+        default: return "Unknown";
+    }
+}
+
+
 bool GameManager::isPlayerTurn() {
     return stepCount % 2 == 0;
 }
 
 bool GameManager::isGameOver() const {
-    if (stepsRemaining <= 0) return true;
+    if (stepsRemaining <= 0) {
+        logger.logResult("Tie - no ammo for the last 40 steps");
+        return true;
+    }
 
     for (const auto& tank : tanks) {
         if (!tank) return true;  // a tank was destroyed
@@ -132,18 +150,6 @@ void GameManager::moveShells() {
     shells = std::move(updatedShells);
 }
 
-void GameManager::updateTanks() {
-    for (const auto& tank : tanks) {
-        if (!tank->isDestroyed()) board.moveObj(tank);
-    }
-}
-
-void GameManager::updateShells() {
-    for (const auto& shell : shells) {
-        if (!shell->isDestroyed()) board.moveObj(shell);
-    }
-}
-
 
 void GameManager::executeTanksStep() {
     Action action1 = algo1->getNextAction(board, *tank1, *tank2);
@@ -167,6 +173,7 @@ void GameManager::executeTanksStep() {
                     action = Action::MoveBack;
                 }
                 else if (action == Action::MoveFwd) {
+                    logger.logStep(stepCount, tank->getPlayerId(), "Cancelling Move Back");
                     tank->setForward();
                     continue;
                 }
@@ -178,6 +185,7 @@ void GameManager::executeTanksStep() {
         }
 
         if(action != Action::MoveBack) {
+            logger.logStep(stepCount, tank->getPlayerId(), actionToString(action));
             tank->setForward();
         }
 
@@ -188,9 +196,11 @@ void GameManager::executeTanksStep() {
             }
             case Action::MoveBack: {
                 if(!tank->isGoingBack()) {
+                    logger.logStep(stepCount, tank->getPlayerId(), "Will move back in 3 steps");
                     tank->setBackwards();
                 }
                 else {
+                    logger.logStep(stepCount, tank->getPlayerId(), actionToString(action));
                     move(tank, true);
                     tank->setLastBackwardStep(stepCount);
                 }
@@ -241,12 +251,7 @@ void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
     board.placeObject(elem);
 }
 
-
-void GameManager::checkCollisions() {
-
-}
-
-
+// TODO: add collision type
 bool GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2){
     Position p1 = elem1->getPosition();
     Position p2 = elem2->getPosition();
@@ -258,6 +263,7 @@ bool GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, st
     return (p1 == prev2 && p2 == prev1);
 }
 
+// TODO: add collision type
 void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr>& marked) {
     if (!tank) return;
 
@@ -292,7 +298,7 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
     }
 }
 
-
+// TODO: add collision type
 void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr>& marked) {
     if (!shell) return;
 
@@ -317,20 +323,7 @@ void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unorde
     }
 }
 
-
-
-
-void GameManager::moveFwd(std::shared_ptr<Tank> tank){
-    move(tank, false);
-    tank->setForward();
-}
-
-bool GameManager::moveBkwd(std::shared_ptr<Tank> tank){
-    move(tank, true);
-    tank->setBackwards();
-    tank->setBackwardTimer(BACKWARDS_STEP_COUNT);
-}
-
+// TODO: log the bad steps
 bool GameManager::isActionLegal(Action act, std::shared_ptr<Tank> tank) {
     switch (act) {
         case Action::MoveFwd: return canMove(tank, false);
@@ -338,22 +331,6 @@ bool GameManager::isActionLegal(Action act, std::shared_ptr<Tank> tank) {
         case Action::Shoot: return tank->canShoot();
         default: return true;
     }
-}
-
-void GameManager::doAction(Action act, std::shared_ptr<Tank> tank) {
-    bool legalStep;
-    switch (act) {
-        case Action::MoveFwd: legalStep=moveFwd(tank); break;
-        case Action::MoveBack: legalStep=moveBkwd(tank); break;
-        case Action::RotateLeft_1_4: tank->rotate(LEFT_ANGLE_1_4);
-            break;
-        case Action::RotateRight_1_4: tank->rotate(RIGHT_ANGLE_1_4); break;
-        case Action::RotateLeft_1_8: tank->rotate(LEFT_ANGLE_1_8); break;
-        case Action::RotateRight_1_8: tank->rotate(RIGHT_ANGLE_1_8); break;
-        case Action::Shoot: legalStep=shoot(tank);break;
-        default:break;
-    }
-    tank->setPrevAction(act);
 }
 
 bool GameManager::shoot(std::shared_ptr<Tank> tank) {

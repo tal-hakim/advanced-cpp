@@ -24,8 +24,6 @@
 class GameManager {
 private:
     GameBoard board;
-    std::shared_ptr<Tank> tank1;
-    std::shared_ptr<Tank> tank2;
     Logger logger;
 //    std::unique_ptr<IAlgorithm> algo1;
 //    std::unique_ptr<IAlgorithm> algo2;
@@ -39,32 +37,15 @@ public:
     void runGame();
     void executeTanksStep();
     void logState() const;
-    void doAction(Action act, std::shared_ptr<Tank> tank);
     bool shoot(std::shared_ptr<Tank> tank);
     void move(std::shared_ptr<MovingElement> elem, bool bkwd);
     Position getPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);
     void moveShells();
-    bool moveFwd(std::shared_ptr<Tank> tank);
-    bool moveBkwd(std::shared_ptr<Tank> tank);
     bool checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
     bool canMove(std::shared_ptr<MovingElement> elem, bool bkwd);
     bool isActionLegal(Action act, std::shared_ptr<Tank> tank);
-
-    void checkCollision();
-
-    void updateBoard();
-
-    void moveObjects(const std::vector<std::shared_ptr<MovingElement>> &objects);
-
-    void updateTanks();
-
-    void updateShells();
-
     bool isPlayerTurn();
-
     void destroyAndRemove(const GameObjectPtr &obj);
-
-    std::vector<GameObjectPtr> checkShellCollisions(std::shared_ptr<Shell> shell);
 
     void checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr> &marked);
 
@@ -73,6 +54,8 @@ public:
     bool areAllTanksOutOfAmmo() const;
 
     bool isGameOver() const;
+
+    std::string actionToString(Action action) const;
 };
 
 #endif // GAME_MANAGER_H

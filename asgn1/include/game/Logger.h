@@ -17,13 +17,14 @@ public:
     Logger(const std::string& inputFile);
     ~Logger();
 
-    void logStep(int stepNumber, const std::string& player1Action, const std::string& player2Action);
     void logBadStep(int playerId, const std::string& reason);
-    void logResult(const std::string& result);
+    void logResult(const std::string& result) const;
     void logInputError(const std::string& message);
 
     void flushStepLog();
     void finalize();
+
+    void logStep(int stepNumber, int playerId, const std::string &action);
 };
 
 #endif // LOGGER_H
