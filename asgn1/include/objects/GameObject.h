@@ -2,9 +2,8 @@
 #define GAME_OBJECT_H
 
 #include "game/Position.h"
-#include "game/GameBoard.h"
 #include "definitions.h"
-
+#include <climits>
 
 class GameObject {
 protected:

@@ -32,7 +32,7 @@ private:
     std::unique_ptr<Algorithm> algo2;
     int stepCount;
     std::vector<std::shared_ptr<Shell>> shells;
-    std::vector<std::shared_ptr<Tank>> tanks;
+    std::vector<std::shared_ptr<Tank>> tanks = {nullptr, nullptr};
     int stepsRemaining = STALEMATE_STEPS;
 
 public:
@@ -56,13 +56,13 @@ public:
 
     bool areAllTanksOutOfAmmo() const;
 
-    bool isGameOver() const;
+    bool isGameOver() ;
 
     std::string actionToString(Action action) const;
 
-    bool hasAliveTank(int playerId) const;
-
     bool canTankShoot(std::shared_ptr<Tank> tank);
+
+    int getGameStep() const { return stepCount / 2; }
 };
 
 #endif // GAME_MANAGER_H

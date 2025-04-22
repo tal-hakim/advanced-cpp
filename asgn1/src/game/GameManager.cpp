@@ -11,17 +11,25 @@ GameManager::GameManager(const std::string& inputFile)
 
     int width = 0, height = 0;
     in >> width >> height;
+
     board = GameBoard(width, height);
 
     std::string line;
     std::getline(in, line); // consume leftover newline
-
+    std::cout << "processing board" << std::endl;
     int y = 0;
-    while (std::getline(in, line) && y < height) {
-        for (int x = 0; x < std::min(width, (int)line.length()); ++x) {
+    for (int y = 0; y < height; ++y) {
+        std::string line;
+        if (!std::getline(in, line)) {
+            // If line is missing (EOF too early), fill with spaces
+            line = std::string(width, ' ');
+        } else if ((int)line.length() < width) {
+            // Pad short lines
+            line += std::string(width - line.length(), ' ');
+        }
+        for (int x = 0; x < width; ++x) {
             char c = line[x];
             Position pos(x, y);
-
             switch (c) {
                 case '#':
                     board.placeObject(std::make_shared<Wall>(pos));
@@ -30,15 +38,16 @@ GameManager::GameManager(const std::string& inputFile)
                     board.placeObject(std::make_shared<Mine>(pos));
                     break;
                 case '1': {
-                    //tank1 = std::make_shared<Tank>(pos, Direction::L, 1);
                     auto player_1_tank = std::make_shared<Tank>(pos, Direction::L, PLAYER_1_ID);
-                    tanks.push_back(player_1_tank);
+                    //tanks.push_back(player_1_tank);
+                    tanks[0] = player_1_tank;
                     board.placeObject(player_1_tank);
                     break;
                 }
                 case '2': {
                     auto player_2_tank = std::make_shared<Tank>(pos, Direction::R, PLAYER_2_ID);
-                    tanks.push_back(player_2_tank);
+                    //tanks.push_back(player_2_tank);
+                    tanks[1] = player_2_tank;
                     board.placeObject(player_2_tank);
                     break;
                 }
@@ -46,8 +55,11 @@ GameManager::GameManager(const std::string& inputFile)
                     break;
             }
         }
-        ++y;
     }
+
+
+    std::cout << "finished building board" << std::endl;
+    board.printBoard();
     // Plug in your two algorithms
     algo1 = std::make_unique<Chaser>();
     algo2 = std::make_unique<Evader>();
@@ -73,7 +85,7 @@ bool GameManager::isPlayerTurn() const {
 }
 
 
-bool GameManager::isGameOver() const {
+bool GameManager::isGameOver() {
     if (stepsRemaining <= 0) {
         logger.logResult("Tie - no ammo for the last 40 steps");
         return true;
@@ -88,8 +100,8 @@ bool GameManager::isGameOver() const {
         if (tank->getPlayerId() == PLAYER_2_ID) tank2 = tank;
     }
 
-    bool tank1Dead = tank1->isDestroyed();
-    bool tank2Dead = tank2->isDestroyed();
+    bool tank1Dead = !tank1 || tank1->isDestroyed();
+    bool tank2Dead = !tank2 || tank2->isDestroyed();
 
     if (tank1Dead && tank2Dead) {
         logger.logResult(std::string("Tie - Both tanks destroyed\n") +
@@ -100,11 +112,19 @@ bool GameManager::isGameOver() const {
     }
 
     if (tank1Dead) {
+        if (!tank2){
+            logger.logResult("Player 2 wins - Player 1 tank destroyed");
+            return true;
+        }
         logger.logResult("Player 2 wins - Player 1 tank destroyed by " + tank1->getCollisionType());
         return true;
     }
 
     if (tank2Dead) {
+        if (!tank2){
+            logger.logResult("Player 1 wins - Player 2 tank destroyed");
+            return true;
+        }
         logger.logResult("Player 1 wins - Player 2 tank destroyed by " + tank2->getCollisionType());
         return true;
     }
@@ -130,6 +150,10 @@ void GameManager::runGame() {
             for (const auto& tank : tanks) {
                 checkTankCollisions(tank, markedForDestruction);
             }
+            for (const auto& shell : shells) {
+                checkShellCollisions(shell, markedForDestruction);
+            }
+            board.printBoard();
         }
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
@@ -155,7 +179,7 @@ void GameManager::moveShells() {
     std::vector<std::shared_ptr<Shell>> updatedShells;
 
     for (auto& shell : shells) {
-        if (shell->isDestroyed()) continue;
+        if (!shell || shell->isDestroyed()) continue;
 
         move(shell, false);  // ✅ move forward one half-step
         updatedShells.push_back(shell);  // keep shell alive for next frame
@@ -166,14 +190,19 @@ void GameManager::moveShells() {
 
 
 void GameManager::executeTanksStep() {
-    Action action1 = algo1->getNextAction(board, *tank1, *tank2);
-    Action action2 = algo2->getNextAction(board, *tank2, *tank1);
+    // TODO: change so that algo1 is with tank1
+    for (const auto& tank: tanks){
+        tank->decreaseShootCooldown();
+        std::cout << tank->toString() << " " << tank->getCooldown() << std::endl;
+    }
+
+    Action action1 = algo1->getNextAction(board, *tanks[0], *tanks[1]);
+    Action action2 = algo2->getNextAction(board, *tanks[1], *tanks[0]);
 
     // 1. Handle tank actions
     for (size_t i = 0; i < tanks.size(); ++i) {
         auto tank = tanks[i];
         Action action = (tank->getPlayerId() == 1) ? action1 : action2;
-        tank->decreaseShootCooldown();
 
         if (!isActionLegal(action, tank)) {
             continue;
@@ -181,12 +210,12 @@ void GameManager::executeTanksStep() {
 
         if (tank->isGoingBack()) {
             tank->decreaseBackwardTimer();
-            if(!tank->isLastStepBack(stepCount) || action != Action::MoveBack) {
+            if(!tank->isLastStepBack(stepCount)) {
                 if (tank->getBackwardTimer() == 0) {
                     action = Action::MoveBack;
                 }
                 else if (action == Action::MoveFwd) {
-                    logger.logStep(stepCount, tank->getPlayerId(), "Cancelling Move Back");
+                    logger.logStep(getGameStep(), tank->getPlayerId(), "Cancelling Move Back");
                     tank->setForward();
                     continue;
                 }
@@ -198,7 +227,7 @@ void GameManager::executeTanksStep() {
         }
 
         if(action != Action::MoveBack) {
-            logger.logStep(stepCount, tank->getPlayerId(), actionToString(action));
+            logger.logStep(getGameStep(), tank->getPlayerId(), actionToString(action));
             tank->setForward();
         }
 
@@ -209,13 +238,13 @@ void GameManager::executeTanksStep() {
             }
             case Action::MoveBack: {
                 if(!tank->isGoingBack()) {
-                    logger.logStep(stepCount, tank->getPlayerId(), "Will move back in 3 steps");
+                    logger.logStep(getGameStep(), tank->getPlayerId(), "Will move back in 3 steps");
                     tank->setBackwards();
                 }
                 else {
-                    logger.logStep(stepCount, tank->getPlayerId(), actionToString(action));
+                    logger.logStep(getGameStep(), tank->getPlayerId(), actionToString(action));
                     move(tank, true);
-                    tank->setLastBackwardStep(stepCount);
+                    tank->setLastBackwardStep(getGameStep());
                 }
                 break;
             }
@@ -379,7 +408,7 @@ bool GameManager::shoot(std::shared_ptr<Tank> tank) {
 
     // Optionally: place it on the board (if you want it visible on the grid)
     board.placeObject(shell);
-
+    move(shell, false);
     tank->shoot();
     return true;
 }
@@ -387,7 +416,7 @@ bool GameManager::shoot(std::shared_ptr<Tank> tank) {
 void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
     if (!obj) return;
 
-    obj->destroy(board);  // calls GameObject's destroy logic
+    obj->destroy();  // calls GameObject's destroy logic
 
     if (obj->isDestroyed()) {
         board.removeSpecificObject(obj);  // ✅ remove only if marked destroyed

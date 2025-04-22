@@ -16,6 +16,9 @@ Logger::~Logger() {
 }
 
 void Logger::logStep(int stepNumber, int playerId, const std::string& action) {
+    std::cout << "Step " << stepNumber
+              << ": Player " << playerId
+              << " - " << action << std::endl;
     stepLogs.push_back("Step " + std::to_string(stepNumber) +
                        ": Player " + std::to_string(playerId) +
                        " - " + action);
@@ -23,10 +26,13 @@ void Logger::logStep(int stepNumber, int playerId, const std::string& action) {
 
 
 void Logger::logBadStep(int playerId, const std::string& reason) {
+    std::string msg = "Bad Step by Player " + std::to_string(playerId) + ": " + reason;
+    std::cout << msg << std::endl;
     stepLogs.push_back("Bad Step by Player " + std::to_string(playerId) + ": " + reason);
 }
 
-void Logger::logResult(const std::string& result) const {
+void Logger::logResult(const std::string& result)  {
+    std::cout << "Game over" << result << std::endl;
     stepLogs.push_back("Game Over: " + result);
 }
 

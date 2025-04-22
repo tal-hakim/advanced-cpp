@@ -18,7 +18,7 @@ public:
     ~Logger();
 
     void logBadStep(int playerId, const std::string& reason);
-    void logResult(const std::string& result) const;
+    void logResult(const std::string& result) ;
     void logInputError(const std::string& message);
 
     void flushStepLog();

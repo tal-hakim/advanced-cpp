@@ -2,7 +2,7 @@
 #ifndef MOVINGELEMENT_H
 #define MOVINGELEMENT_H
 
-#include "GameObject.h"
+#include "objects/GameObject.h"
 #include "game/Direction.h"
 
 class MovingElement : public GameObject {

@@ -32,12 +32,13 @@ public:
     bool canShoot() const;
     bool isOutOfAmmo() { return shellsRemaining == 0; }
     void setLastBackwardStep(int step) { lastBackwardStep = step; }
-    bool isLastStepBack(int step) { return step - lastBackwardStep == 2; }
+    bool isLastStepBack(int step) { return step - lastBackwardStep == 1; }
     std::string getCollisionType() const { return collisionType; }
     void setCollisionType(std::string colType) {if(collisionType == "") collisionType = colType;}
     std::string toString() const override {
         return "Tank "+ std::to_string(playerId);
     }
+    int getCooldown() const {return shootCooldown; }
 };
 
 #endif // TANK_H
