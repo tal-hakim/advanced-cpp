@@ -1,6 +1,6 @@
 #ifndef ALGORITHMCHASER_H
 #define ALGORITHMCHASER_H
-
+#include "algorithms/Chaser.h"
 #include "Algorithm.h"
 #include <vector>
 

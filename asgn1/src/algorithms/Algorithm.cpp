@@ -3,7 +3,7 @@
 //
 #include "algorithms/Algorithm.h"
 
-int Algorithm::stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps = 10) {
+int Algorithm::stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps) {
     Shell tmpShell = shell;
     Position tankPos = board.wrap(tank.getPosition());
 

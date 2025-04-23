@@ -1,4 +1,4 @@
-#include "DirectionUtils.h"
+#include "game/DirectionUtils.h"
 
 namespace DirectionUtils {
 

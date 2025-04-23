@@ -1,5 +1,4 @@
 #include "objects/MovingElement.h"
-#include "game/DirectionUtils.h"
 
 Position MovingElement::getNextPos(bool backwards) const {
     Position current = getPosition();
