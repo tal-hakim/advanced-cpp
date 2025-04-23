@@ -2,8 +2,14 @@
 #define ALGORITHMCHASER_H
 
 #include "Algorithm.h"
+#include <vector>
 
 class Chaser : public Algorithm {
+private:
+    std::vector<Position> bfsPath;
+    Position lastEnemyPos;
+    int lastStep = -1;
+
 public:
     Action getNextAction(const GameBoard& board,
                          const Tank& myTank,
