@@ -10,4 +10,6 @@ public:
                          const Tank& opponentTank) override;
 };
 
+
+
 #endif // ALGORITHMEVADER_H

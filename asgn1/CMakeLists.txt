@@ -30,4 +30,5 @@ add_executable(asgn1 src/main.cpp
         include/algorithms/Evader.h
         src/algorithms/Evader.cpp
         src/algorithms/Chaser.cpp
+        src/algorithms/Algorithm.cpp
 )

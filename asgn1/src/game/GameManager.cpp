@@ -153,11 +153,11 @@ void GameManager::runGame() {
             for (const auto& shell : shells) {
                 checkShellCollisions(shell, markedForDestruction);
             }
-            board.printBoard();
         }
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
+        if(isPlayerTurn()) board.printBoard();
         ++stepCount;
     }
 
@@ -204,13 +204,9 @@ void GameManager::executeTanksStep() {
         auto tank = tanks[i];
         Action action = (tank->getPlayerId() == 1) ? action1 : action2;
 
-        if (!isActionLegal(action, tank)) {
-            continue;
-        }
-
         if (tank->isGoingBack()) {
             tank->decreaseBackwardTimer();
-            if(!tank->isLastStepBack(stepCount)) {
+            if(!tank->isLastStepBack(getGameStep())) {
                 if (tank->getBackwardTimer() == 0) {
                     action = Action::MoveBack;
                 }
@@ -224,6 +220,10 @@ void GameManager::executeTanksStep() {
                 }
             }
 
+        }
+        tank->setPrevPos();
+        if (!isActionLegal(action, tank)) {
+            continue;
         }
 
         if(action != Action::MoveBack) {
@@ -267,25 +267,22 @@ void GameManager::logState() const {
     board.printBoard();
 }
 
-Position GameManager::getPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd) {
+Position GameManager::getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd) {
     return board.wrap(elem->getNextPos(bkwd));
 }
 
-bool GameManager::canMove(std::shared_ptr<MovingElement> elem, bool bkwd) {
-    Position next = getPosOnBoard(elem, bkwd);
-    auto objects = board.getObjectsAt(next);
-
-    for (const auto& obj : objects) {
-        if (std::dynamic_pointer_cast<Wall>(obj)) {
-            if (bkwd) {
-                logger.logBadStep(elem->getPlayerId(), "Can't move back because wall in position " + obj->getPosition().toString());
-
-            }
-            else {
-                logger.logBadStep(elem->getPlayerId(), "Can't move forward because wall in position " + obj->getPosition().toString());
-            }
-            return false;  // 🚧 Wall is in the way!
+bool GameManager::canMove(std::shared_ptr<Tank> tank, bool bkwd) {
+    Position next = getNextPosOnBoard(tank, bkwd);
+    if(board.isWall(next)){
+        if (bkwd) {
+            tank->setForward();
+            logger.logBadStep(tank->getPlayerId(), "Can't move back because wall in position " + next.toString());
         }
+        else {
+            logger.logBadStep(tank->getPlayerId(), "Can't move forward because wall in position " + next.toString());
+        }
+            return false;  // 🚧 Wall is in the way!
+
     }
 
     return true;  // ✅ No wall → we can move
@@ -293,7 +290,7 @@ bool GameManager::canMove(std::shared_ptr<MovingElement> elem, bool bkwd) {
 
 
 void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
-    Position newPos = getPosOnBoard(elem, bkwd);
+    Position newPos = getNextPosOnBoard(elem, bkwd);
     board.removeSpecificObject(elem);  // move tank
     elem->setPrevPos();
     elem->setPosition(newPos);
@@ -409,6 +406,7 @@ bool GameManager::shoot(std::shared_ptr<Tank> tank) {
     // Optionally: place it on the board (if you want it visible on the grid)
     board.placeObject(shell);
     move(shell, false);
+    shell->setPrevPos();
     tank->shoot();
     return true;
 }

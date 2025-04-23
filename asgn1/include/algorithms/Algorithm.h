@@ -3,6 +3,7 @@
 
 #include "game/GameBoard.h"
 #include "objects/Tank.h"
+#include "objects/Shell.h"
 #include "game/Action.h"
 
 class Algorithm {
@@ -12,6 +13,12 @@ public:
     virtual Action getNextAction(const GameBoard& board,
                                  const Tank& myTank,
                                  const Tank& opponentTank) = 0;
+    int stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps = 10);
+
+
+    static Direction getOppositeDirection(Direction dir);
+
+    static bool areFacingEachOther(const Tank &tank, const Shell &shell);
 };
 
 #endif // ALGORITHM_H

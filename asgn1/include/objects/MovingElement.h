@@ -20,6 +20,7 @@ public:
     Position getNextPos(bool backwards = false) const;
     void setPrevPos() { prevPos = pos; }
     Position getPrevPos() const { return prevPos; }
+
 };
 
 #endif //MOVINGELEMENT_H

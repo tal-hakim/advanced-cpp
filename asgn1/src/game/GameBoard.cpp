@@ -30,7 +30,7 @@ void GameBoard::printBoard() const {
             if (!grid[y][x].empty())
                 std::cout << grid[y][x].back()->getSymbol();  // draw top-most object
             else
-                std::cout << ' ';
+                std::cout << '_';
         }
         std::cout << '\n';
     }
@@ -40,4 +40,28 @@ Position GameBoard::wrap(Position p) const {
     int x = ((p.x % width) + width) % width;
     int y = ((p.y % height) + height) % height;
     return Position(x, y);
+}
+
+bool GameBoard::isWall(const Position& pos) const {
+    Position wrapped = wrap(pos);
+    const auto& objects = getObjectsAt(wrapped);  // returns const ref to vector of shared_ptr<GameObject>
+
+    for (const auto& obj : objects) {
+        if (obj && std::dynamic_pointer_cast<Wall>(obj)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool GameBoard::isMine(const Position& pos) const {
+    Position wrapped = wrap(pos);
+    const auto& objects = getObjectsAt(wrapped);  // returns const ref to vector of shared_ptr<GameObject>
+
+    for (const auto& obj : objects) {
+        if (obj && std::dynamic_pointer_cast<Mine>(obj)) {
+            return true;
+        }
+    }
+    return false;
 }

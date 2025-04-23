@@ -2,17 +2,21 @@
 #include <cmath>
 
 Action Chaser::getNextAction(const GameBoard& board,
-                                      const Tank& myTank,
-                                      const Tank& opponentTank) {
-    // Naive chase: if aligned, shoot. Else, move forward.
-    Position myPos = myTank.getPosition();
-    Position enemyPos = opponentTank.getPosition();
-    std::cout << myPos << std::endl;
+                             const Tank& myTank,
+                             const Tank& opponentTank) {
+    static int stepCounter = 0;
+    ++stepCounter;
+
     if (myTank.canShoot()) {
-        // Just try to shoot constantly in naive mode
         return Action::Shoot;
     }
 
-    return Action::MoveFwd;
+    // Move forward every 3rd step, rotate otherwise
+    if (stepCounter % 3 == 0) {
+        return Action::MoveFwd;
+    } else {
+        return Action::RotateRight_1_8;
+    }
 }
+
 

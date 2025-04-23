@@ -3,6 +3,8 @@
 
 #include "objects/GameObject.h"
 #include "objects/MovingElement.h"
+#include "objects/Wall.h"
+#include "objects/Mine.h"
 #include "game/Position.h"
 #include <vector>
 #include <memory>
@@ -33,6 +35,10 @@ public:
     void printBoard() const;
     int getWidth() const { return width; }
     int getHeight() const { return height; }
+
+    bool isWall(const Position &pos) const;
+
+    bool isMine(const Position &pos) const;
 };
 
 #endif // GAME_BOARD_H
