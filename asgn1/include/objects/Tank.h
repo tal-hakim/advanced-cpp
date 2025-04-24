@@ -39,6 +39,8 @@ public:
         return "Tank "+ std::to_string(playerId);
     }
     int getCooldown() const {return shootCooldown; }
+
+    Direction getNewDir(int angle);
 };
 
 #endif // TANK_H

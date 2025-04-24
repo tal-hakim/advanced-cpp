@@ -9,8 +9,13 @@ bool Tank::canShoot() const {
     return shootCooldown < 0 && shellsRemaining > 0;
 }
 
-void Tank::rotate(int angle) {
+Direction Tank::getNewDir(int angle){
     int raw = static_cast<int>(dir);
     raw = (raw + angle + 8) % 8;
-    dir = static_cast<Direction>(raw);
+    return static_cast<Direction>(raw);
+}
+}
+
+void Tank::rotate(int angle) {
+    dir = getNewDir(angle);
 }
