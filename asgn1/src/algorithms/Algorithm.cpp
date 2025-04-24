@@ -2,6 +2,7 @@
 // Created by talta on 23/04/2025.
 //
 #include "algorithms/Algorithm.h"
+#include "game/DirectionUtils.h"
 
 int Algorithm::stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps) {
     Shell tmpShell = shell;
@@ -24,12 +25,9 @@ int Algorithm::stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, con
     return -1; // No hit
 }
 
-Direction Algorithm::getOppositeDirection(Direction dir) {
-    return static_cast<Direction>((static_cast<int>(dir) + 4) % 8);
-}
 
 bool Algorithm::areFacingEachOther(const Tank& tank, const Shell& shell) {
-    return tank.getDirection() == getOppositeDirection(shell.getDirection());
+    return tank.getDirection() == DirectionUtils::getOppositeDirection(shell.getDirection());
 }
 
 

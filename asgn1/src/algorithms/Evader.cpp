@@ -41,7 +41,7 @@ Action Evader::getNextAction(const GameBoard& board,
     }
 
     Direction shellDir = closestThreat->getDirection();
-    Direction shellOpposite = Algorithm::getOppositeDirection(shellDir);
+    Direction shellOpposite = DirectionUtils::getOppositeDirection(shellDir);
 
     if (shellDir != tankDir && shellOpposite != tankDir) {
         Position forwardPos = board.wrap(myTank.getNextPos());

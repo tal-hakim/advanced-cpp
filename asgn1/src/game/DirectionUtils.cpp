@@ -35,4 +35,8 @@ Direction directionFromTo(const Position& from, const Position& to) {
     return Direction::U;  // default/fallback
 }
 
+Direction getOppositeDirection(Direction dir) {
+        return static_cast<Direction>((static_cast<int>(dir) + 4) % 8);
+}
+
 } // namespace DirectionUtils

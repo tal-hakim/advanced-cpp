@@ -15,9 +15,6 @@ public:
                                  const Tank& opponentTank) = 0;
     int stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps = 10);
 
-
-    static Direction getOppositeDirection(Direction dir);
-
     static bool areFacingEachOther(const Tank &tank, const Shell &shell);
 };
 
