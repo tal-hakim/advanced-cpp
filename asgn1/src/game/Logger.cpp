@@ -7,7 +7,7 @@ Logger::Logger(const std::string& inputFile)
 {
     std::filesystem::path inputPath(inputFile);
     inputFilename = inputPath.filename().string();
-    std::string outputFile = "../logs/log_for_" + inputFilename;
+    std::string outputFile = "../logs/output" + inputFilename;
     std::cout << std::filesystem::current_path() << std::endl;
     outputLog.open(outputFile);
 }
