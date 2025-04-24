@@ -65,3 +65,27 @@ bool GameBoard::isMine(const Position& pos) const {
     }
     return false;
 }
+
+bool GameBoard::isShell(const Position& pos) const {
+    Position wrapped = wrap(pos);
+    const auto& objects = getObjectsAt(wrapped);  // returns const ref to vector of shared_ptr<GameObject>
+
+    for (const auto& obj : objects) {
+        if (obj && std::dynamic_pointer_cast<Shell>(obj)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool GameBoard::isTank(const Position& pos) const {
+    Position wrapped = wrap(pos);
+    const auto& objects = getObjectsAt(wrapped);  // returns const ref to vector of shared_ptr<GameObject>
+
+    for (const auto& obj : objects) {
+        if (obj && std::dynamic_pointer_cast<Tank>(obj)) {
+            return true;
+        }
+    }
+    return false;
+}

@@ -40,7 +40,18 @@ Action Evader::getNextAction(const GameBoard& board,
         return Action::Shoot;
     }
 
-    // TODO: Implement rotation or movement to dodge
+    Direction shellDir = closestThreat->getDirection();
+    Direction shellOpposite = Algorithm::getOppositeDirection(shellDir);
+
+    if (shellDir != tankDir && shellOpposite != tankDir) {
+        Position forwardPos = board.wrap(myTank.getNextPos());
+        if (!board.isWall(forwardPos) && !board.isMine(forwardPos) && !board.isTank(forwardPos)) {
+            return Action::MoveFwd;
+        }
+        for (int i = LEFT_ANGLE_1_4; i <= RIGHT_ANGLE_1_4; i++ ){
+
+        }
+    }
 
     return Action::None; // fallback
 }

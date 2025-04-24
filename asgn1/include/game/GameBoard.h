@@ -5,6 +5,8 @@
 #include "objects/MovingElement.h"
 #include "objects/Wall.h"
 #include "objects/Mine.h"
+#include "objects/Shell.h"
+#include "objects/Tank.h"
 #include "game/Position.h"
 #include <vector>
 #include <memory>
@@ -39,6 +41,10 @@ public:
     bool isWall(const Position &pos) const;
 
     bool isMine(const Position &pos) const;
+
+    bool isTank(const Position &pos) const;
+
+    bool isShell(const Position &pos) const;
 };
 
 #endif // GAME_BOARD_H
