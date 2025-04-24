@@ -191,9 +191,10 @@ void GameManager::moveShells() {
 
 void GameManager::executeTanksStep() {
     // TODO: change so that algo1 is with tank1
+
+    logger.logStepNum(getGameStep());
     for (const auto& tank: tanks){
         tank->decreaseShootCooldown();
-        std::cout << tank->toString() << " " << tank->getCooldown() << std::endl;
     }
 
     Action action1 = algo1->getNextAction(board, *tanks[0], *tanks[1]);
@@ -211,7 +212,7 @@ void GameManager::executeTanksStep() {
                     action = Action::MoveBack;
                 }
                 else if (action == Action::MoveFwd) {
-                    logger.logStep(getGameStep(), tank->getPlayerId(), "Cancelling Move Back");
+                    logger.logAction(tank->getPlayerId(), "Cancelling Move Back");
                     tank->setForward();
                     continue;
                 }
@@ -227,7 +228,7 @@ void GameManager::executeTanksStep() {
         }
 
         if(action != Action::MoveBack) {
-            logger.logStep(getGameStep(), tank->getPlayerId(), actionToString(action));
+            logger.logAction(tank->getPlayerId(), actionToString(action));
             tank->setForward();
         }
 
@@ -238,11 +239,11 @@ void GameManager::executeTanksStep() {
             }
             case Action::MoveBack: {
                 if(!tank->isGoingBack()) {
-                    logger.logStep(getGameStep(), tank->getPlayerId(), "Will move back in 3 steps");
+                    logger.logAction(tank->getPlayerId(), "Will move back in 3 steps");
                     tank->setBackwards();
                 }
                 else {
-                    logger.logStep(getGameStep(), tank->getPlayerId(), actionToString(action));
+                    logger.logAction(tank->getPlayerId(), actionToString(action));
                     move(tank, true);
                     tank->setLastBackwardStep(getGameStep());
                 }

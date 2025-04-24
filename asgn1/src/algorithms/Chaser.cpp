@@ -7,40 +7,9 @@
 #include <unordered_set>
 #include <string>
 
-namespace {
-    Direction directionFromTo(const Position& from, const Position& to) {
-        int dx = to.x - from.x;
-        int dy = to.y - from.y;
-        dx = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
-        dy = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
-
-        if (dx == 0 && dy == -1) return Direction::U;
-        if (dx == 1 && dy == -1) return Direction::UR;
-        if (dx == 1 && dy == 0)  return Direction::R;
-        if (dx == 1 && dy == 1)  return Direction::DR;
-        if (dx == 0 && dy == 1)  return Direction::D;
-        if (dx == -1 && dy == 1) return Direction::DL;
-        if (dx == -1 && dy == 0) return Direction::L;
-        if (dx == -1 && dy == -1)return Direction::UL;
-
-        return Direction::U; // default fallback
-    }
-
-    Action rotateToward(Direction current, Direction target) {
-        int rawCurrent = static_cast<int>(current);
-        int rawTarget = static_cast<int>(target);
-        int diff = (rawTarget - rawCurrent + 8) % 8;
-
-        if (diff == 0) return Action::None;
-        if (diff == 1 || diff == 7) return (diff == 1) ? Action::RotateRight_1_8 : Action::RotateLeft_1_8;
-        if (diff == 2 || diff == 6) return (diff == 2) ? Action::RotateRight_1_4 : Action::RotateLeft_1_4;
-        return (diff <= 4) ? Action::RotateRight_1_8 : Action::RotateLeft_1_8;
-    }
-}
-
 Action Chaser::getNextAction(const GameBoard& board,
-                                      const Tank& myTank,
-                                      const Tank& opponentTank)
+                             const Tank& myTank,
+                             const Tank& opponentTank)
 {
     auto bfsToEnemy = [&](const Position& start, const Position& goal) {
         std::queue<std::pair<Position, std::vector<Position>>> q;
@@ -56,12 +25,13 @@ Action Chaser::getNextAction(const GameBoard& board,
 
             for (int d = 0; d < 8; ++d) {
                 Direction dir = static_cast<Direction>(d);
-                Shell probe(current, dir, myTank.getPlayerId());
-                Position next = board.wrap(probe.getNextPos());
+                Position next = board.wrap(current + DirectionUtils::dirToVector(dir));
 
+                // Skip walls, mines, and previously visited positions
                 if (!board.isWall(next) &&
                     !board.isMine(next) &&
                     visited.count(next.toString()) == 0) {
+
                     visited.insert(next.toString());
                     auto newPath = path;
                     newPath.push_back(next);
@@ -76,7 +46,7 @@ Action Chaser::getNextAction(const GameBoard& board,
     auto pathBlocked = [&](const std::vector<Position>& path) {
         for (const auto& pos : path) {
             if (board.isWall(pos) || board.isMine(pos))
-                return true;
+                return true;  // Blocked if wall or mine is encountered
         }
         return false;
     };
@@ -91,35 +61,35 @@ Action Chaser::getNextAction(const GameBoard& board,
     }
 
     if (bfsPath.size() < 2)
-        return rotateToward(myTank.getDirection(), directionFromTo(myTank.getPosition(), opponentTank.getPosition()));
+        return rotateToward(myTank.getDirection(), DirectionUtils::directionFromTo(myTank.getPosition(), opponentTank.getPosition()));
 
     auto canShootEnemy = [&]() -> bool {
         Position myPos = myTank.getPosition();
-        Position enemyPos = opponentTank.getPosition();
         Direction myDir = myTank.getDirection();
-    
-        Direction toEnemy = directionFromTo(myPos, enemyPos);
-        if (toEnemy != myDir) return false;
-    
-        Position current = board.wrap(myPos + DirectionUtils::dirToVector(myDir));
-        while (current != enemyPos) {
-            if (board.isWall(current) || board.isMine(current))
-                return false;
-    
-            current = board.wrap(current + DirectionUtils::dirToVector(myDir));
-        }
-    
-        return true;
+        int steps = stepsUntilShellHitsTank(Shell(myPos, myDir, myTank.getPlayerId()), opponentTank, board);
+        return myTank.canShoot() && steps >=0;
     };
-    
-    // 👇 CHECK IF WE SHOULD FIRE
+
+    // Check if we should fire at the enemy
     if (canShootEnemy())
         return Action::Shoot;
-    Position next = bfsPath[1];
-    Direction desiredDir = directionFromTo(myTank.getPosition(), next);
 
+    Position next = bfsPath[1];
+    std::cout << "chaser is going to: " << next << std::endl;
+    Direction desiredDir = DirectionUtils::directionFromTo(myTank.getPosition(), next);
+    std::cout << "chaser dir needs to be: " << static_cast<int>(desiredDir) << std::endl;
+    int angleDiff = static_cast<int>(desiredDir) - static_cast<int>(myTank.getDirection());
+    if (angleDiff < 0) angleDiff += 8;  // Normalize to positive difference
+
+    // Rotate clockwise (right) 1/8 at a time
+//    Direction newDir = static_cast<Direction>((static_cast<int>(myTank.getDirection()) + 1) % 8);
+//    return rotateToward(myTank.getDirection(), newDir);
+
+    // Rotate if not facing the desired direction
     if (myTank.getDirection() != desiredDir)
         return rotateToward(myTank.getDirection(), desiredDir);
-
+    bfsPath.erase(bfsPath.begin());
     return Action::MoveFwd;
 }
+
+

@@ -17,11 +17,19 @@ Position dirToVector(Direction dir) {
 }
 
 Direction directionFromTo(const Position& from, const Position& to) {
-    int dx = to.x - from.x;
-    int dy = to.y - from.y;
+    int dist_x = to.x - from.x;
+    int dist_y = to.y - from.y;
 
-    dx = (dx > 0) ? 1 : (dx < 0) ? -1 : 0;
-    dy = (dy > 0) ? 1 : (dy < 0) ? -1 : 0;
+    int dx = (dist_x > 0) ? 1 : (dist_x < 0) ? -1 : 0;
+    int dy = (dist_y > 0) ? 1 : (dist_y < 0) ? -1 : 0;
+
+    if (abs(dist_x) > 1){
+        dx = -dx;
+    }
+
+    if (abs(dist_y) > 1 ){
+        dy = -dy;
+    }
 
     if (dx == 0 && dy == -1) return Direction::U;
     if (dx == 1 && dy == -1) return Direction::UR;

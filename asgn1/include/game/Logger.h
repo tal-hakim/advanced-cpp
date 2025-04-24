@@ -24,7 +24,9 @@ public:
     void flushStepLog();
     void finalize();
 
-    void logStep(int stepNumber, int playerId, const std::string &action);
+    void logAction(int playerId, const std::string &action);
+
+    void logStepNum(int step);
 };
 
 #endif // LOGGER_H

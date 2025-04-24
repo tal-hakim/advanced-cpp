@@ -31,3 +31,16 @@ bool Algorithm::areFacingEachOther(const Tank& tank, const Shell& shell) {
 }
 
 
+Action Algorithm::rotateToward(Direction current, Direction target) {
+    int rawCurrent = static_cast<int>(current);
+    int rawTarget = static_cast<int>(target);
+    int diff = (rawTarget - rawCurrent + 8) % 8;
+
+    if (diff == 0) return Action::None;
+    if (diff == 1 || diff == 7) return (diff == 1) ? Action::RotateRight_1_8 : Action::RotateLeft_1_8;
+//        if (diff == 2 || diff == 6) return (diff == 2) ? Action::RotateRight_1_4 : Action::RotateLeft_1_4;
+    return (diff <= 4) ? Action::RotateRight_1_4 : Action::RotateLeft_1_4;
+}
+
+
+
