@@ -16,8 +16,6 @@ GameManager::GameManager(const std::string& inputFile)
 
     std::string line;
     std::getline(in, line); // consume leftover newline
-    std::cout << "processing board" << std::endl;
-    int y = 0;
     for (int y = 0; y < height; ++y) {
         std::string line;
         if (!std::getline(in, line)) {
@@ -58,8 +56,6 @@ GameManager::GameManager(const std::string& inputFile)
     }
 
 
-    std::cout << "finished building board" << std::endl;
-    board.printBoard();
     // Plug in your two algorithms
     algo1 = std::make_unique<Chaser>();
     algo2 = std::make_unique<Evader>();
@@ -157,7 +153,6 @@ void GameManager::runGame() {
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
-        if(isPlayerTurn()) board.printBoard();
         ++stepCount;
     }
 

@@ -48,11 +48,16 @@ Player 2 - <action_2>
     - `RotateRight 1/8`
     - `None`
 
-Final output:
+Final result:
 
 ```
 ====== Game Over ======
 <Player_Number> wins - <reason>
+```
+or
+```
+====== Game Over ======
+Tie - <reason>
 ```
 
 #### Example Output:

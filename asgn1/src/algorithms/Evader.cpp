@@ -57,7 +57,6 @@ Action Evader::getNextAction(const GameBoard& board,
 
         int d = (static_cast<int>(myTank.getDirection()) + i + 8) % 8;
         Direction dir = static_cast<Direction>(d);
-        std::cout << "looking to dir " << d << std::endl;
         Position tmpPos = board.wrap(myTank.getPosition() + DirectionUtils::dirToVector(dir));;
         if (!board.isWall(tmpPos) && !board.isMine(tmpPos)) {
             return rotateToward(myTank.getDirection(), dir);
@@ -77,7 +76,6 @@ Action Evader::checkOpponentAndAct(const GameBoard& board, const Tank& myTank, c
 
         // Check if the opponent is at either the first or second step
         if (firstStepPos == opponentTank.getPosition() || secondStepPos == opponentTank.getPosition()) {
-            std::cout << "Opponent found in direction: " << static_cast<int>(dir) << std::endl;
             // Opponent found one or two steps away, move or rotate accordingly
             Direction currentDir = myTank.getDirection();
             Direction desiredDir = dir;

@@ -75,9 +75,7 @@ Action Chaser::getNextAction(const GameBoard& board,
         return Action::Shoot;
 
     Position next = bfsPath[1];
-    std::cout << "chaser is going to: " << next << std::endl;
     Direction desiredDir = DirectionUtils::directionFromTo(myTank.getPosition(), next);
-    std::cout << "chaser dir needs to be: " << static_cast<int>(desiredDir) << std::endl;
     int angleDiff = static_cast<int>(desiredDir) - static_cast<int>(myTank.getDirection());
     if (angleDiff < 0) angleDiff += 8;  // Normalize to positive difference
 
