@@ -23,7 +23,7 @@ void Logger::logAction(int playerId, const std::string& action) {
 }
 
 void Logger::logStepNum(int step){
-    stepLogs.push_back("\nGame Step #" + std::to_string(step));
+    stepLogs.push_back("\nGame Step #" + std::to_string(step + 1));
 }
 
 void Logger::logBadStep(int playerId, const std::string& reason) {
@@ -36,7 +36,7 @@ void Logger::logResult(const std::string& result)  {
 
 void Logger::logInputError(const std::string& message) {
     if (!inputErrorLog.is_open()) {
-        inputErrorLog.open("input_errors.txt");
+        inputErrorLog.open("../logs/input_errors.txt");
         hasInputErrors = true;
     }
     inputErrorLog << "Error: " << message << "\n";

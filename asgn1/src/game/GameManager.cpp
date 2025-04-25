@@ -6,7 +6,8 @@ GameManager::GameManager(const std::string& inputFile)
     std::ifstream in(inputFile);
     if (!in) {
         std::cerr << "Cannot open input file: " << inputFile << std::endl;
-        std::exit(1);
+        validGame = false;
+        return;
     }
 
     int width = 0, height = 0;
@@ -21,9 +22,14 @@ GameManager::GameManager(const std::string& inputFile)
         if (!std::getline(in, line)) {
             // If line is missing (EOF too early), fill with spaces
             line = std::string(width, ' ');
+            logger.logInputError("Missing line at y=" + std::to_string(y) + ". Filling with spaces.");
         } else if ((int)line.length() < width) {
             // Pad short lines
             line += std::string(width - line.length(), ' ');
+            logger.logInputError("Line too short at y=" + std::to_string(y) + ". Padding with spaces.");
+        }
+        if ((int)line.length() > width) {
+            logger.logInputError("Line too long at y=" + std::to_string(y) + ". Ignoring extra characters.");
         }
         for (int x = 0; x < width; ++x) {
             char c = line[x];
@@ -36,17 +42,23 @@ GameManager::GameManager(const std::string& inputFile)
                     board.placeObject(std::make_shared<Mine>(pos));
                     break;
                 case '1': {
-                    auto player_1_tank = std::make_shared<Tank>(pos, Direction::L, PLAYER_1_ID);
-                    //tanks.push_back(player_1_tank);
-                    tanks[0] = player_1_tank;
-                    board.placeObject(player_1_tank);
+                    if (!tanks[0]) {
+                        auto player_1_tank = std::make_shared<Tank>(pos, Direction::L, PLAYER_1_ID);
+                        tanks[0] = player_1_tank;
+                        board.placeObject(player_1_tank);
+                    } else {
+                        logger.logInputError("Multiple tanks detected for Player 1. Ignored additional tank at (" + std::to_string(x) + "," + std::to_string(y) + ").");
+                    }
                     break;
                 }
                 case '2': {
-                    auto player_2_tank = std::make_shared<Tank>(pos, Direction::R, PLAYER_2_ID);
-                    //tanks.push_back(player_2_tank);
-                    tanks[1] = player_2_tank;
-                    board.placeObject(player_2_tank);
+                    if (!tanks[1]) {
+                        auto player_2_tank = std::make_shared<Tank>(pos, Direction::R, PLAYER_2_ID);
+                        tanks[1] = player_2_tank;
+                        board.placeObject(player_2_tank);
+                    } else {
+                        logger.logInputError("Multiple tanks detected for Player 2. Ignored additional tank at (" + std::to_string(x) + "," + std::to_string(y) + ").");
+                    }
                     break;
                 }
                 default:
@@ -54,7 +66,10 @@ GameManager::GameManager(const std::string& inputFile)
             }
         }
     }
-
+    std::string extraLine;
+    if (std::getline(in, extraLine)) {
+        logger.logInputError("Input file has more lines than declared height. Ignoring extra lines.");
+    }
 
     // Plug in your two algorithms
     algo1 = std::make_unique<Chaser>();
@@ -131,7 +146,9 @@ bool GameManager::isGameOver() {
 
 
 void GameManager::runGame() {
-
+    if (!validGame){
+        return;
+    }
     while (!isGameOver()) {
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();

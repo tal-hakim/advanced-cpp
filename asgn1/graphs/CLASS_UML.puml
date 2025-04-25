@@ -1,5 +1,4 @@
 @startuml "Tank Game Class Diagram"
-
 ' Layout settings that don't affect arrow types
 skinparam padding 5
 skinparam packageMargin 200
@@ -7,7 +6,8 @@ skinparam packagePadding 1000
 skinparam nodesep 60
 skinparam ranksep 100
 skinparam linetype ortho
-
+skinparam PackageBorderColor DarkGreen
+skinparam PackageBackgroundColor LightYellow
 ' Game components
 package "game" {
   together {
