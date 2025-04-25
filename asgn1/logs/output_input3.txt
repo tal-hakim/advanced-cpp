@@ -1,0 +1,43 @@
+
+Game Step #1
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #2
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #3
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #4
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #5
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #6
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #7
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #8
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #9
+Player 1 - Shoot
+Player 2 - Move Forward
+
+Game Step #10
+Player 1 - RotateLeft 1/8
+Player 2 - RotateLeft 1/4
+
+====== Game Over ====== 
+Player 1 wins - Player 2 tank destroyed by Shell

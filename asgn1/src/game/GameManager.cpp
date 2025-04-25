@@ -6,7 +6,8 @@ GameManager::GameManager(const std::string& inputFile)
     std::ifstream in(inputFile);
     if (!in) {
         std::cerr << "Cannot open input file: " << inputFile << std::endl;
-        std::exit(1);
+        validGame = false;
+        return;
     }
 
     int width = 0, height = 0;
@@ -16,16 +17,19 @@ GameManager::GameManager(const std::string& inputFile)
 
     std::string line;
     std::getline(in, line); // consume leftover newline
-    std::cout << "processing board" << std::endl;
-    int y = 0;
     for (int y = 0; y < height; ++y) {
         std::string line;
         if (!std::getline(in, line)) {
             // If line is missing (EOF too early), fill with spaces
             line = std::string(width, ' ');
+            logger.logInputError("Missing line at y=" + std::to_string(y) + ". Filling with spaces.");
         } else if ((int)line.length() < width) {
             // Pad short lines
             line += std::string(width - line.length(), ' ');
+            logger.logInputError("Line too short at y=" + std::to_string(y) + ". Padding with spaces.");
+        }
+        if ((int)line.length() > width) {
+            logger.logInputError("Line too long at y=" + std::to_string(y) + ". Ignoring extra characters.");
         }
         for (int x = 0; x < width; ++x) {
             char c = line[x];
@@ -38,17 +42,23 @@ GameManager::GameManager(const std::string& inputFile)
                     board.placeObject(std::make_shared<Mine>(pos));
                     break;
                 case '1': {
-                    auto player_1_tank = std::make_shared<Tank>(pos, Direction::L, PLAYER_1_ID);
-                    //tanks.push_back(player_1_tank);
-                    tanks[0] = player_1_tank;
-                    board.placeObject(player_1_tank);
+                    if (!tanks[0]) {
+                        auto player_1_tank = std::make_shared<Tank>(pos, Direction::L, PLAYER_1_ID);
+                        tanks[0] = player_1_tank;
+                        board.placeObject(player_1_tank);
+                    } else {
+                        logger.logInputError("Multiple tanks detected for Player 1. Ignored additional tank at (" + std::to_string(x) + "," + std::to_string(y) + ").");
+                    }
                     break;
                 }
                 case '2': {
-                    auto player_2_tank = std::make_shared<Tank>(pos, Direction::R, PLAYER_2_ID);
-                    //tanks.push_back(player_2_tank);
-                    tanks[1] = player_2_tank;
-                    board.placeObject(player_2_tank);
+                    if (!tanks[1]) {
+                        auto player_2_tank = std::make_shared<Tank>(pos, Direction::R, PLAYER_2_ID);
+                        tanks[1] = player_2_tank;
+                        board.placeObject(player_2_tank);
+                    } else {
+                        logger.logInputError("Multiple tanks detected for Player 2. Ignored additional tank at (" + std::to_string(x) + "," + std::to_string(y) + ").");
+                    }
                     break;
                 }
                 default:
@@ -56,10 +66,11 @@ GameManager::GameManager(const std::string& inputFile)
             }
         }
     }
+    std::string extraLine;
+    if (std::getline(in, extraLine)) {
+        logger.logInputError("Input file has more lines than declared height. Ignoring extra lines.");
+    }
 
-
-    std::cout << "finished building board" << std::endl;
-    board.printBoard();
     // Plug in your two algorithms
     algo1 = std::make_unique<Chaser>();
     algo2 = std::make_unique<Evader>();
@@ -135,7 +146,9 @@ bool GameManager::isGameOver() {
 
 
 void GameManager::runGame() {
-
+    if (!validGame){
+        return;
+    }
     while (!isGameOver()) {
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
@@ -157,7 +170,6 @@ void GameManager::runGame() {
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
-        if(isPlayerTurn()) board.printBoard();
         ++stepCount;
     }
 
@@ -191,9 +203,10 @@ void GameManager::moveShells() {
 
 void GameManager::executeTanksStep() {
     // TODO: change so that algo1 is with tank1
+
+    logger.logStepNum(getGameStep());
     for (const auto& tank: tanks){
         tank->decreaseShootCooldown();
-        std::cout << tank->toString() << " " << tank->getCooldown() << std::endl;
     }
 
     Action action1 = algo1->getNextAction(board, *tanks[0], *tanks[1]);
@@ -211,7 +224,7 @@ void GameManager::executeTanksStep() {
                     action = Action::MoveBack;
                 }
                 else if (action == Action::MoveFwd) {
-                    logger.logStep(getGameStep(), tank->getPlayerId(), "Cancelling Move Back");
+                    logger.logAction(tank->getPlayerId(), "Cancelling Move Back");
                     tank->setForward();
                     continue;
                 }
@@ -227,7 +240,7 @@ void GameManager::executeTanksStep() {
         }
 
         if(action != Action::MoveBack) {
-            logger.logStep(getGameStep(), tank->getPlayerId(), actionToString(action));
+            logger.logAction(tank->getPlayerId(), actionToString(action));
             tank->setForward();
         }
 
@@ -238,11 +251,11 @@ void GameManager::executeTanksStep() {
             }
             case Action::MoveBack: {
                 if(!tank->isGoingBack()) {
-                    logger.logStep(getGameStep(), tank->getPlayerId(), "Will move back in 3 steps");
+                    logger.logAction(tank->getPlayerId(), "Will move back in 3 steps");
                     tank->setBackwards();
                 }
                 else {
-                    logger.logStep(getGameStep(), tank->getPlayerId(), actionToString(action));
+                    logger.logAction(tank->getPlayerId(), actionToString(action));
                     move(tank, true);
                     tank->setLastBackwardStep(getGameStep());
                 }

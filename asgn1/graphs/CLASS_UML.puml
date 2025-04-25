@@ -1,0 +1,251 @@
+@startuml "Tank Game Class Diagram"
+' Layout settings that don't affect arrow types
+skinparam padding 5
+skinparam packageMargin 200
+skinparam packagePadding 1000
+skinparam nodesep 60
+skinparam ranksep 100
+skinparam linetype ortho
+skinparam PackageBorderColor DarkGreen
+skinparam PackageBackgroundColor LightYellow
+' Game components
+package "game" {
+  together {
+    enum Direction {
+      U
+      UR
+      R
+      DR
+      D
+      DL
+      L
+      UL
+    }
+
+    enum Action {
+      MoveFwd
+      MoveBack
+      Shoot
+      RotateLeft_1_8
+      RotateRight_1_8
+      RotateLeft_1_4
+      RotateRight_1_4
+      None
+    }
+
+    class Position {
+      +int x
+      +int y
+      +bool operator==()
+      +bool operator!=()
+      +Position operator+()
+      +Position operator-()
+      +Position operator-()
+      +string toString()
+    }
+  }
+
+  class DirectionUtils <<utility>> {
+    +{static} Position dirToVector(Direction)
+    +{static} Direction directionFromTo(Position, Position)
+    +{static} Direction getOppositeDirection(Direction)
+  }
+
+  class Logger {
+    -ofstream outputLog
+    -ofstream inputErrorLog
+    -string inputFilename
+    -vector<string> stepLogs
+    -bool hasInputErrors
+    +Logger(string inputFile)
+    +void logBadStep(int, string)
+    +void logResult(string)
+    +void logInputError(string)
+    +void flushStepLog()
+    +void finalize()
+    +void logAction(int, string)
+    +void logStepNum(int)
+  }
+
+  class GameBoard {
+    -int width
+    -int height
+    -GameGrid grid
+    +Position wrap(Position) const
+    +void placeObject(GameObjectPtr)
+    +vector<GameObjectPtr> getObjectsAt(Position) const
+    +void removeSpecificObject(GameObjectPtr)
+    +void moveObj(MovingElement)
+    +void printBoard() const
+    +int getWidth() const
+    +int getHeight() const
+    +bool isWall(Position) const
+    +bool isMine(Position) const
+    +bool isTank(Position) const
+    +bool isShell(Position) const
+  }
+
+  class GameManager {
+    -GameBoard board
+    -Logger logger
+    -Algorithm algo1
+    -Algorithm algo2
+    -int stepCount
+    -vector<Shell> shells
+    -vector<Tank> tanks
+    -int stepsRemaining
+    +GameManager(string inputFile)
+    +void runGame()
+    +void executeTanksStep()
+    +void logState() const
+    +bool shoot(Tank)
+    +void move(MovingElement, bool)
+    +Position getNextPosOnBoard(MovingElement, bool)
+    +void moveShells()
+    +bool checkPassingCollision(MovingElement, MovingElement)
+    +bool canMove(Tank, bool)
+    +bool isActionLegal(Action, Tank)
+    +bool isPlayerTurn() const
+    +void destroyAndRemove(GameObject)
+    +void checkShellCollisions(Shell, unordered_set<GameObject>)
+    +void checkTankCollisions(Tank, unordered_set<GameObject>)
+    +bool areAllTanksOutOfAmmo() const
+    +bool isGameOver()
+    +string actionToString(Action) const
+    +bool canTankShoot(Tank)
+    +int getGameStep() const
+  }
+}
+
+' Game objects
+package "objects" {
+  abstract class GameObject {
+    #Position pos
+    #char symbol
+    #bool destroyed
+    +GameObject(Position, char)
+    +virtual ~GameObject()
+    +Position getPosition() const
+    +void setPosition(Position)
+    +virtual void destroy()
+    +bool isDestroyed() const
+    +virtual char getSymbol()
+    +{abstract} string toString() const
+  }
+
+  abstract class MovingElement {
+    #Direction dir
+    #int playerId
+    #Position prevPos
+    +MovingElement(Position, char, Direction, int)
+    +int getPlayerId() const
+    +Direction getDirection() const
+    +void setDirection(Direction)
+    +Position getNextPos(bool) const
+    +void setPrevPos()
+    +Position getPrevPos() const
+  }
+
+  together {
+    class Wall {
+      -int hitCount
+      +Wall(Position)
+      +void takeHit()
+      +bool isDestroyed() const
+      +void destroy()
+      +string toString() const
+    }
+
+    class Mine {
+      +Mine(Position)
+      +string toString() const
+    }
+  }
+
+  together {
+    class Shell {
+      +Shell(Position, Direction, int)
+      +string toString() const
+    }
+
+    class Tank {
+      #int shellsRemaining
+      #int shootCooldown
+      #int backwardTimer
+      #int lastBackwardStep
+      #string collisionType
+      +Tank(Position, Direction, int)
+      +void shoot()
+      +void rotate(int)
+      +int getShellsLeft() const
+      +bool isGoingBack() const
+      +void setForward()
+      +void setBackwards()
+      +int getBackwardTimer() const
+      +void decreaseShootCooldown()
+      +void decreaseBackwardTimer()
+      +bool canShoot() const
+      +bool isOutOfAmmo()
+      +void setLastBackwardStep(int)
+      +bool isLastStepBack(int)
+      +string getCollisionType() const
+      +void setCollisionType(string)
+      +string toString() const
+      +int getCooldown() const
+      +Direction getNewDir(int)
+    }
+  }
+}
+
+' Algorithms
+package "algorithms" {
+  abstract class Algorithm {
+    +virtual ~Algorithm()
+    +{abstract} Action getNextAction(GameBoard, Tank, Tank)
+    +int stepsUntilShellHitsTank(Shell, Tank, GameBoard, int)
+    +{static} bool areFacingEachOther(Tank, Shell)
+    +{static} Action rotateToward(Direction, Direction)
+  }
+
+  together {
+    class Chaser {
+      -vector<Position> bfsPath
+      -Position lastEnemyPos
+      -int lastStep
+      +Action getNextAction(GameBoard, Tank, Tank) override
+    }
+
+    class Evader {
+      +Action getNextAction(GameBoard, Tank, Tank) override
+      +Action checkOpponentAndAct(GameBoard, Tank, Tank)
+    }
+  }
+}
+
+' Inheritance relationships - keeping original arrow types
+GameObject <|-- MovingElement
+GameObject <|-- Wall
+GameObject <|-- Mine
+MovingElement <|-- Shell
+MovingElement <|-- Tank
+Algorithm <|-- Chaser
+Algorithm <|-- Evader
+
+' Composition relationships - keeping original arrow types
+GameManager o-- GameBoard
+GameManager o-- Logger
+GameManager o-- "2" Algorithm
+GameManager o-- "*" Shell
+GameManager o-- "2" Tank
+
+GameBoard o-- "*" GameObject
+
+' Added relationships - keeping original arrow types
+GameObject o-- Position
+MovingElement o-- Direction
+Algorithm ..> Action
+DirectionUtils -- Direction
+DirectionUtils -- Position
+Position <.. MovingElement
+
+@enduml

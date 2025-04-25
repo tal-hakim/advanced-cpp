@@ -34,6 +34,7 @@ private:
     std::vector<std::shared_ptr<Shell>> shells;
     std::vector<std::shared_ptr<Tank>> tanks = {nullptr, nullptr};
     int stepsRemaining = STALEMATE_STEPS;
+    bool validGame = true;
 
 public:
     GameManager(const std::string& inputFile);

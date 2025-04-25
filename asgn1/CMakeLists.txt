@@ -31,4 +31,6 @@ add_executable(asgn1 src/main.cpp
         src/algorithms/Evader.cpp
         src/algorithms/Chaser.cpp
         src/algorithms/Algorithm.cpp
+        include/game/DirectionUtils.h
+        src/game/DirectionUtils.cpp
 )

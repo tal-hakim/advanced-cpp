@@ -37,6 +37,13 @@ struct Position {
     std::string toString() const {
         return "(" + std::to_string(x) + "," + std::to_string(y)+")";
     }
+
+
+    inline Position operator-() {
+        return { -x, -y };
+    }
+    
+    
 };
 
 #endif // POSITION_H

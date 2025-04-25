@@ -1,0 +1,187 @@
+
+Game Step #0
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #1
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #2
+Player 1 - RotateRight 1/8
+Player 2 - RotateRight 1/4
+
+Game Step #3
+Player 1 - Shoot
+Player 2 - Move Forward
+
+Game Step #4
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #5
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #6
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #7
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #8
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #9
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #10
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #11
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #12
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #13
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #14
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #15
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #16
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #17
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #18
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #19
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #20
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #21
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #22
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #23
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #24
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #25
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #26
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #27
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #28
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #29
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #30
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #31
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #32
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #33
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #34
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #35
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #36
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #37
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #38
+Player 1 - RotateLeft 1/8
+Player 2 - Move Forward
+
+Game Step #39
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #40
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #41
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #42
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #43
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #44
+Player 1 - RotateRight 1/8
+Player 2 - Move Forward
+
+Game Step #45
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+====== Game Over ====== 
+Player 1 wins - Player 2 tank destroyed by Shell

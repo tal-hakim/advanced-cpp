@@ -4,6 +4,7 @@
 
 #include "objects/GameObject.h"
 #include "game/Direction.h"
+#include "game/DirectionUtils.h"
 
 class MovingElement : public GameObject {
 protected:

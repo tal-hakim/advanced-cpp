@@ -1,0 +1,4 @@
+Error: Line too long at y=0. Ignoring extra characters.
+Error: Line too short at y=2. Padding with spaces.
+Error: Line too short at y=3. Padding with spaces.
+Error: Line too short at y=4. Padding with spaces.

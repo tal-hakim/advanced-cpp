@@ -8,6 +8,8 @@ public:
     Action getNextAction(const GameBoard& board,
                          const Tank& myTank,
                          const Tank& opponentTank) override;
+
+    Action checkOpponentAndAct(const GameBoard &board, const Tank &myTank, const Tank &opponentTank);
 };
 
 
