@@ -1,11 +1,13 @@
 cmake_minimum_required(VERSION 3.20)
 set(CMAKE_PKG_REDIRECTS_DIR "${CMAKE_BINARY_DIR}/pkgRedirects" CACHE PATH "Relocated pkgRedirects dir")
 project(asgn1)
-
+add_compile_options(-Wall -Wextra -Werror -pedantic)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 include_directories(include)
-add_executable(asgn1 src/main.cpp
+add_executable(tanks_game src/main.cpp
         include/game/Position.h
         include/objects/GameObject.h
         include/game/GameBoard.h

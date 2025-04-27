@@ -1,5 +1,5 @@
 #include "game/DirectionUtils.h"
-
+#include "definitions.h"
 namespace DirectionUtils {
 
 Position dirToVector(Direction dir) {
@@ -44,7 +44,7 @@ Direction directionFromTo(const Position& from, const Position& to) {
 }
 
 Direction getOppositeDirection(Direction dir) {
-        return static_cast<Direction>((static_cast<int>(dir) + 4) % 8);
+        return static_cast<Direction>((static_cast<int>(dir) + 4) % NUM_DIRECTIONS );
 }
 
 } // namespace DirectionUtils

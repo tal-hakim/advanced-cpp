@@ -27,6 +27,8 @@ public:
     void logAction(int playerId, const std::string &action);
 
     void logStepNum(int step);
+
+    void logGameStart();
 };
 
 #endif // LOGGER_H

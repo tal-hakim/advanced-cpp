@@ -23,7 +23,7 @@ Action Chaser::getNextAction(const GameBoard& board,
 
             if (current == goal) return path;
 
-            for (int d = 0; d < 8; ++d) {
+            for (int d = 0; d < NUM_DIRECTIONS ; ++d) {
                 Direction dir = static_cast<Direction>(d);
                 Position next = board.wrap(current + DirectionUtils::dirToVector(dir));
 
@@ -60,24 +60,37 @@ Action Chaser::getNextAction(const GameBoard& board,
         lastEnemyPos = opponentTank.getPosition();
     }
 
-    if (bfsPath.size() < 2)
-        return rotateToward(myTank.getDirection(), DirectionUtils::directionFromTo(myTank.getPosition(), opponentTank.getPosition()));
-
-    auto canShootEnemy = [&]() -> bool {
+    auto canShootEnemy = [&](Direction dir) -> bool {
         Position myPos = myTank.getPosition();
-        Direction myDir = myTank.getDirection();
-        int steps = stepsUntilShellHitsTank(Shell(myPos, myDir, myTank.getPlayerId()), opponentTank, board);
+        int steps = stepsUntilShellHitsTank(Shell(myPos, dir, myTank.getPlayerId()), opponentTank, board);
         return myTank.canShoot() && steps >=0;
     };
 
-    // Check if we should fire at the enemy
-    if (canShootEnemy())
+    if (canShootEnemy(myTank.getDirection()))
         return Action::Shoot;
 
+    if (bfsPath.size() < 7) {
+//        return Action::Shoot;
+        for (int i = LEFT_ANGLE_1_4; i < 6; i++) {
+            int d = (static_cast<int>(myTank.getDirection()) + i + NUM_DIRECTIONS ) % NUM_DIRECTIONS ;
+            Direction dir = static_cast<Direction>(d);
+            if (canShootEnemy(dir)){
+                if(i != 0){
+                    return rotateToward(myTank.getDirection(),dir);
+                }
+
+            }
+        }
+    }
+
+
+    if(bfsPath.size() < 4){
+        return Action::Shoot;
+    }
     Position next = bfsPath[1];
     Direction desiredDir = DirectionUtils::directionFromTo(myTank.getPosition(), next);
     int angleDiff = static_cast<int>(desiredDir) - static_cast<int>(myTank.getDirection());
-    if (angleDiff < 0) angleDiff += 8;  // Normalize to positive difference
+    if (angleDiff < 0) angleDiff += NUM_DIRECTIONS ;  // Normalize to positive difference
 
     // Rotate clockwise (right) 1/8 at a time
 //    Direction newDir = static_cast<Direction>((static_cast<int>(myTank.getDirection()) + 1) % 8);

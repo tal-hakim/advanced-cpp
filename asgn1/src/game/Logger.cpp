@@ -7,7 +7,7 @@ Logger::Logger(const std::string& inputFile)
 {
     std::filesystem::path inputPath(inputFile);
     inputFilename = inputPath.filename().string();
-    std::string outputFile = "../logs/output_" + inputFilename;
+    std::string outputFile = "output_" + inputFilename;
     outputLog.open(outputFile);
 }
 
@@ -34,9 +34,13 @@ void Logger::logResult(const std::string& result)  {
     stepLogs.push_back("\n====== Game Over ====== \n" + result);
 }
 
+void Logger::logGameStart()  {
+    stepLogs.push_back("====== Game Start ======");
+}
+
 void Logger::logInputError(const std::string& message) {
     if (!inputErrorLog.is_open()) {
-        inputErrorLog.open("../logs/input_errors.txt");
+        inputErrorLog.open("input_errors.txt");
         hasInputErrors = true;
     }
     inputErrorLog << "Error: " << message << "\n";

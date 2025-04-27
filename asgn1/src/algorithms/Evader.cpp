@@ -33,6 +33,9 @@ Action Evader::getNextAction(const GameBoard& board,
 
     if (!closestThreat) {
 //        return Action::None;
+        if(stepsUntilShellHitsTank(Shell(myTank.getPosition(), myTank.getDirection(), myTank.getPlayerId()), opponentTank, board) >=0 && myTank.canShoot()){
+            return Action::Shoot;
+        }
         return checkOpponentAndAct(board, myTank, opponentTank);
     }
 
@@ -55,7 +58,7 @@ Action Evader::getNextAction(const GameBoard& board,
 
     for (int i = LEFT_ANGLE_1_4; i < 6; i++ ){
 
-        int d = (static_cast<int>(myTank.getDirection()) + i + 8) % 8;
+        int d = (static_cast<int>(myTank.getDirection()) + i + NUM_DIRECTIONS ) % NUM_DIRECTIONS ;
         Direction dir = static_cast<Direction>(d);
         Position tmpPos = board.wrap(myTank.getPosition() + DirectionUtils::dirToVector(dir));;
         if (!board.isWall(tmpPos) && !board.isMine(tmpPos)) {
@@ -69,13 +72,12 @@ Action Evader::getNextAction(const GameBoard& board,
 Action Evader::checkOpponentAndAct(const GameBoard& board, const Tank& myTank, const Tank& opponentTank)
 {
     // Check for opponent's tank in all 8 directions (one step or two steps)
-    for (int d = 0; d < 8; ++d) {
+    for (int d = 0; d < NUM_DIRECTIONS ; ++d) {
         Direction dir = static_cast<Direction>(d);
         Position firstStepPos = board.wrap(myTank.getPosition() + DirectionUtils::dirToVector(dir)); // First step
-        Position secondStepPos = board.wrap(firstStepPos + DirectionUtils::dirToVector(dir)); // Second step
 
         // Check if the opponent is at either the first or second step
-        if (firstStepPos == opponentTank.getPosition() || secondStepPos == opponentTank.getPosition()) {
+        if (firstStepPos == opponentTank.getPosition()) {
             // Opponent found one or two steps away, move or rotate accordingly
             Direction currentDir = myTank.getDirection();
             Direction desiredDir = dir;

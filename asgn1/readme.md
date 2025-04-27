@@ -4,8 +4,24 @@ code by: \
 Tal Hakim 322213836 \
 Gal Shnitzer 212054837
 
+### Compile & Run
+
+To build and compile run:
+```
+cmake .
+make
+```
+
+To run the game:
+```
+tanks_game <input_file>
+```
+- `<input file> ` should be either an absolute path or relative to the running directory of the game. \
+- The output will be in the running directory of the program with the name `output_<input_filename>.txt` \
+- Errors in the input file format will be outputted to `input_errors.txt`.
 
 ### Input Format:
+A .txt file in the format of:
 
 ```
 <height> <width>
@@ -63,18 +79,20 @@ Tie - <reason>
 #### Example Output:
 
 ```
-Game Step #0
+====== Game Start ======
+
+Game Step #1
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #2
+Player 1 - RotateRight 1/4
+Player 2 - None
+
+Game Step #3
 Player 1 - Shoot
 Player 2 - None
 
-Game Step #1
-Player 1 - Move Forward
-Player 2 - Shoot
-
-Game Step #2
-Player 1 - RotateLeft 1/8
-Player 2 - None
-
-====== Game Over ======
+====== Game Over ====== 
 Player 1 wins - Player 2 tank destroyed by Shell
 ```

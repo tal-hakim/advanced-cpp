@@ -23,13 +23,21 @@ GameManager::GameManager(const std::string& inputFile)
             // If line is missing (EOF too early), fill with spaces
             line = std::string(width, ' ');
             logger.logInputError("Missing line at y=" + std::to_string(y) + ". Filling with spaces.");
-        } else if ((int)line.length() < width) {
-            // Pad short lines
-            line += std::string(width - line.length(), ' ');
-            logger.logInputError("Line too short at y=" + std::to_string(y) + ". Padding with spaces.");
-        }
-        if ((int)line.length() > width) {
-            logger.logInputError("Line too long at y=" + std::to_string(y) + ". Ignoring extra characters.");
+        } else {
+            // 🔥 REMOVE '\r' immediately after reading
+            if (!line.empty() && line.back() == '\r') {
+                line.pop_back();
+            }
+
+            if ((int)line.length() < width) {
+                // Pad short lines
+                line += std::string(width - line.length(), ' ');
+                logger.logInputError("Line too short at y=" + std::to_string(y) + ". Padding with spaces.");
+            }
+            if ((int)line.length() > width) {
+                logger.logInputError("Line too long at y=" + std::to_string(y) + ". Ignoring extra characters.");
+                line = line.substr(0, width); // Actually truncate!
+            }
         }
         for (int x = 0; x < width; ++x) {
             char c = line[x];
@@ -61,7 +69,10 @@ GameManager::GameManager(const std::string& inputFile)
                     }
                     break;
                 }
+                case ' ':
+                    break;
                 default:
+                    logger.logInputError("Unexpected symbol at (" + std::to_string(x) + "," + std::to_string(y) + ").");
                     break;
             }
         }
@@ -149,6 +160,7 @@ void GameManager::runGame() {
     if (!validGame){
         return;
     }
+    logger.logGameStart();
     while (!isGameOver()) {
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
@@ -202,8 +214,6 @@ void GameManager::moveShells() {
 
 
 void GameManager::executeTanksStep() {
-    // TODO: change so that algo1 is with tank1
-
     logger.logStepNum(getGameStep());
     for (const auto& tank: tanks){
         tank->decreaseShootCooldown();
@@ -276,7 +286,7 @@ void GameManager::executeTanksStep() {
 }
 
 void GameManager::logState() const {
-    std::cout << "Game step: " << stepCount << "\n";
+    std::cout << "Game step: " << getGameStep() + 1 << "\n";
     board.printBoard();
 }
 
