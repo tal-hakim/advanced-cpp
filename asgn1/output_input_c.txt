@@ -1,0 +1,467 @@
+
+Game Step #1
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #2
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #3
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #4
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #5
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #6
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #7
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #8
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #9
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #10
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #11
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #12
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #13
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #14
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #15
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #16
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #17
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #18
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #19
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #20
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #21
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #22
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #23
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #24
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #25
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #26
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #27
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #28
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #29
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #30
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #31
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #32
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #33
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #34
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #35
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #36
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #37
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #38
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #39
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #40
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #41
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #42
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #43
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #44
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #45
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #46
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #47
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #48
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #49
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #50
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #51
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #52
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #53
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #54
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #55
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #56
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #57
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #58
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #59
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #60
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #61
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #62
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #63
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #64
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #65
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #66
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #67
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #68
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #69
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #70
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #71
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #72
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #73
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #74
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #75
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #76
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #77
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #78
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #79
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #80
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #81
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #82
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #83
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #84
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #85
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #86
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #87
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #88
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #89
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #90
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #91
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #92
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #93
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #94
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #95
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #96
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #97
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #98
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #99
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #100
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #101
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #102
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #103
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #104
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #105
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #106
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #107
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #108
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #109
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #110
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #111
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #112
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #113
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #114
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #115
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #116
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+====== Game Over ====== 
+Tie - no ammo for the last 40 steps

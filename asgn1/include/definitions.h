@@ -15,5 +15,6 @@ constexpr int RIGHT_ANGLE_1_4 = 2;
 constexpr int LEFT_ANGLE_1_8 = -1;
 constexpr int RIGHT_ANGLE_1_8 = 1;
 constexpr int STALEMATE_STEPS = 40;
+constexpr int NUM_DIRECTIONS = 8;
 
 #endif //DEFINITIONS_H

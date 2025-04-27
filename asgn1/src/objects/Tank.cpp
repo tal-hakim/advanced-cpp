@@ -11,7 +11,7 @@ bool Tank::canShoot() const {
 
 Direction Tank::getNewDir(int angle){
     int raw = static_cast<int>(dir);
-    raw = (raw + angle + 8) % 8;
+    raw = (raw + angle + NUM_DIRECTIONS) % NUM_DIRECTIONS;
     return static_cast<Direction>(raw);
 }
 
