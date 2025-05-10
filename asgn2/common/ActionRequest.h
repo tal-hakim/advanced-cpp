@@ -1,8 +1,17 @@
-//
-// Created by talta on 10/05/2025.
-//
+#ifndef ACTION_H
+#define ACTION_H
 
-#ifndef ASGN2_ACTIONREQUEST_H
-#define ASGN2_ACTIONREQUEST_H
+enum class ActionRequest {
+    MoveForward,
+    MoveBackward,
+    RotateLeft90,
+    RotateRight90,
+    RotateLeft45,
+    RotateRight45,
+    Shoot,
+    GetBattleInfo,
+    DoNothing
+};
 
-#endif //ASGN2_ACTIONREQUEST_H
+
+#endif // ACTION_H

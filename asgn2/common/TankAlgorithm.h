@@ -5,8 +5,9 @@
 #ifndef ASGN2_TANKALGORITHM_H
 #define ASGN2_TANKALGORITHM_H
 
-#include "ActionRequest.h"
+
 #include "BattleInfo.h"
+#include "ActionRequest.h"
 
 class TankAlgorithm {
 public:
