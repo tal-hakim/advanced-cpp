@@ -1,4 +1,5 @@
 #include "game/GameBoard.h"
+#include "game/BoardSatelliteView.h"
 #include <iostream>
 #include <algorithm>
 
@@ -88,4 +89,19 @@ bool GameBoard::isTank(const Position& pos) const {
         }
     }
     return false;
+}
+
+std::vector<std::vector<char>> GameBoard::getBoardMat() const {
+    std::vector<std::vector<char>> mat(height, std::vector<char>(width, ' '));  // use space for empty
+
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const auto& cell = grid[y][x];
+            if (!cell.empty()) {
+                mat[y][x] = cell.back()->getSymbol();  // draw top-most object
+            }
+        }
+    }
+
+    return mat;
 }

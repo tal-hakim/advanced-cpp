@@ -8,9 +8,12 @@
 #include "objects/Shell.h"
 #include "objects/Tank.h"
 #include "game/Position.h"
+#include "SatelliteView.h"
 #include <vector>
 #include <memory>
 #include <algorithm> // for std::remove_if
+
+
 
 using GameObjectPtr = std::shared_ptr<GameObject>;
 using GameGrid = std::vector<std::vector<std::vector<GameObjectPtr>>>;
@@ -45,6 +48,8 @@ public:
     bool isTank(const Position &pos) const;
 
     bool isShell(const Position &pos) const;
+
+    std::vector<std::vector<char>> getBoardMat() const;
 };
 
 #endif // GAME_BOARD_H

@@ -426,7 +426,7 @@ bool GameManager::shoot(std::shared_ptr<Tank> tank) {
     // Add shell to game state
     shells.push_back(shell);
 
-    // Optionally: place it on the board (if you want it visible on the grid)
+    // Optionally: place it on the boardView (if you want it visible on the grid)
     board.placeObject(shell);
     move(shell, false);
     shell->setPrevPos();
@@ -443,4 +443,17 @@ void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
         board.removeSpecificObject(obj);  // ✅ remove only if marked destroyed
     }
 }
+
+BoardSatelliteView GameManager::getSatelliteView(const Tank& tank) const {
+    auto boardMat = board.getBoardMat();
+    Position pos = tank.getPosition();
+
+    if (pos.y < board.getHeight() && pos.x < board.getWidth()) {
+        boardMat[pos.y][pos.x] = '%';
+    }
+
+    return BoardSatelliteView(std::move(boardMat));
+}
+
+
 

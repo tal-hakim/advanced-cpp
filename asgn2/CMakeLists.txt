@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories(include)
+include_directories(include common)
 
 add_executable(asgn2
         common/TankAlgorithm.h
@@ -43,6 +43,7 @@ add_executable(asgn2
         include/game/DirectionUtils.h
         src/game/DirectionUtils.cpp
         src/main.cpp
+        include/game/BoardSatelliteView.h
 
 )
 

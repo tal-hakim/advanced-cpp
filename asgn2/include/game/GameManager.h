@@ -21,8 +21,11 @@
 #include "objects/Shell.h"
 #include "objects/Mine.h"
 #include "../../common/ActionRequest.h"
+#include "../../common/SatelliteView.h"
+#include "game/BoardSatelliteView.h"
 #include "objects/MovingElement.h"
 #include "definitions.h"
+#include <vector>
 
 class GameManager {
 private:
@@ -64,6 +67,8 @@ public:
     bool canTankShoot(std::shared_ptr<Tank> tank);
 
     int getGameStep() const { return stepCount / 2; }
+
+    BoardSatelliteView getSatelliteView(const Tank& tank) const;
 };
 
 #endif // GAME_MANAGER_H
