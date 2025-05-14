@@ -1,5 +1,1 @@
-Error: Line too short at y=0. Padding with spaces.
-Error: Line too long at y=1. Ignoring extra characters.
-Error: Line too short at y=3. Padding with spaces.
-Error: Line too short at y=4. Padding with spaces.
-Error: Line too short at y=5. Padding with spaces.
+Error: Invalid board size
