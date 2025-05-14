@@ -39,7 +39,7 @@ struct Position {
     }
 
 
-    inline Position operator-() {
+    inline Position operator-() const {
         return { -x, -y };
     }
     

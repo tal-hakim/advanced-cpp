@@ -1,1 +1,4 @@
-Error: Invalid board size
+Error: Line too short at y=0. Padding with spaces.
+Error: Line too long at y=1. Ignoring extra characters.
+Error: Input file has more lines than declared height. Ignoring extra lines.
+Error: Missing tanks in the input file.

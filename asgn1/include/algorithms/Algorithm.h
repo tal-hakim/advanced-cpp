@@ -13,6 +13,8 @@ public:
     virtual Action getNextAction(const GameBoard& board,
                                  const Tank& myTank,
                                  const Tank& opponentTank) = 0;
+
+protected:
     int stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps = 10);
 
     static bool areFacingEachOther(const Tank &tank, const Shell &shell);

@@ -1,4 +1,52 @@
 ====== Game Start ======
 
+Game Step #1
+Player 1 - Shoot
+Player 2 - Shoot
+
+Game Step #3
+Player 1 - Move Forward
+Player 2 - RotateLeft 1/4
+
+Game Step #5
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
+Game Step #7
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #9
+Player 1 - Move Forward
+Player 2 - None
+
+Game Step #11
+Player 1 - RotateLeft 1/4
+Player 2 - None
+
+Game Step #13
+Player 1 - Shoot
+Player 2 - None
+
+Game Step #15
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #17
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - None
+
+Game Step #19
+Bad Step by Player 1: Tried to shoot before cooldown ended.
+Player 2 - Move Forward
+
+Game Step #21
+Player 1 - RotateLeft 1/4
+Player 2 - None
+
+Game Step #23
+Player 1 - RotateLeft 1/8
+Player 2 - None
+
 ====== Game Over ====== 
-Player 1 wins - Player 2 tank destroyed
+Player 2 wins - Player 1 tank destroyed by Shell

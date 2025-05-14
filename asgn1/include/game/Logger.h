@@ -17,6 +17,10 @@ public:
     Logger(const std::string& inputFile);
     ~Logger();
 
+    // Delete copy operations since we manage file resources
+    Logger(const Logger&) = delete;
+    Logger& operator=(const Logger&) = delete;
+
     void logBadStep(int playerId, const std::string& reason);
     void logResult(const std::string& result) ;
     void logInputError(const std::string& message);

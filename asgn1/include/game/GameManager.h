@@ -36,34 +36,28 @@ private:
     int stepsRemaining = STALEMATE_STEPS;
     bool validGame = true;
 
-public:
-    GameManager(const std::string& inputFile);
-    void runGame();
     void executeTanksStep();
     void logState() const;
     bool shoot(std::shared_ptr<Tank> tank);
     void move(std::shared_ptr<MovingElement> elem, bool bkwd);
-    Position getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);
     void moveShells();
     bool checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2);
     bool canMove(std::shared_ptr<Tank> tank, bool bkwd);
     bool isActionLegal(Action act, std::shared_ptr<Tank> tank);
     bool isPlayerTurn() const;
-    void destroyAndRemove(const GameObjectPtr &obj);
-
-    void checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr> &marked);
-
-    void checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr> &marked);
-
+    void destroyAndRemove(const GameObjectPtr& obj);
+    void checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr>& marked);
+    void checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr>& marked);
     bool areAllTanksOutOfAmmo() const;
-
-    bool isGameOver() ;
-
+    bool isGameOver();
     std::string actionToString(Action action) const;
-
     bool canTankShoot(std::shared_ptr<Tank> tank);
+    int getGameStep() const { return stepCount; }
+    Position getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);
 
-    int getGameStep() const { return stepCount / 2; }
+public:
+    GameManager(const std::string& inputFile);
+    void runGame();
 };
 
 #endif // GAME_MANAGER_H
