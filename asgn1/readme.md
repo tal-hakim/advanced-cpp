@@ -24,7 +24,7 @@ tanks_game <input_file>
 A .txt file in the format of:
 
 ```
-<height> <width>
+<width> <height>
 <board layout>
 ```
 

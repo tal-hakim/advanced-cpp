@@ -14,6 +14,13 @@ GameManager::GameManager(const std::string& inputFile)
     in >> width >> height;
 
     board = GameBoard(width, height);
+    // check if recieved both width and height
+    if (width <= 0 || height <= 0) {
+        // print to log
+        logger.logInputError("Invalid board size");
+        validGame = false;
+        return;
+    }
 
     std::string line;
     std::getline(in, line); // consume leftover newline
@@ -81,7 +88,11 @@ GameManager::GameManager(const std::string& inputFile)
     if (std::getline(in, extraLine)) {
         logger.logInputError("Input file has more lines than declared height. Ignoring extra lines.");
     }
-
+    if(!tanks[0] || !tanks[1]) {
+        logger.logInputError("Missing tanks in the input file.");
+        validGame = false;
+        return;
+    }
     // Plug in your two algorithms
     algo1 = std::make_unique<Chaser>();
     algo2 = std::make_unique<Evader>();
