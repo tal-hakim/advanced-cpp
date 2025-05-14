@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="asgn1"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn1"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="tanks_game">
+				<Option output="/home/tal/dev/advanced-cpp/asgn1/tanks_game" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn1"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn1/include"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 tanks_game"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="tanks_game/fast">
+				<Option output="/home/tal/dev/advanced-cpp/asgn1/tanks_game" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn1"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn1/include"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 tanks_game/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn1"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn1"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn1/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/algorithms/Algorithm.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/algorithms/Chaser.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/algorithms/Evader.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/definitions.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/Action.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/Direction.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/DirectionUtils.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/GameBoard.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/GameManager.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/Logger.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/game/Position.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/objects/GameObject.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/objects/Mine.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/objects/MovingElement.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/objects/Shell.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/objects/Tank.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/include/objects/Wall.h">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/algorithms/Algorithm.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/algorithms/Chaser.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/algorithms/Evader.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/game/DirectionUtils.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/game/GameBoard.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/game/GameManager.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/game/Logger.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/main.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/objects/GameObject.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/objects/MovingElement.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/src/objects/Tank.cpp">
+			<Option target="tanks_game"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn1/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
