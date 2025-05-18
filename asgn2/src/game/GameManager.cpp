@@ -1,90 +1,8 @@
 #include "game/GameManager.h"
 
-GameManager::GameManager(const std::string& inputFile)
-        : board(20, 20), logger(inputFile), stepCount(0) // default size, replace with parsed size
-{
-    std::ifstream in(inputFile);
-    if (!in) {
-        std::cerr << "Cannot open input file: " << inputFile << std::endl;
-        validGame = false;
-        return;
-    }
-
-    int width = 0, height = 0;
-    in >> width >> height;
-
-    board = GameBoard(width, height);
-
-    std::string line;
-    std::getline(in, line); // consume leftover newline
-    for (int y = 0; y < height; ++y) {
-        std::string line;
-        if (!std::getline(in, line)) {
-            // If line is missing (EOF too early), fill with spaces
-            line = std::string(width, ' ');
-            logger.logInputError("Missing line at y=" + std::to_string(y) + ". Filling with spaces.");
-        } else {
-            // 🔥 REMOVE '\r' immediately after reading
-            if (!line.empty() && line.back() == '\r') {
-                line.pop_back();
-            }
-
-            if ((int)line.length() < width) {
-                // Pad short lines
-                line += std::string(width - line.length(), ' ');
-                logger.logInputError("Line too short at y=" + std::to_string(y) + ". Padding with spaces.");
-            }
-            if ((int)line.length() > width) {
-                logger.logInputError("Line too long at y=" + std::to_string(y) + ". Ignoring extra characters.");
-                line = line.substr(0, width); // Actually truncate!
-            }
-        }
-        for (int x = 0; x < width; ++x) {
-            char c = line[x];
-            Position pos(x, y);
-            switch (c) {
-                case '#':
-                    board.placeObject(std::make_shared<Wall>(pos));
-                    break;
-                case '@':
-                    board.placeObject(std::make_shared<Mine>(pos));
-                    break;
-                case '1': {
-                    if (!tanks[0]) {
-                        auto player_1_tank = std::make_shared<Tank>(pos, Direction::L, PLAYER_1_ID);
-                        tanks[0] = player_1_tank;
-                        board.placeObject(player_1_tank);
-                    } else {
-                        logger.logInputError("Multiple tanks detected for Player 1. Ignored additional tank at (" + std::to_string(x) + "," + std::to_string(y) + ").");
-                    }
-                    break;
-                }
-                case '2': {
-                    if (!tanks[1]) {
-                        auto player_2_tank = std::make_shared<Tank>(pos, Direction::R, PLAYER_2_ID);
-                        tanks[1] = player_2_tank;
-                        board.placeObject(player_2_tank);
-                    } else {
-                        logger.logInputError("Multiple tanks detected for Player 2. Ignored additional tank at (" + std::to_string(x) + "," + std::to_string(y) + ").");
-                    }
-                    break;
-                }
-                case ' ':
-                    break;
-                default:
-                    logger.logInputError("Unexpected symbol at (" + std::to_string(x) + "," + std::to_string(y) + ").");
-                    break;
-            }
-        }
-    }
-    std::string extraLine;
-    if (std::getline(in, extraLine)) {
-        logger.logInputError("Input file has more lines than declared height. Ignoring extra lines.");
-    }
-
-    // Plug in your two algorithms
-    algo1 = std::make_unique<Chaser>();
-    algo2 = std::make_unique<Evader>();
+GameManager::GameManager(const PlayerFactory& playerFactory, const TankAlgorithmFactory& algorithmFactory) {
+    // Initialize empty playersArmy map
+    playersArmy.clear();
 }
 
 std::string GameManager::actionToString(ActionRequest action) const {
@@ -101,102 +19,116 @@ std::string GameManager::actionToString(ActionRequest action) const {
     }
 }
 
-
 bool GameManager::isPlayerTurn() const {
-    return stepCount % 2 == 0;
+    return stepCount % 2 == 0;  // Players only act on even steps
 }
 
+int GameManager::getNextPlayerIndex() const {
+    return (currentPlayerIndex + 1) % players.size();
+}
 
 bool GameManager::isGameOver() {
-    if (stepsRemaining <= 0) {
+    if (stepCount >= maxSteps) {
+        std::string result = "Tie, reached max steps = " + std::to_string(maxSteps);
+        for (const auto& [playerId, tanks] : playersArmy) {
+            int aliveTanks = 0;
+            for (const auto& tank : tanks) {
+                if (tank && !tank->isDestroyed()) aliveTanks++;
+            }
+            result += ", player " + std::to_string(playerId) + " has " + std::to_string(aliveTanks) + " tanks";
+        }
+        logger.logResult(result);
+        return true;
+    }
+    
+    if (stalemateSteps <= 0) {
         logger.logResult("Tie - no ammo for the last 40 steps");
         return true;
     }
 
-    std::shared_ptr<Tank> tank1 = nullptr;
-    std::shared_ptr<Tank> tank2 = nullptr;
+    // Count remaining tanks for each player
+    std::map<int, int> playerTankCounts;
+    bool anyPlayerHasTanks = false;
+    int playersWithTanks = 0;
 
-    for (const auto& tank : tanks) {
-        if (!tank) continue;
-        if (tank->getPlayerId() == PLAYER_1_ID) tank1 = tank;
-        if (tank->getPlayerId() == PLAYER_2_ID) tank2 = tank;
-    }
-
-    bool tank1Dead = !tank1 || tank1->isDestroyed();
-    bool tank2Dead = !tank2 || tank2->isDestroyed();
-
-    if (tank1Dead && tank2Dead) {
-        logger.logResult(std::string("Tie - Both tanks destroyed\n") +
-        "Player 1: tank destroyed by " + tank1->getCollisionType() + "\n" +
-        "Player 2: tank destroyed by " + tank2->getCollisionType()
-        );
-        return true;
-    }
-
-    if (tank1Dead) {
-        if (!tank2){
-            logger.logResult("Player 2 wins - Player 1 tank destroyed");
-            return true;
+    for (const auto& [playerId, tanks] : playersArmy) {
+        int aliveTanks = 0;
+        for (const auto& tank : tanks) {
+            if (tank && !tank->isDestroyed()) aliveTanks++;
         }
-        logger.logResult("Player 2 wins - Player 1 tank destroyed by " + tank1->getCollisionType());
+        playerTankCounts[playerId] = aliveTanks;
+        if (aliveTanks > 0) {
+            anyPlayerHasTanks = true;
+            playersWithTanks++;
+        }
+    }
+
+    if (!anyPlayerHasTanks) {
+        logger.logResult("Tie, all players have zero tanks");
         return true;
     }
 
-    if (tank2Dead) {
-        if (!tank2){
-            logger.logResult("Player 1 wins - Player 2 tank destroyed");
-            return true;
+    if (playersWithTanks == 1) {
+        // Find the winning player
+        for (const auto& [playerId, tankCount] : playerTankCounts) {
+            if (tankCount > 0) {
+                logger.logResult("Player " + std::to_string(playerId) + " won with " + 
+                               std::to_string(tankCount) + " tanks still alive");
+                return true;
+            }
         }
-        logger.logResult("Player 1 wins - Player 2 tank destroyed by " + tank2->getCollisionType());
-        return true;
     }
 
     return false;  // game continues
 }
 
-
-
 void GameManager::runGame() {
-    if (!validGame){
+    if (!validGame) {
         return;
     }
     logger.logGameStart();
     while (!isGameOver()) {
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
+        
         // check shells collisions
         for (const auto& shell : shells) {
             checkShellCollisions(shell, markedForDestruction);
         }
-        if(isPlayerTurn()){
-            if (areAllTanksOutOfAmmo()) stepsRemaining--;
+        
+        if (isPlayerTurn()) {  // On even steps, all players act simultaneously
+            if (areAllTanksOutOfAmmo()) stalemateSteps--;
             executeTanksStep();
+            
             // check tanks collisions
-            for (const auto& tank : tanks) {
-                checkTankCollisions(tank, markedForDestruction);
+            for (const auto& [playerId, tanks] : playersArmy) {
+                for (const auto& tank : tanks) {
+                    if (tank) checkTankCollisions(tank, markedForDestruction);
+                }
             }
+            
             for (const auto& shell : shells) {
                 checkShellCollisions(shell, markedForDestruction);
             }
         }
+        
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
         ++stepCount;
     }
-
-
     logger.finalize();
 }
 
-
 bool GameManager::areAllTanksOutOfAmmo() const {
-    for (const auto& tank : tanks) {
-        if (tank && !tank->isOutOfAmmo()) {
-            return false;  // At least one tank has ammo
+    for (const auto& [playerId, tanks] : playersArmy) {
+        for (const auto& tank : tanks) {
+            if (tank && !tank->isOutOfAmmo()) {
+                return false;  // At least one tank has ammo
+            }
         }
     }
-    return true;  // ✅ All tanks are out of ammo
+    return true;  // All tanks are out of ammo
 }
 
 void GameManager::moveShells() {
@@ -212,75 +144,107 @@ void GameManager::moveShells() {
     shells = std::move(updatedShells);
 }
 
-
 void GameManager::executeTanksStep() {
     logger.logStepNum(getGameStep());
-    for (const auto& tank: tanks){
-        tank->decreaseShootCooldown();
+    int currentStep = getGameStep();
+    
+    // Update cooldown for all tanks
+    for (const auto& [playerId, tanks] : playersArmy) {
+        for (const auto& tank : tanks) {
+            if (tank && !tank->isDestroyed()) {
+                tank->decreaseShootCooldown();
+            }
+        }
     }
 
-    ActionRequest action1 = algo1->getNextAction(board, *tanks[0], *tanks[1]);
-    ActionRequest action2 = algo2->getNextAction(board, *tanks[1], *tanks[0]);
+    // First pass: Handle GetBattleInfo actions for all players simultaneously
+    for (const auto& [playerId, tanks] : playersArmy) {
+        for (const auto& tank : tanks) {
+            if (!tank || tank->isDestroyed()) continue;
 
-    // 1. Handle tank actions
-    for (size_t i = 0; i < tanks.size(); ++i) {
-        auto tank = tanks[i];
-        ActionRequest action = (tank->getPlayerId() == 1) ? action1 : action2;
-
-        if (tank->isGoingBack()) {
-            tank->decreaseBackwardTimer();
-            if(!tank->isLastStepBack(getGameStep())) {
-                if (tank->getBackwardTimer() == 0) {
-                    action = ActionRequest::MoveBackward;
-                }
-                else if (action == ActionRequest::MoveForward) {
-                    logger.logAction(tank->getPlayerId(), "Cancelling Move Back");
-                    tank->setForward();
-                    continue;
-                }
-                else {
-                    continue;
-                }
+            ActionRequest action = tank->getAlgorithm()->getAction();
+            if (action == ActionRequest::GetBattleInfo) {
+                // Create battle info with current step
+                auto battleInfo = std::make_unique<BattleInfo>();
+                battleInfo->setGameStep(currentStep);
+                players[playerId - 1]->updateTankWithBattleInfo(*tank->getAlgorithm(), getSatelliteView(*tank), std::move(battleInfo));
             }
-
         }
-        tank->setPrevPos();
-        if (!isActionLegal(action, tank)) {
-            continue;
-        }
+    }
 
-        if(action != ActionRequest::MoveBackward) {
-            logger.logAction(tank->getPlayerId(), actionToString(action));
-            tank->setForward();
-        }
+    // Second pass: Handle movement and combat actions for all players simultaneously
+    for (const auto& [playerId, tanks] : playersArmy) {
+        for (const auto& tank : tanks) {
+            if (!tank || tank->isDestroyed()) continue;
 
-        switch (action) {
-            case ActionRequest::MoveForward: {
-                move(tank, false);
-                break;
-            }
-            case ActionRequest::MoveBackward: {
-                if(!tank->isGoingBack()) {
-                    logger.logAction(tank->getPlayerId(), "Will move back in 3 steps");
-                    tank->setBackwards();
+            // Get action from the tank's algorithm
+            ActionRequest action = tank->getAlgorithm()->getAction();
+            
+            // Skip if it's a GetBattleInfo action (handled in first pass)
+            if (action == ActionRequest::GetBattleInfo) continue;
+
+            if (tank->isGoingBack()) {
+                tank->decreaseBackwardTimer();
+                if(!tank->isLastStepBack(getGameStep())) {
+                    if (tank->getBackwardTimer() == 0) {
+                        action = ActionRequest::MoveBackward;
+                    }
+                    else if (action == ActionRequest::MoveForward) {
+                        logger.logAction(tank->getPlayerId(), "Cancelling Move Back");
+                        tank->setForward();
+                        continue;
+                    }
+                    else {
+                        continue;
+                    }
                 }
-                else {
-                    logger.logAction(tank->getPlayerId(), actionToString(action));
-                    move(tank, true);
-                    tank->setLastBackwardStep(getGameStep());
-                }
-                break;
             }
-            case ActionRequest::Shoot: {
-                shoot(tank);
-                break;
+
+            tank->setPrevPos();
+            if (!isActionLegal(action, tank)) {
+                logger.logAction(tank->getPlayerId(), actionToString(action) + " (ignored)");
+                continue;
             }
-            case ActionRequest::RotateLeft45: tank->rotate(LEFT_ANGLE_1_8); break;
-            case ActionRequest::RotateRight45: tank->rotate(RIGHT_ANGLE_1_8); break;
-            case ActionRequest::RotateLeft90: tank->rotate(LEFT_ANGLE_1_4); break;
-            case ActionRequest::RotateRight90: tank->rotate(RIGHT_ANGLE_1_4); break;
-            default:
-                break;
+
+            if(action != ActionRequest::MoveBackward) {
+                logger.logAction(tank->getPlayerId(), actionToString(action));
+                tank->setForward();
+            }
+
+            // Execute the action
+            switch (action) {
+                case ActionRequest::MoveForward:
+                    if (canMove(tank, false)) {
+                        move(tank, false);
+                    }
+                    break;
+                case ActionRequest::MoveBackward:
+                    if (canMove(tank, true)) {
+                        move(tank, true);
+                    }
+                    break;
+                case ActionRequest::RotateLeft90:
+                    tank->rotate(-90);
+                    break;
+                case ActionRequest::RotateRight90:
+                    tank->rotate(90);
+                    break;
+                case ActionRequest::RotateLeft45:
+                    tank->rotate(-45);
+                    break;
+                case ActionRequest::RotateRight45:
+                    tank->rotate(45);
+                    break;
+                case ActionRequest::Shoot:
+                    if (canTankShoot(tank)) {
+                        shoot(tank);
+                    }
+                    break;
+                case ActionRequest::DoNothing:
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -311,7 +275,6 @@ bool GameManager::canMove(std::shared_ptr<Tank> tank, bool bkwd) {
     return true;  // ✅ No wall → we can move
 }
 
-
 void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
     Position newPos = getNextPosOnBoard(elem, bkwd);
     board.removeSpecificObject(elem);  // move tank
@@ -334,39 +297,39 @@ bool GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, st
 
 // TODO: add collision type
 void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr>& marked) {
-    if (!tank) return;
+    if (!tank || tank->isDestroyed()) return;
 
-    Position currPos = tank->getPosition();
+    Position pos = tank->getPosition();
+    const auto& objects = board.getObjectsAt(pos);
 
-    // 1. Passing collision with other tanks
-    for (const auto& other : tanks) {
-        if (!other || other == tank) continue;
+    for (const auto& obj : objects) {
+        if (!obj || obj == tank || obj->isDestroyed()) continue;
 
-        if (checkPassingCollision(tank, other)) {
-            tank->setCollisionType(other->toString());
-            other->setCollisionType(tank->toString());
-            marked.insert(tank);
-            marked.insert(other);
+        // Check tank-to-tank collision
+        if (auto otherTank = std::dynamic_pointer_cast<Tank>(obj)) {
+            if (otherTank->getPlayerId() != tank->getPlayerId()) {
+                // Enemy tank collision - both tanks are destroyed
+                tank->setCollisionType("enemy tank collision");
+                otherTank->setCollisionType("enemy tank collision");
+                marked.insert(tank);
+                marked.insert(otherTank);
+            }
+            continue;
         }
-    }
 
-    // 2. Passing collision with shells
-    for (const auto& shell : shells) {
-        if (!shell) continue;
-
-        if (checkPassingCollision(tank, shell)) {
-            tank->setCollisionType(shell->toString());
+        // Check tank-to-wall collision
+        if (std::dynamic_pointer_cast<Wall>(obj)) {
+            tank->setCollisionType("wall collision");
             marked.insert(tank);
-            marked.insert(shell);
+            continue;
         }
-    }
 
-    // 3. Static collision at current position (excluding self)
-    for (const auto& obj : board.getObjectsAt(currPos)) {
-        if (!obj || obj == tank) continue;
-        tank->setCollisionType(obj->toString());
-        marked.insert(obj);
-        marked.insert(tank);
+        // Check tank-to-mine collision
+        if (std::dynamic_pointer_cast<Mine>(obj)) {
+            tank->setCollisionType("mine explosion");
+            marked.insert(tank);
+            continue;
+        }
     }
 }
 
@@ -444,7 +407,7 @@ void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
     }
 }
 
-BoardSatelliteView GameManager::getSatelliteView(const Tank& tank) const {
+std::unique_ptr<SatelliteView> GameManager::getSatelliteView(const Tank& tank) const {
     auto boardMat = board.getBoardMat();
     Position pos = tank.getPosition();
 
@@ -452,7 +415,161 @@ BoardSatelliteView GameManager::getSatelliteView(const Tank& tank) const {
         boardMat[pos.y][pos.x] = '%';
     }
 
-    return BoardSatelliteView(std::move(boardMat));
+    return std::make_unique<BoardSatelliteView>(std::move(boardMat));
+}
+
+bool GameManager::readBoard(const std::string& inputFile) {
+    std::ifstream file(inputFile);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file " << inputFile << std::endl;
+        return false;
+    }
+
+    std::string line;
+    std::string mapName;
+    int maxSteps = 0;
+    int numShells = 0;
+    int rows = 0;
+    int cols = 0;
+
+    // Read map name/description (Line 1)
+    if (!std::getline(file, mapName)) {
+        std::cerr << "Error: Empty file" << std::endl;
+        return false;
+    }
+
+    // Helper function to remove spaces from a string
+    auto removeSpaces = [](std::string& str) {
+        str.erase(std::remove_if(str.begin(), str.end(), ::isspace), str.end());
+    };
+
+    // Read MaxSteps (Line 2)
+    if (!std::getline(file, line)) {
+        std::cerr << "Error: Missing MaxSteps line" << std::endl;
+        return false;
+    }
+    removeSpaces(line);
+    if (sscanf(line.c_str(), "MaxSteps=%d", &maxSteps) != 1) {
+        std::cerr << "Error: Invalid MaxSteps format" << std::endl;
+        return false;
+    }
+
+    // Read NumShells (Line 3)
+    if (!std::getline(file, line)) {
+        std::cerr << "Error: Missing NumShells line" << std::endl;
+        return false;
+    }
+    removeSpaces(line);
+    if (sscanf(line.c_str(), "NumShells=%d", &numShells) != 1) {
+        std::cerr << "Error: Invalid NumShells format" << std::endl;
+        return false;
+    }
+
+    // Read Rows (Line 4)
+    if (!std::getline(file, line)) {
+        std::cerr << "Error: Missing Rows line" << std::endl;
+        return false;
+    }
+    removeSpaces(line);
+    if (sscanf(line.c_str(), "Rows=%d", &rows) != 1) {
+        std::cerr << "Error: Invalid Rows format" << std::endl;
+        return false;
+    }
+
+    // Read Cols (Line 5)
+    if (!std::getline(file, line)) {
+        std::cerr << "Error: Missing Cols line" << std::endl;
+        return false;
+    }
+    removeSpaces(line);
+    if (sscanf(line.c_str(), "Cols=%d", &cols) != 1) {
+        std::cerr << "Error: Invalid Cols format" << std::endl;
+        return false;
+    }
+
+    // Validate dimensions
+    if (rows <= 0 || cols <= 0) {
+        std::cerr << "Error: Invalid dimensions" << std::endl;
+        return false;
+    }
+
+    // Initialize the board with the specified dimensions
+    board = GameBoard(rows, cols);
+
+    // Read the map content
+    std::vector<std::string> mapLines;
+    while (std::getline(file, line)) {
+        mapLines.push_back(line);
+    }
+
+    // Process the map content
+    std::map<int, bool> hasPlayerTank;
+    std::map<int, int> playerTankCount;
+
+    for (int row = 0; row < rows; row++) {
+        std::string currentLine = (row < mapLines.size()) ? mapLines[row] : "";
+        
+        for (int col = 0; col < cols; col++) {
+            char cell = (col < currentLine.length()) ? currentLine[col] : ' ';
+            Position pos(row, col);
+
+            switch (cell) {
+                case '#': // Wall
+                    board.addObject(std::make_shared<Wall>(pos));
+                    break;
+                case '@': // Mine
+                    board.addObject(std::make_shared<Mine>(pos));
+                    break;
+                case ' ': // Empty space
+                    break;
+                default: // Tank or other character
+                    if (cell >= '1' && cell <= '9') {  // Support up to 9 players
+                        int playerId = cell - '0';
+                        hasPlayerTank[playerId] = true;
+                        playerTankCount[playerId]++;
+                        
+                        // Create tank with appropriate direction
+                        Direction initialDir = (playerId == 1) ? Direction::LEFT : Direction::RIGHT;
+                        auto tank = std::make_shared<Tank>(pos, initialDir, playerId, numShells);
+                        
+                        // Add to player's army
+                        playersArmy[playerId].push_back(tank);
+                        board.addObject(tank);
+                        
+                        // Create and add algorithm for this tank
+                        auto algorithm = algorithmFactory.create(playerId, playersArmy[playerId].size() - 1);
+                        tank->setAlgorithm(std::move(algorithm));
+                    }
+                    break;
+            }
+        }
+    }
+
+    // Create players for each player ID found
+    players.clear();
+    for (const auto& [playerId, hasTank] : hasPlayerTank) {
+        if (hasTank) {
+            players.push_back(playerFactory.create(playerId, cols, rows, maxSteps, numShells));
+        }
+    }
+
+    // Check if we have at least two players with tanks
+    if (players.size() < 2) {
+        logger.logResult("Error: Need at least two players with tanks to start the game");
+        return false;
+    }
+
+    // Set game parameters
+    this->maxSteps = maxSteps;
+    stalemateSteps = STALEMATE_STEPS;
+    validGame = true;
+    currentPlayerIndex = 0;
+
+    return true;
+}
+
+int GameManager::getGameStep() const {
+    return stepCount / 2;  // Each game step consists of two stepCount increments
 }
 
 

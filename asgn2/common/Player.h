@@ -7,6 +7,8 @@
 
 #include "TankAlgorithm.h"
 #include "SatelliteView.h"
+#include "BattleInfo.h"
+#include <memory>
 
 class Player {
 public:
@@ -15,7 +17,7 @@ public:
             size_t max_steps, size_t num_shells ) {}
     virtual ~Player() {}
     virtual void updateTankWithBattleInfo
-            (TankAlgorithm& tank, SatelliteView& satellite_view) = 0;
+            (TankAlgorithm& tank, SatelliteView& satellite_view, std::unique_ptr<BattleInfo> battle_info) = 0;
 };
 
 #endif //ASGN2_PLAYER_H

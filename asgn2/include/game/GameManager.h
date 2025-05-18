@@ -1,46 +1,39 @@
 #ifndef GAME_MANAGER_H
 #define GAME_MANAGER_H
 
-
 #include "GameBoard.h"
-#include "algorithms/Algorithm.h"
-#include "algorithms/Evader.h"
-#include "algorithms/Chaser.h"
 #include "objects/Tank.h"
 #include "objects/Shell.h"
 #include "game/Logger.h"
+#include "game/BoardSatelliteView.h"
+#include "../../common/PlayerFactory.h"
+#include "../../common/TankAlgorithmFactory.h"
+#include "Player.h"
+#include "../../common/SatelliteView.h"
 
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <memory>
 #include <unordered_set>
-
-#include "objects/Tank.h"
-#include "objects/Wall.h"
-#include "objects/Shell.h"
-#include "objects/Mine.h"
-#include "../../common/ActionRequest.h"
-#include "../../common/SatelliteView.h"
-#include "game/BoardSatelliteView.h"
-#include "objects/MovingElement.h"
-#include "definitions.h"
 #include <vector>
+#include <map>
 
 class GameManager {
 private:
     GameBoard board;
     Logger logger;
-    std::unique_ptr<Algorithm> algo1;
-    std::unique_ptr<Algorithm> algo2;
-    int stepCount;
+    std::vector<std::unique_ptr<Player>> players;  // Vector of all players
+    std::map<int, std::vector<std::shared_ptr<Tank>>> playersArmy;  // Map of player_id to their tanks
     std::vector<std::shared_ptr<Shell>> shells;
-    std::vector<std::shared_ptr<Tank>> tanks = {nullptr, nullptr};
-    int stepsRemaining = STALEMATE_STEPS;
+    int stepCount = 0;
+    int maxSteps = 0;
+    int stalemateSteps = STALEMATE_STEPS;
     bool validGame = true;
+    int currentPlayerIndex = 0;  // Track current player's turn
 
 public:
-    GameManager(const std::string& inputFile);
+    GameManager(const PlayerFactory& playerFactory, const TankAlgorithmFactory& algorithmFactory);
     void runGame();
     void executeTanksStep();
     void logState() const;
@@ -53,22 +46,16 @@ public:
     bool isActionLegal(ActionRequest act, std::shared_ptr<Tank> tank);
     bool isPlayerTurn() const;
     void destroyAndRemove(const GameObjectPtr &obj);
-
     void checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr> &marked);
-
     void checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr> &marked);
-
     bool areAllTanksOutOfAmmo() const;
-
-    bool isGameOver() ;
-
+    bool isGameOver();
     std::string actionToString(ActionRequest action) const;
-
     bool canTankShoot(std::shared_ptr<Tank> tank);
-
-    int getGameStep() const { return stepCount / 2; }
-
-    BoardSatelliteView getSatelliteView(const Tank& tank) const;
+    int getGameStep() const { return stepCount / players.size(); }
+    std::unique_ptr<SatelliteView> getSatelliteView(const Tank& tank) const;
+    bool readBoard(const std::string& inputFile);
+    int getNextPlayerIndex() const;
 };
 
 #endif // GAME_MANAGER_H

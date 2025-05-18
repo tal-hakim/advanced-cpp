@@ -1,49 +1,31 @@
 cmake_minimum_required(VERSION 3.20)
 set(CMAKE_PKG_REDIRECTS_DIR "${CMAKE_BINARY_DIR}/pkgRedirects" CACHE PATH "Relocated pkgRedirects dir")
 project(asgn2)
+
+# Compiler flags
 add_compile_options(-Wall -Wextra -Werror -pedantic)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+# Include directories
 include_directories(include common)
 
-add_executable(asgn2
-        common/TankAlgorithm.h
-        common/BattleInfo.h
-        common/SatelliteView.h
-        common/Player.h
-        common/PlayerFactory.h
-        common/TankAlgorithmFactory.h
-        include/game/Position.h
-        include/objects/GameObject.h
-        include/game/GameBoard.h
-        include/game/GameManager.h
-        include/game/Direction.h
-        include/objects/Shell.h
-        include/objects/Mine.h
-        include/objects/Wall.h
-        include/objects/Tank.h
-        include/game/Logger.h
-        src/game/Logger.cpp
-        src/game/GameBoard.cpp
-        src/game/GameManager.cpp
-        common/ActionRequest.h
-        src/objects/GameObject.cpp
-        src/objects/Tank.cpp
-        include/objects/MovingElement.h
-        src/objects/MovingElement.cpp
-        include/definitions.h
-        include/algorithms/Algorithm.h
-        include/algorithms/Chaser.h
-        include/algorithms/Evader.h
-        src/algorithms/Evader.cpp
-        src/algorithms/Chaser.cpp
-        src/algorithms/Algorithm.cpp
-        include/game/DirectionUtils.h
-        src/game/DirectionUtils.cpp
-        src/main.cpp
-        include/game/BoardSatelliteView.h
-
+# Source files
+set(SOURCES
+    src/game/Logger.cpp
+    src/game/GameBoard.cpp
+    src/game/GameManager.cpp
+    src/objects/GameObject.cpp
+    src/objects/Tank.cpp
+    src/objects/MovingElement.cpp
+    src/algorithms/Evader.cpp
+    src/algorithms/Chaser.cpp
+    src/algorithms/Algorithm.cpp
+    src/game/DirectionUtils.cpp
+    src/main.cpp
 )
+
+# Add executable
+add_executable(asgn2 ${SOURCES})
 
