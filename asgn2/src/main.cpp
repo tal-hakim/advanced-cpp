@@ -2,8 +2,15 @@
 #include "game/GameManager.h"
 
 int main(int argc, char** argv) {
-    GameManager game(MyPlayerFactory(), MyTankAlgorithmFactory());
-    game.readBoard(<game_board_input_file from command line>);
-    game.run();
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_file>" << std::endl;
+        return 1;
+    }
+    
+    std::string inputFile = argv[1];
+    GameManager game(MyPlayerFactory(), MyTankAlgorithmFactory(), inputFile);
+    game.readBoard(inputFile);
+    game.runGame();
+    return 0;
 }
 

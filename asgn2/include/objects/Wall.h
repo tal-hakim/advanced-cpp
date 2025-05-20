@@ -11,7 +11,7 @@ public:
     Wall(Position p) : GameObject(p, '#') {}
     void takeHit() {hitCount++;}
     bool isDestroyed() const {return hitCount >= 2;}
-    void destroy() { takeHit(); if(isDestroyed()) {GameObject::destroy();} }
+    void destroy() override { takeHit(); if(isDestroyed()) {GameObject::destroy();} }
     std::string toString() const override {
         return "Wall";
     }

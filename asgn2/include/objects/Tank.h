@@ -1,6 +1,7 @@
 #ifndef TANK_H
 #define TANK_H
 
+#include <memory>
 #include "MovingElement.h"
 #include "game/Direction.h"
 #include "../../common/ActionRequest.h"

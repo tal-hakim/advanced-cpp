@@ -2,7 +2,7 @@
 #define PLAYER_FACTORY_H
 
 #include "../../common/PlayerFactory.h"
-#include "Player.h"
+#include "ConcretePlayer.h"
 
 class ConcretePlayerFactory : public PlayerFactory {
 public:
