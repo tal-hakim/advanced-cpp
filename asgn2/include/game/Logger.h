@@ -10,15 +10,17 @@ private:
     std::ofstream outputLog;
     std::ofstream inputErrorLog;
     std::string inputFilename;
-    std::vector<std::string> stepLogs;
+    mutable std::vector<std::string> stepLogs;
     bool hasInputErrors = false;
 
 public:
     Logger(const std::string& inputFile);
     ~Logger();
-
+    Logger(const Logger&) = delete;
+    Logger& operator=(const Logger&) = delete;
+    
     void logBadStep(int playerId, const std::string& reason);
-    void logResult(const std::string& result) ;
+    void logResult(const std::string& result);
     void logInputError(const std::string& message);
 
     void flushStepLog();

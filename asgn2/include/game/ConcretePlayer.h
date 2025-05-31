@@ -5,37 +5,44 @@
 #include "../../common/TankAlgorithm.h"
 #include "../../common/SatelliteView.h"
 #include "../../common/BattleInfo.h"
+#include "game//Direction.h"
+#include "game/DirectionUtils.h"
+#include "game/Position.h"
+#include "game/ConcreteBattleInfo.h"
 #include <memory>
 #include <vector>
 #include <unordered_map>
+#include <map>
 
 // Concrete Player implementation
 class ConcretePlayer : public Player {
 private:
+    // Base class parameters
     int playerId;
     size_t boardWidth;
     size_t boardHeight;
     size_t maxSteps;
     size_t numShells;
-    std::unordered_map<int, std::unique_ptr<BattleInfo>> tankBattleInfo;
+
+    // State variables
+    ConcreteBattleInfo::PlayerUpdates playerState;
+    std::unordered_map<int, int> tankTurns;
+    int aliveTanks;
+    bool reorderTurns;
+    size_t roundCounter = 0;
+    std::map<int, int> remainingShells;
+
+    void handleTankTurnReordering(int tankId);
+    
+    // Helper functions for board analysis
+    void analyzeWindowAroundObject(const Position& pos, int windowSize, const std::vector<std::vector<char>>& map);
 
 public:
-    ConcretePlayer(int player_index, size_t x, size_t y, size_t max_steps, size_t num_shells)
-        : Player(player_index, x, y, max_steps, num_shells),
-          playerId(player_index),
-          boardWidth(x),
-          boardHeight(y),
-          maxSteps(max_steps),
-          numShells(num_shells) {}
-
-    void updateTankWithBattleInfo(TankAlgorithm& tank, SatelliteView& satellite_view, std::unique_ptr<BattleInfo> battle_info) override {
-        int tankId = tank.getTankId();
-        if (battle_info) {
-            tankBattleInfo[tankId] = std::move(battle_info);
-        }
-        tankBattleInfo[tankId]->update(satellite_view);
-        tank.updateBattleInfo(*tankBattleInfo[tankId]);
-    }
+    ConcretePlayer(int playerIndex, size_t x, size_t y, size_t maxSteps, size_t numShells);
+    void updateTankWithBattleInfo(TankAlgorithm& tank, SatelliteView& satellite_view) override;
+    void initializeTanksInfo(int numTanks) { playerState.myTanksInfo.resize(numTanks, {Position{0,0}, Direction::R}); }
+    std::vector<std::vector<char>> readView(int tankId, SatelliteView &view);
+    void analyzeBoard(int tankId, SatelliteView &view);
 };
 
 #endif // PLAYER_H 

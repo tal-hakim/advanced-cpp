@@ -8,7 +8,7 @@
 #include "objects/Shell.h"
 #include "objects/Tank.h"
 #include "game/Position.h"
-#include "SatelliteView.h"
+#include "common/SatelliteView.h"
 #include <vector>
 #include <memory>
 #include <algorithm> // for std::remove_if

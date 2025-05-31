@@ -9,20 +9,35 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Include directories
-include_directories(include common)
+include_directories(
+    ${CMAKE_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/common
+)
 
 # Source files
-set(SOURCES
+
+set(GAME_SOURCES
     src/game/Logger.cpp
     src/game/GameBoard.cpp
     src/game/GameManager.cpp
+    src/game/ConcretePlayer.cpp
+    src/game/ConcreteBattleInfo.cpp
+    src/game/ConcreteTankAlgorithm.cpp
+    src/game/DirectionUtils.cpp
+)
+
+set(OBJECT_SOURCES
     src/objects/GameObject.cpp
     src/objects/Tank.cpp
     src/objects/MovingElement.cpp
-    src/algorithms/Evader.cpp
-    src/algorithms/Chaser.cpp
-    src/algorithms/Algorithm.cpp
-    src/game/DirectionUtils.cpp
+)
+
+# Combine all sources
+set(SOURCES
+    ${GAME_SOURCES}
+    ${OBJECT_SOURCES}
+    ${ALGORITHM_SOURCES}
     src/main.cpp
 )
 

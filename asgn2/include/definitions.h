@@ -16,5 +16,6 @@ constexpr int LEFT_ANGLE_1_8 = -1;
 constexpr int RIGHT_ANGLE_1_8 = 1;
 constexpr int STALEMATE_STEPS = 40;
 constexpr int NUM_DIRECTIONS = 8;
+constexpr char CURR_TANK = '%';
 
 #endif //DEFINITIONS_H

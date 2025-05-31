@@ -34,11 +34,8 @@ private:
     int totalShells = 0;  // Track total shells in the game
     bool validGame = false;
 
-public:
-    GameManager(const PlayerFactory& playerFactory, const TankAlgorithmFactory& algorithmFactory, const std::string& inputFile);
-    void runGame();
     void executeTanksStep();
-    void logState() const;
+    void logState();
     bool shoot(const std::shared_ptr<Tank>& tank);
     void move(std::shared_ptr<MovingElement> elem, bool bkwd);
     Position getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);
@@ -55,19 +52,24 @@ public:
     bool canTankShoot(std::shared_ptr<Tank> tank);
     int getGameStep() const;
     std::unique_ptr<SatelliteView> getSatelliteView(const std::shared_ptr<Tank>& tank) const;
-    bool readBoard(const std::string& inputFile);
     int getNextPlayerIndex() const;
-
-private:
     void decreaseTanksCooldown();
-    ActionRequest handleBackwardMovement(const std::shared_ptr<Tank>& tank);
+    ActionRequest requestTankAction(const std::shared_ptr<Tank>& tank);
     void executeAction(const std::shared_ptr<Tank>& tank, ActionRequest action);
     bool validateAndLogAction(const std::shared_ptr<Tank>& tank, ActionRequest action);
+    bool isMaxStepsReached();
+    bool isStalemate();
+    std::map<int, int> getPlayerTankCounts() const;
 
     // Board reading helper functions
     bool readBoardHeader(std::ifstream& file, int& numShells, int& rows, int& cols);
     bool processMapCell(char cell, const Position& pos, int numShells);
     bool readMapContent(std::ifstream& file, int rows, int cols, int numShells);
+
+public:
+    GameManager(const PlayerFactory& playerFactory, const TankAlgorithmFactory& algorithmFactory, const std::string& inputFile);
+    void runGame();
+    bool readBoard(const std::string& inputFile);
 };
 
 #endif // GAME_MANAGER_H

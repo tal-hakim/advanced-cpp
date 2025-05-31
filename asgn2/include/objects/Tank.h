@@ -6,15 +6,20 @@
 #include "game/Direction.h"
 #include "../../common/ActionRequest.h"
 #include "../../common/TankAlgorithm.h"
+#include "common/ActionRequest.h"
+
+class GameManager;  // Forward declaration
 
 class Tank : public MovingElement {
+    friend class GameManager;  // Allow GameManager to access protected members
 protected:
-    int shellsRemaining = INITIAL_SHELLS_AMOUNT;
+    int shellsRemaining;
     int shootCooldown = 0;
     int backwardTimer = UNINITIALIZED;
     int lastBackwardStep = INT_MIN;
     std::string collisionType = "";
     std::unique_ptr<TankAlgorithm> algorithm;
+    Direction getNewDir(int angle);
 
 public:
     Tank(Position p, Direction dir, int id, int numShells = INITIAL_SHELLS_AMOUNT)
@@ -38,7 +43,6 @@ public:
     void setCollisionType(std::string colType) { if(collisionType == "") collisionType = colType; }
     std::string toString() const override { return "Tank " + std::to_string(playerId); }
     int getCooldown() const { return shootCooldown; }
-    Direction getNewDir(int angle);
 
     void setAlgorithm(std::unique_ptr<TankAlgorithm> algo) { algorithm = std::move(algo); }
     TankAlgorithm* getAlgorithm() { return algorithm.get(); }

@@ -29,11 +29,11 @@ void GameBoard::printBoard() const {
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
             if (!grid[y][x].empty())
-                std::cout << grid[y][x].back()->getSymbol();  // draw top-most object
+                std::cout << grid[y][x].back()->getSymbol();  // print top-most object
             else
-                std::cout << '_';
+                std::cout << "_";
         }
-        std::cout << '\n';
+        std::cout << std::endl;
     }
 }
 

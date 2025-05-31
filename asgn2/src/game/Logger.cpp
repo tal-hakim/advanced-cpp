@@ -30,7 +30,7 @@ void Logger::logBadStep(int playerId, const std::string& reason) {
     stepLogs.push_back("Bad Step by Player " + std::to_string(playerId) + ": " + reason);
 }
 
-void Logger::logResult(const std::string& result)  {
+void Logger::logResult(const std::string& result) {
     stepLogs.push_back("\n====== Game Over ====== \n" + result);
 }
 

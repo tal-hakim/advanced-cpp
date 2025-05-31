@@ -2,19 +2,29 @@
 #define TANK_ALGORITHM_FACTORY_H
 
 #include "../../common/TankAlgorithmFactory.h"
-#include "algorithms/Chaser.h"
-#include "algorithms/Evader.h"
+#include "game/ConcreteTankAlgorithm.h"
+#include "game/Direction.h"
+#include <stdexcept>
 
 class ConcreteTankAlgorithmFactory : public TankAlgorithmFactory {
 public:
     std::unique_ptr<TankAlgorithm> create(int player_index, int tank_index) const override {
-        // For now, we'll use Chaser for player 1 and Evader for player 2
-        // You can modify this to create different algorithms based on player_index and tank_index
-        if (player_index == 1) {
-            return std::make_unique<Chaser>();
-        } else {
-            return std::make_unique<Evader>();
+        // Validate inputs
+        if (player_index != 1 && player_index != 2) {
+            throw std::invalid_argument("Player index must be 1 or 2");
         }
+        if (tank_index < 0) {
+            throw std::invalid_argument("Tank index cannot be negative");
+        }
+
+        // Create algorithm with validated inputs
+        auto algo = std::make_unique<ConcreteTankAlgorithm>(player_index, tank_index);
+        
+        // Set initial direction based on player index (1 = LEFT, 2 = RIGHT)
+        const Direction initialDirection = (player_index == 1) ? Direction::L : Direction::R;
+        algo->setTankDir(initialDirection);
+        
+        return algo;
     }
 };
 
