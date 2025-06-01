@@ -1,0 +1,9 @@
+Urban Combat Simulation
+MaxSteps =200
+NumShells= 4
+Rows = 2
+Cols=11
+#1  @   2 #
+#2     1  #
+Extra lines should be ignored
+So should this one

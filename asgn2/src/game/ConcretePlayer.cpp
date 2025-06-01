@@ -14,16 +14,11 @@
 ConcretePlayer::ConcretePlayer(int playerIndex, size_t x, size_t y, size_t maxSteps, size_t numShells)
     : Player(playerIndex, x, y, maxSteps, numShells),
       playerId(playerIndex), boardWidth(x), boardHeight(y), maxSteps(maxSteps), numShells(numShells),
-      aliveTanks(0), reorderTurns(false) {
+      aliveTanks(UNINITIALIZED), reorderTurns(false) {
     // Initialize context with empty state
     playerState.latestMap.resize(y, std::vector<char>(x, ' '));
-    // Initialize myTanksInfo with enough space for all tanks (we'll resize it when we see the actual number)
-    playerState.myTanksInfo.resize(1, {Position{0,0}, Direction::R});  // Start with size 1, will be updated in updateTankWithBattleInfo
-    
-    // Initialize tankTurns with sequential ordering (0:0, 1:1, etc.)
-    for (size_t i = 0; i < playerState.myTanksInfo.size(); ++i) {
-        tankTurns[static_cast<int>(i)] = static_cast<int>(i);
-    }
+    playerState.initShells = numShells;
+    // Don't initialize myTanksInfo - we'll resize it when we first see tanks
     
     roundCounter = 0;
 }
@@ -33,13 +28,9 @@ void ConcretePlayer::updateTankWithBattleInfo(TankAlgorithm& tank, SatelliteView
     auto *tankPtr = dynamic_cast<ConcreteTankAlgorithm *>(&tank);
     int tankId = tankPtr->getTankId();
     
-    // If this is a new tank ID, resize myTanksInfo to accommodate it
-    if (tankId >= static_cast<int>(playerState.myTanksInfo.size())) {
-        playerState.myTanksInfo.resize(tankId + 1, {Position{0,0}, Direction::R});
-    }
-    
     analyzeBoard(tankId, satellite_view);
     handleTankTurnReordering(tankId);
+    playerState.turnId = tankTurns[tankId];
 
     // Create battle info with current player state
     ConcreteBattleInfo info(playerState);
@@ -58,29 +49,31 @@ std::vector<std::vector<char>> ConcretePlayer::readView(int tankId, SatelliteVie
     int currAliveTanks = 0;
     
     // First pass: count tanks
-    for(size_t i = 0; i < boardWidth; i++){
-        for (size_t j = 0; j < boardHeight; ++j) {
+    for(size_t i = 0; i < boardHeight ; i++){
+        for (size_t j = 0; j <boardWidth; ++j) {
             char currObj = view.getObjectAt(i, j);
-            if(currObj == '0' + playerId) {
+            if(currObj == '0' + playerId || currObj == '%') {
                 currAliveTanks++;
             }
         }
     }
     
-    // Resize myTanksInfo if needed
-    if (currAliveTanks > static_cast<int>(playerState.myTanksInfo.size())) {
+    // Initialize or resize myTanksInfo if needed
+    if (this->aliveTanks == UNINITIALIZED) {
         playerState.myTanksInfo.resize(currAliveTanks, {Position{0,0}, Direction::R});
+        this->aliveTanks = currAliveTanks;
         // Initialize tankTurns with sequential ordering (0:0, 1:1, etc.) when we first know the actual number of tanks
         if (tankTurns.empty()) {
             for (int i = 0; i < currAliveTanks; ++i) {
                 tankTurns[i] = i;
             }
+            reorderTurns = false;
         }
     }
     
     // Second pass: populate map and update positions
-    for(size_t i = 0; i < boardWidth; i++){
-        for (size_t j = 0; j < boardHeight; ++j) {
+    for(size_t i = 0; i < boardHeight; i++){
+        for (size_t j = 0; j < boardWidth; ++j) {
             char currObj = view.getObjectAt(i, j);
             if(currObj == CURR_TANK){
                 playerState.myTanksInfo[tankId].first = Position{static_cast<int>(i), static_cast<int>(j)};
@@ -109,7 +102,7 @@ void ConcretePlayer::analyzeWindowAroundObject(const Position& pos, int windowSi
             Position windowPos{wrappedX, wrappedY};
             
             char obj = map[windowPos.y][windowPos.x];
-            if (obj != ' ' && obj != '*' && obj != '1' && obj != '2') {
+            if (obj != ' ') {  // Only exclude empty space
                 Direction dir = DirectionUtils::directionFromTo(pos, windowPos);
                 
                 if (obj == '*') {

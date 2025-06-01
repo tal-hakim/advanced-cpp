@@ -20,6 +20,7 @@ public:
         std::vector<std::vector<char>> latestMap;
         std::unordered_map<Position, Direction> shellInfo;  // Maps shell positions to their directions
         size_t turnId;
+        int initShells;
     };
     struct TankUpdates {
         Direction tankDir;
