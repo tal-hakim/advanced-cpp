@@ -4,35 +4,44 @@
 #include <optional>
 
 // Helper function to determine rotation action
-static ActionRequest rotateToward(Direction current, Direction target) {
-    if (current == target) return ActionRequest::DoNothing;
+ActionRequest ConcreteTankAlgorithm::rotateToward(Direction current, Direction target) {
+    if (current == target) return ActionRequest::MoveForward;
     
     int currentAngle = static_cast<int>(current);
     int targetAngle = static_cast<int>(target);
-    int diff = (targetAngle - currentAngle + 360) % 360;
+    int diff = (targetAngle - currentAngle + NUM_DIRECTIONS) % NUM_DIRECTIONS;
     
-    if (diff == 45) return ActionRequest::RotateRight45;
-    if (diff == 90) return ActionRequest::RotateRight90;
-    if (diff == 135) return ActionRequest::RotateRight45;
-    if (diff == 180) return ActionRequest::RotateRight90;
-    if (diff == 225) return ActionRequest::RotateLeft45;
-    if (diff == 270) return ActionRequest::RotateLeft90;
-    if (diff == 315) return ActionRequest::RotateLeft45;
+    if (diff == 1) {
+        tankState.tankDir = static_cast<Direction>((currentAngle + 1) % NUM_DIRECTIONS);
+        return ActionRequest::RotateRight45;
+    }
+    if (diff == 2 || diff == 3 || diff == 4) {
+        tankState.tankDir = static_cast<Direction>((currentAngle + 2) % NUM_DIRECTIONS);
+        return ActionRequest::RotateRight90;
+    }
+    if (diff == 7) {
+        tankState.tankDir = static_cast<Direction>((currentAngle + 7) % NUM_DIRECTIONS);
+        return ActionRequest::RotateLeft45;
+    }
+    if (diff == 6 || diff == 5) {
+        tankState.tankDir = static_cast<Direction>((currentAngle + 6) % NUM_DIRECTIONS);
+        return ActionRequest::RotateLeft90;
+    }
     
     return ActionRequest::DoNothing;
 }
 
 // Helper functions to work directly with map data
 bool isWall(const std::vector<std::vector<char>>& map, const Position& pos) {
-    return map[pos.y][pos.x] == '#';
+    return map[pos.x][pos.y] == '#';
 }
 
 bool isMine(const std::vector<std::vector<char>>& map, const Position& pos) {
-    return map[pos.y][pos.x] == '*';
+    return map[pos.x][pos.y] == '*';
 }
 
 bool isTank(const std::vector<std::vector<char>>& map, const Position& pos) {
-    char c = map[pos.y][pos.x];
+    char c = map[pos.x][pos.y];
     return c >= '1' && c <= '9';
 }
 
@@ -48,9 +57,6 @@ Position wrap(const Position& pos, size_t width, size_t height) {
 // ====== Public Method ======
 ActionRequest ConcreteTankAlgorithm::getAction() {
     tankState.roundCounter++;
-    std::cout << "Debug - Round: " << tankState.roundCounter
-              << ", Tanks: " << static_cast<int>(numTanks)
-              << ", Turn Id: " << playerState.turnId << std::endl;
 
     if (shouldGetBattleInfo()) {
         return ActionRequest::GetBattleInfo;
@@ -58,11 +64,10 @@ ActionRequest ConcreteTankAlgorithm::getAction() {
 
     Position myPos = playerState.myTanksInfo[tankId].first;
     Direction myDir = tankState.tankDir;
-    int myShells = tankState.remainingShells;
 
     ThreatInfo threat = detectThreat(myPos);
     if (threat.exists) {
-        return evadeThreat(threat, myPos, myDir, myShells);
+        return evadeThreat(threat, myPos, myDir);
     }
 
     return chaseEnemy(myPos, myDir);
@@ -75,7 +80,6 @@ bool ConcreteTankAlgorithm::shouldGetBattleInfo() const {
 }
 
 ConcreteTankAlgorithm::ThreatInfo ConcreteTankAlgorithm::detectThreat(const Position& myPos) const {
-    std::cout << "detecting threat" << std::endl;
     ThreatInfo threat;
     const int radius = 4;
 
@@ -100,34 +104,30 @@ ConcreteTankAlgorithm::ThreatInfo ConcreteTankAlgorithm::detectThreat(const Posi
     return threat;
 }
 
-ActionRequest ConcreteTankAlgorithm::evadeThreat(
-        const ThreatInfo& threat, Position myPos, Direction myDir, int myShells)
+ActionRequest ConcreteTankAlgorithm::evadeThreat(const ThreatInfo &threat, Position myPos, Direction myDir)
 {
-    std::cout << "in evade threat" << std::endl;
-    if (myDir == threat.dir && myShells > 0 && canShoot()) {
+    if (myDir == threat.dir && canShoot()) {
         return shoot();
     }
 
     Direction oppDir = DirectionUtils::getOppositeDirection(threat.dir);
     if (threat.dir != myDir && oppDir != myDir) {
         Position forward = wrap(myPos + DirectionUtils::dirToVector(myDir), mapWidth, mapHeight);
-        if (isSafe(forward)) {
+        if (isWalkable(forward)) {
             playerState.myTanksInfo[tankId].first = forward;
             return ActionRequest::MoveForward;
         }
     }
 
     for (Direction dir : getSafeRotations(myPos)) {
-        tankState.tankDir = dir;
         return rotateToward(myDir, dir);
     }
 
     for (Direction dir : getSafeMoves(myPos)) {
-        tankState.tankDir = dir;
         return rotateToward(myDir, dir);
     }
 
-    if (myShells > 0 && canShoot()) {
+    if (canShoot()) {
         return shoot();
     }
 
@@ -135,13 +135,12 @@ ActionRequest ConcreteTankAlgorithm::evadeThreat(
 }
 
 ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir) {
-    std::cout << "in chase enemy" << std::endl;
     auto enemy = getFirstEnemy();
     if (!enemy.has_value()) return ActionRequest::GetBattleInfo;
 
     Position enemyPos = enemy.value();
     if (shouldRecalculatePath(enemyPos)) {
-        bfsPath = bfsToEnemy(myPos, enemyPos);
+        bfsToEnemy(myPos, enemyPos);
         lastEnemyPos = enemyPos;
     }
 
@@ -153,9 +152,9 @@ ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir)
         for (Direction dir : getAllDirections()) {
             if (canShootEnemy(dir, myPos, enemyPos)) {
                 if (dir != myDir) {
-                    tankState.tankDir = dir;
                     return rotateToward(myDir, dir);
                 }
+                return shoot();
             }
         }
     }
@@ -163,11 +162,10 @@ ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir)
     if (bfsPath.size() < 2) {
         Direction desired = DirectionUtils::directionFromTo(myPos, enemyPos);
         if (myDir != desired) {
-            tankState.tankDir = desired;
             return rotateToward(myDir, desired);
         }
         if (canShoot()){
-            return ActionRequest::Shoot;
+            return shoot();
         }
         return ActionRequest::GetBattleInfo;
     }
@@ -176,14 +174,12 @@ ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir)
     Direction desired = DirectionUtils::directionFromTo(myPos, next);
 
     if (myDir != desired) {
-        tankState.tankDir = desired;
         return rotateToward(myDir, desired);
     }
 
-    if (!isSafe(next)) {
+    if (!isWalkable(next)) {
         for (Direction dir : getSafeRotations(myPos)) {
-            tankState.tankDir = dir;
-            bfsPath = bfsToEnemy(myPos, enemyPos);
+            bfsToEnemy(myPos, enemyPos);
             return rotateToward(myDir, dir);
         }
         return ActionRequest::GetBattleInfo;
@@ -195,9 +191,8 @@ ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir)
 }
 
 // ====== BFS and Support ======
-std::vector<Position> ConcreteTankAlgorithm::bfsToEnemy(Position start, Position goal) const {
-    // TODO: fix the bfs
-    std::cout << "BFSing" << std::endl;
+void ConcreteTankAlgorithm::bfsToEnemy(Position start, Position goal) {
+    // TODO: fix the bfs, write player 2, fix logger
     std::queue<std::pair<Position, std::vector<Position>>> q;
     std::unordered_set<std::string> visited;
 
@@ -205,22 +200,19 @@ std::vector<Position> ConcreteTankAlgorithm::bfsToEnemy(Position start, Position
     visited.insert(start.toString());
 
     while (!q.empty()) {
-        if(q.size() == 1){
-            const auto& [pos, path] = q.front();
-            std::cout << "Front Position: " << pos.toString() << ", Path length: " << path.size() << std::endl;
-        }
         auto [current, path] = q.front(); q.pop();
 
-        if (current == goal) return path;
+        if (current == goal) {
+            bfsPath = path;
+            return;
+        }
 
         for (int d = 0; d < NUM_DIRECTIONS ; ++d) {
             Direction dir = static_cast<Direction>(d);
             Position next = wrap(current + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
-//            Position next = playerState.latestMap[pos.y][pos.x];
 
             // Skip walls, mines, and previously visited positions
-            if (!isWall(playerState.latestMap, next) &&
-                !isMine(playerState.latestMap, next) &&
+            if (isWalkable(next) &&
                 visited.count(next.toString()) == 0) {
 
                 visited.insert(next.toString());
@@ -231,11 +223,11 @@ std::vector<Position> ConcreteTankAlgorithm::bfsToEnemy(Position start, Position
         }
     }
 
-    return std::vector<Position>{};
+    bfsPath = std::vector<Position>{};
 }
 
 bool ConcreteTankAlgorithm::canShoot() const {
-    return (tankState.roundCounter - lastShotRound >= SHOOTING_COOLDOWN) && tankState.remainingShells > 0;
+    return (tankState.roundCounter - lastShotRound > SHOOTING_COOLDOWN) && tankState.remainingShells > 0;
 }
 
 ActionRequest ConcreteTankAlgorithm::shoot() {
@@ -244,10 +236,9 @@ ActionRequest ConcreteTankAlgorithm::shoot() {
     return ActionRequest::Shoot;
 }
 
-bool ConcreteTankAlgorithm::isSafe(const Position& pos) const {
+bool ConcreteTankAlgorithm::isWalkable(const Position& pos) const {
     return !isWall(playerState.latestMap, pos) &&
-           !isMine(playerState.latestMap, pos) &&
-           !isTank(playerState.latestMap, pos);
+           !isMine(playerState.latestMap, pos);
 }
 
 std::optional<Position> ConcreteTankAlgorithm::getFirstEnemy() const {
@@ -263,7 +254,7 @@ bool ConcreteTankAlgorithm::shouldRecalculatePath(const Position& enemyPos) cons
 
 bool ConcreteTankAlgorithm::pathBlocked(const std::vector<Position>& path) const {
     for (const auto& pos : path) {
-        if (isWall(playerState.latestMap, pos) || isMine(playerState.latestMap, pos))
+        if (!isWalkable(pos))
             return true;
     }
     return false;
@@ -275,7 +266,7 @@ std::vector<Direction> ConcreteTankAlgorithm::getSafeRotations(const Position& m
         int d = (static_cast<int>(tankState.tankDir) + i + NUM_DIRECTIONS) % NUM_DIRECTIONS;
         Direction dir = static_cast<Direction>(d);
         Position pos = wrap(myPos + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
-        if (!isWall(playerState.latestMap, pos) && !isMine(playerState.latestMap, pos)) {
+        if (isWalkable(pos)) {
             safeDirs.push_back(dir);
         }
     }
@@ -287,7 +278,7 @@ std::vector<Direction> ConcreteTankAlgorithm::getSafeMoves(const Position& myPos
     for (int d = 0; d < NUM_DIRECTIONS; ++d) {
         Direction dir = static_cast<Direction>(d);
         Position next = wrap(myPos + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
-        if (isSafe(next)) {
+        if (isWalkable(next)) {
             moves.push_back(dir);
         }
     }
@@ -303,15 +294,21 @@ std::vector<Direction> ConcreteTankAlgorithm::getAllDirections() const {
 }
 
 bool ConcreteTankAlgorithm::canShootEnemy(Direction dir, const Position& myPos, const Position& enemyPos) const {
-    if (tankState.remainingShells <= 0 || !canShoot()) return false;
+    if (!canShoot()) return false;
 
     Position current = myPos;
-    while (true) {
+    int steps = 0;
+    const int maxSteps = std::max(mapWidth, mapHeight); // or a hard cap like 20
+
+    while (steps++ < maxSteps) {
         current = wrap(current + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
         if (current == enemyPos) return true;
         if (isWall(playerState.latestMap, current)) return false;
     }
+
+    return false; // didn't hit anything, assume can't shoot
 }
+
 
 
 //ActionRequest ConcreteTankAlgorithm::getAction() {
@@ -579,8 +576,8 @@ void ConcreteTankAlgorithm::updateBattleInfo(BattleInfo& info) {
         }
         // Update map dimensions only the first time
         if (mapWidth == static_cast<size_t>(UNINITIALIZED) && !playerState.latestMap.empty()) {
-            mapWidth = playerState.latestMap[0].size();
-            mapHeight = playerState.latestMap.size();
+            mapWidth = playerState.latestMap.size();
+            mapHeight = playerState.latestMap[0].size();
         }
     }
 }

@@ -16,16 +16,16 @@ public:
             : boardView(std::move(matrix)) {}
 
     void setObjectAt(size_t x, size_t y, char value) {
-        if (y < boardView.size() && x < boardView[y].size()) {
-            boardView[y][x] = value;
+        if (x < boardView.size() && y < boardView[x].size()) {
+            boardView[x][y] = value;
         }
     }
 
     char getObjectAt(size_t x, size_t y) const override {
-        if (y >= boardView.size() || x >= boardView[y].size()) {
+        if (x >= boardView.size() || y >= boardView[x].size()) {
             return '&';  // Outside the battlefield
         }
-        return boardView[y][x];
+        return boardView[x][y];
     }
 
     size_t getWidth() const {

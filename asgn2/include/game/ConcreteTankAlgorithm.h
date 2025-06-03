@@ -62,7 +62,7 @@ public:
 
     bool shouldRecalculatePath(const Position &enemyPos) const;
 
-    bool isSafe(const Position &pos) const;
+    bool isWalkable(const Position &pos) const;
 
     ActionRequest shoot();
 
@@ -70,7 +70,7 @@ public:
 
     ActionRequest chaseEnemy(Position myPos, Direction myDir);
 
-    ActionRequest evadeThreat(const ThreatInfo &threat, Position myPos, Direction myDir, int myShells);
+    ActionRequest evadeThreat(const ThreatInfo &threat, Position myPos, Direction myDir);
 
     ThreatInfo detectThreat(const Position &myPos) const;
 
@@ -83,7 +83,9 @@ public:
     bool pathBlocked(const std::vector<Position> &path) const;
 
 
-    std::vector<Position> bfsToEnemy(Position start, Position goal) const;
+    void bfsToEnemy(Position start, Position goal);
+
+    ActionRequest rotateToward(Direction current, Direction target);
 };
 
 #endif // CONCRETE_TANK_ALGORITHM_H 

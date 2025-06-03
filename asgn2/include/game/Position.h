@@ -42,8 +42,8 @@ struct Position {
     inline Position operator-() {
         return { -x, -y };
     }
-    
-    
+
+
 };
 
 namespace std {

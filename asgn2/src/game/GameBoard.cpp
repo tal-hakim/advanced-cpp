@@ -5,18 +5,18 @@
 
 void GameBoard::placeObject(const GameObjectPtr& obj) {
     Position pos = wrap(obj->getPosition());
-    grid[pos.y][pos.x].push_back(obj);
+    grid[pos.x][pos.y].push_back(obj);
 }
 
 std::vector<GameObjectPtr> GameBoard::getObjectsAt(Position p) const {
     Position wrapped = wrap(p);
-    return grid[wrapped.y][wrapped.x];
+    return grid[wrapped.x][wrapped.y];
 }
 
 
 void GameBoard::removeSpecificObject(const GameObjectPtr& obj) {
     Position pos = wrap(obj->getPosition());
-    auto& cell = grid[pos.y][pos.x];
+    auto& cell = grid[pos.x][pos.y];
     cell.erase(std::remove(cell.begin(), cell.end(), obj), cell.end());
 }
 
@@ -28,8 +28,8 @@ void GameBoard::moveObj(const std::shared_ptr<MovingElement>& elem) {
 void GameBoard::printBoard() const {
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            if (!grid[y][x].empty())
-                std::cout << grid[y][x].back()->getSymbol();  // print top-most object
+            if (!grid[x][y].empty())
+                std::cout << grid[x][y].back()->getSymbol();  // print top-most object
             else
                 std::cout << "_";
         }
@@ -92,13 +92,13 @@ bool GameBoard::isTank(const Position& pos) const {
 }
 
 std::vector<std::vector<char>> GameBoard::getBoardMat() const {
-    std::vector<std::vector<char>> mat(height, std::vector<char>(width, ' '));  // use space for empty
+    std::vector<std::vector<char>> mat(width, std::vector<char>(height, ' '));  // use space for empty
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            const auto& cell = grid[y][x];
+            const auto& cell = grid[x][y];
             if (!cell.empty()) {
-                mat[y][x] = cell.back()->getSymbol();  // draw top-most object
+                mat[x][y] = cell.back()->getSymbol();  // draw top-most object
             }
         }
     }

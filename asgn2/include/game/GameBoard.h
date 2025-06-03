@@ -28,7 +28,7 @@ public:
     GameBoard(int w, int h)
             : width(w),
               height(h),
-              grid(h, std::vector<std::vector<GameObjectPtr>>(w)) {}
+              grid(w, std::vector<std::vector<GameObjectPtr>>(h)) {}
 
     Position wrap(Position p) const;
 

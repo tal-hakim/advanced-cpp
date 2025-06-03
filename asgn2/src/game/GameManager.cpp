@@ -93,6 +93,7 @@ void GameManager::runGame() {
     logger.logGameStart();
     stalemateSteps = UNINITIALIZED;  // Initialize stalemate steps
     while (!isGameOver()) {
+        board.printBoard();
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
 
@@ -199,16 +200,16 @@ void GameManager::executeAction(const std::shared_ptr<Tank>& tank, ActionRequest
             }
             break;
         case ActionRequest::RotateLeft90:
-            tank->rotate(-90);
+            tank->rotate(-2);
             break;
         case ActionRequest::RotateRight90:
-            tank->rotate(90);
+            tank->rotate(2);
             break;
         case ActionRequest::RotateLeft45:
-            tank->rotate(-45);
+            tank->rotate(-1);
             break;
         case ActionRequest::RotateRight45:
-            tank->rotate(45);
+            tank->rotate(1);
             break;
         case ActionRequest::Shoot:
             if (canTankShoot(tank)) {
@@ -253,11 +254,17 @@ void GameManager::executeTanksStep() {
     // Handle all tanks' actions in a single pass
     for (const auto& [playerId, tanks] : playersArmy) {
         for (const auto& tank : tanks) {
-            if (!tank || tank->isDestroyed()) continue;
+            if (!tank || tank->isDestroyed()) {
+                logger.logAction(playerId, "killed");
+                continue;
+            }
 
             // Get action from the tank's algorithm
             ActionRequest action = requestTankAction(tank);
-            if (action == ActionRequest::DoNothing) continue;
+            if (action == ActionRequest::DoNothing) {
+                logger.logAction(tank->getPlayerId(), actionToString(action));
+                continue;
+            }
 
             // Validate and log the action
             if (!validateAndLogAction(tank, action)) continue;
@@ -385,7 +392,8 @@ void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unorde
 // TODO: log the bad steps
 bool GameManager::isActionLegal(ActionRequest act, std::shared_ptr<Tank> tank) {
     switch (act) {
-        case ActionRequest::MoveForward: return canMove(tank, false);
+        case ActionRequest::MoveForward:
+            return canMove(tank, false);
         case ActionRequest::MoveBackward: return canMove(tank, true);
         case ActionRequest::Shoot: return canTankShoot(tank);
         default: return true;
@@ -448,7 +456,7 @@ std::unique_ptr<SatelliteView> GameManager::getSatelliteView(const std::shared_p
     Position pos = tank->getPosition();
 
     if (pos.y < board.getHeight() && pos.x < board.getWidth()) {
-        boardMat[pos.y][pos.x] = '%';
+        boardMat[pos.x][pos.y] = '%';
     }
 
     return std::make_unique<BoardSatelliteView>(std::move(boardMat));
@@ -564,12 +572,12 @@ bool GameManager::readMapContent(std::ifstream& file, int rows, int cols, int nu
         mapLines.push_back(line);
     }
 
-    for (int row = 0; row < rows; row++) {
-        std::string currentLine = (row < static_cast<int>(mapLines.size())) ? mapLines[row] : "";
+    for (int y = 0; y < rows; y++) {
+        std::string currentLine = (y < static_cast<int>(mapLines.size())) ? mapLines[y] : "";
 
-        for (int col = 0; col < cols; col++) {
-            char cell = (col < static_cast<int>(currentLine.length())) ? currentLine[col] : ' ';
-            Position pos(row, col);
+        for (int x = 0; x < cols; x++) {
+            char cell = (x < static_cast<int>(currentLine.length())) ? currentLine[x] : ' ';
+            Position pos(x, y);
 
             if (!processMapCell(cell, pos, numShells)) {
                 return false;
@@ -624,7 +632,7 @@ bool GameManager::readBoard(const std::string& inputFile) {
     }
 
     // Initialize the board with the specified dimensions
-    board = GameBoard(rows, cols);
+    board = GameBoard(cols, rows);
 
     // Read and process map content
     if (!readMapContent(file, rows, cols, numShells)) {

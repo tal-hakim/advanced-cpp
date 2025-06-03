@@ -16,7 +16,7 @@ ConcretePlayer::ConcretePlayer(int playerIndex, size_t x, size_t y, size_t maxSt
       playerId(playerIndex), boardWidth(x), boardHeight(y), maxSteps(maxSteps), numShells(numShells),
       aliveTanks(UNINITIALIZED), reorderTurns(false) {
     // Initialize context with empty state
-    playerState.latestMap.resize(y, std::vector<char>(x, ' '));
+    playerState.latestMap.resize(x, std::vector<char>(y, ' '));
     playerState.initShells = numShells;
     // Don't initialize myTanksInfo - we'll resize it when we first see tanks
     
@@ -49,8 +49,8 @@ std::vector<std::vector<char>> ConcretePlayer::readView(int tankId, SatelliteVie
     int currAliveTanks = 0;
     
     // First pass: count tanks
-    for(size_t i = 0; i < boardHeight ; i++){
-        for (size_t j = 0; j <boardWidth; ++j) {
+    for(size_t i = 0; i < boardWidth ; i++){
+        for (size_t j = 0; j <boardHeight; ++j) {
             char currObj = view.getObjectAt(i, j);
             if(currObj == '0' + playerId || currObj == '%') {
                 currAliveTanks++;
@@ -72,8 +72,8 @@ std::vector<std::vector<char>> ConcretePlayer::readView(int tankId, SatelliteVie
     }
     
     // Second pass: populate map and update positions
-    for(size_t i = 0; i < boardHeight; i++){
-        for (size_t j = 0; j < boardWidth; ++j) {
+    for(size_t i = 0; i < boardWidth; i++){
+        for (size_t j = 0; j < boardHeight; ++j) {
             char currObj = view.getObjectAt(i, j);
             if(currObj == CURR_TANK){
                 playerState.myTanksInfo[tankId].first = Position{static_cast<int>(i), static_cast<int>(j)};
@@ -101,7 +101,7 @@ void ConcretePlayer::analyzeWindowAroundObject(const Position& pos, int windowSi
             int wrappedY = (pos.y + dy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
             Position windowPos{wrappedX, wrappedY};
             
-            char obj = map[windowPos.y][windowPos.x];
+            char obj = map[windowPos.x][windowPos.y];
             if (obj != ' ') {  // Only exclude empty space
                 Direction dir = DirectionUtils::directionFromTo(pos, windowPos);
                 
@@ -114,9 +114,9 @@ void ConcretePlayer::analyzeWindowAroundObject(const Position& pos, int windowSi
                                 int prevX = (windowPos.x + prevDx + static_cast<int>(boardWidth)) % static_cast<int>(boardWidth);
                                 int prevY = (windowPos.y + prevDy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
                                 
-                                if (static_cast<size_t>(prevY) < playerState.latestMap.size() && 
-                                    static_cast<size_t>(prevX) < playerState.latestMap[0].size() && 
-                                    playerState.latestMap[prevY][prevX] == '*') {
+                                if (static_cast<size_t>(prevX) < playerState.latestMap.size() &&
+                                    static_cast<size_t>(prevY) < playerState.latestMap[0].size() &&
+                                    playerState.latestMap[prevX][prevY] == '*') {
                                     isNewShell = false;
                                 }
                             }
@@ -131,7 +131,7 @@ void ConcretePlayer::analyzeWindowAroundObject(const Position& pos, int windowSi
                                 int searchX = (windowPos.x + searchDx + static_cast<int>(boardWidth)) % static_cast<int>(boardWidth);
                                 int searchY = (windowPos.y + searchDy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
                                 
-                                char searchObj = map[searchY][searchX];
+                                char searchObj = map[searchX][searchY];
                                 if (searchObj == '1' || searchObj == '2' || searchObj == '0' + playerId) {
                                     // Found a tank, calculate direction from tank to shell
                                     Position tankPos{searchX, searchY};
@@ -190,7 +190,7 @@ void ConcretePlayer::analyzeBoard(int tankId, SatelliteView& view) {
         int expectedY = (oldPos.y + 2 * dirVector.y + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
         
         // Only keep shell if it's exactly at the expected position
-        if (newMap[expectedY][expectedX] == '*') {
+        if (newMap[expectedX][expectedY] == '*') {
             Position newPos{expectedX, expectedY};
             updatedShells[newPos] = shellDir;
         }
@@ -205,7 +205,7 @@ void ConcretePlayer::analyzeBoard(int tankId, SatelliteView& view) {
     // Now find any new shells on the map
     for (size_t y = 0; y < boardHeight; ++y) {
         for (size_t x = 0; x < boardWidth; ++x) {
-            if (newMap[y][x] == '*') {
+            if (newMap[x][y] == '*') {
                 Position shellPos{static_cast<int>(x), static_cast<int>(y)};
                 
                 // If this shell isn't in our updated positions, it's new
@@ -220,7 +220,7 @@ void ConcretePlayer::analyzeBoard(int tankId, SatelliteView& view) {
                             int searchX = (x + searchDx + static_cast<int>(boardWidth)) % static_cast<int>(boardWidth);
                             int searchY = (y + searchDy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
                             
-                            char searchObj = newMap[searchY][searchX];
+                            char searchObj = newMap[searchX][searchY];
                             if (searchObj == '1' || searchObj == '2' || searchObj == '0' + playerId) {
                                 // Calculate distance (manhattan distance is fine for this)
                                 int distance = std::abs(searchDx) + std::abs(searchDy);
@@ -238,7 +238,7 @@ void ConcretePlayer::analyzeBoard(int tankId, SatelliteView& view) {
                         playerState.shellInfo[shellPos] = shellDir;
                     }
                 }
-            } else if (newMap[y][x] == '1' || newMap[y][x] == '2') {
+            } else if (newMap[x][y] == '1' || newMap[x][y] == '2') {
                 // For tanks, analyze 1 cell in each direction
                 Position pos{static_cast<int>(x), static_cast<int>(y)};
                 analyzeWindowAroundObject(pos, 1, newMap);
