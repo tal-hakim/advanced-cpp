@@ -5,7 +5,10 @@
 
 // Helper function to determine rotation action
 ActionRequest ConcreteTankAlgorithm::rotateToward(Direction current, Direction target) {
-    if (current == target) return ActionRequest::MoveForward;
+    if (current == target) {
+        // TODO: if cant move forward - handle it
+        return ActionRequest::MoveForward;
+    }
     
     int currentAngle = static_cast<int>(current);
     int targetAngle = static_cast<int>(target);
@@ -37,7 +40,7 @@ bool isWall(const std::vector<std::vector<char>>& map, const Position& pos) {
 }
 
 bool isMine(const std::vector<std::vector<char>>& map, const Position& pos) {
-    return map[pos.x][pos.y] == '*';
+    return map[pos.x][pos.y] == '@';
 }
 
 bool isTank(const std::vector<std::vector<char>>& map, const Position& pos) {
@@ -58,6 +61,9 @@ Position wrap(const Position& pos, size_t width, size_t height) {
 ActionRequest ConcreteTankAlgorithm::getAction() {
     tankState.roundCounter++;
 
+    // Update shell positions at the start of each action
+    updateShellPositions();
+
     if (shouldGetBattleInfo()) {
         return ActionRequest::GetBattleInfo;
     }
@@ -66,7 +72,18 @@ ActionRequest ConcreteTankAlgorithm::getAction() {
     Direction myDir = tankState.tankDir;
 
     ThreatInfo threat = detectThreat(myPos);
-    if (threat.exists) {
+    if (tankState.remainingShells <= 0) {
+        // When out of ammo, use getNearestEnemy to find a threat
+        auto enemyPos = getNearestEnemy(myPos);
+        if (enemyPos.has_value()) {
+            threat.exists = true;
+            threat.pos = enemyPos.value();
+            threat.dir = DirectionUtils::directionFromTo(enemyPos.value(), myPos);
+            threat.steps = std::abs(enemyPos.value().x - myPos.x) + std::abs(enemyPos.value().y - myPos.y);
+        }
+    }
+    
+    if (threat.exists || tankState.remainingShells <= 0) {
         return evadeThreat(threat, myPos, myDir);
     }
 
@@ -74,9 +91,9 @@ ActionRequest ConcreteTankAlgorithm::getAction() {
 }
 // ====== Top-Level Helpers ======
 bool ConcreteTankAlgorithm::shouldGetBattleInfo() const {
-    return (tankState.roundCounter == 0 ||
+    return ((tankState.roundCounter == 0 ||
             (tankState.roundCounter % static_cast<int>(numTanks) == playerState.turnId))
-           && numTanks != 1;
+           && numTanks != 1) || (numTanks == 1 && tankState.roundCounter % 3 == 0);
 }
 
 ConcreteTankAlgorithm::ThreatInfo ConcreteTankAlgorithm::detectThreat(const Position& myPos) const {
@@ -104,26 +121,54 @@ ConcreteTankAlgorithm::ThreatInfo ConcreteTankAlgorithm::detectThreat(const Posi
     return threat;
 }
 
+bool ConcreteTankAlgorithm::canMoveForward(Position myPos, Direction myDir){
+    Position forward = wrap(myPos + DirectionUtils::dirToVector(myDir), mapWidth, mapHeight);
+    if (isWalkable(forward)) {
+        playerState.myTanksInfo[tankId].first = forward;
+        return true;
+    }
+    return false;
+}
+
 ActionRequest ConcreteTankAlgorithm::evadeThreat(const ThreatInfo &threat, Position myPos, Direction myDir)
 {
-    if (myDir == threat.dir && canShoot()) {
+    Direction oppDir = DirectionUtils::getOppositeDirection(threat.dir);
+    if (myDir == oppDir && canShoot()) {
         return shoot();
     }
-
-    Direction oppDir = DirectionUtils::getOppositeDirection(threat.dir);
     if (threat.dir != myDir && oppDir != myDir) {
-        Position forward = wrap(myPos + DirectionUtils::dirToVector(myDir), mapWidth, mapHeight);
-        if (isWalkable(forward)) {
-            playerState.myTanksInfo[tankId].first = forward;
+        if(canMoveForward(myPos, myDir)) {
             return ActionRequest::MoveForward;
         }
     }
+//        Position forward = wrap(myPos + DirectionUtils::dirToVector(myDir), mapWidth, mapHeight);
+//        if (isWalkable(forward)) {
+//            playerState.myTanksInfo[tankId].first = forward;
+//            return ActionRequest::MoveForward;
+//        }
+//    }
 
     for (Direction dir : getSafeRotations(myPos)) {
+        // If we're already facing a safe direction, try moving forward first
+        if (myDir == dir) {
+            if (canMoveForward(myPos, myDir)) {
+                return ActionRequest::MoveForward;
+            }
+            // If we can't move forward, continue to find another safe direction
+            continue;
+        }
         return rotateToward(myDir, dir);
     }
 
     for (Direction dir : getSafeMoves(myPos)) {
+        // If we're already facing a safe direction, try moving forward first
+        if (myDir == dir) {
+            if (canMoveForward(myPos, myDir)) {
+                return ActionRequest::MoveForward;
+            }
+            // If we can't move forward, continue to find another safe direction
+            continue;
+        }
         return rotateToward(myDir, dir);
     }
 
@@ -135,7 +180,7 @@ ActionRequest ConcreteTankAlgorithm::evadeThreat(const ThreatInfo &threat, Posit
 }
 
 ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir) {
-    auto enemy = getFirstEnemy();
+    auto enemy = getNearestEnemy(myPos);
     if (!enemy.has_value()) return ActionRequest::GetBattleInfo;
 
     Position enemyPos = enemy.value();
@@ -180,21 +225,49 @@ ActionRequest ConcreteTankAlgorithm::chaseEnemy(Position myPos, Direction myDir)
     if (!isWalkable(next)) {
         for (Direction dir : getSafeRotations(myPos)) {
             bfsToEnemy(myPos, enemyPos);
+            // If we're already facing a safe direction, try moving forward first
+            if (myDir == dir) {
+                if (canMoveForward(myPos, myDir)) {
+                    return ActionRequest::MoveForward;
+                }
+                // If we can't move forward, continue to find another safe direction
+                continue;
+            }
             return rotateToward(myDir, dir);
         }
         return ActionRequest::GetBattleInfo;
     }
 
-    playerState.myTanksInfo[tankId].first = next;
     bfsPath.erase(bfsPath.begin());
-    return ActionRequest::MoveForward;
+    if(canMoveForward(myPos, myDir)) {
+        return ActionRequest::MoveForward;
+    }
+    
+    // If we can't move forward and none of the above conditions were met,
+    // try to find a safe direction to rotate to
+    for (Direction dir : getSafeRotations(myPos)) {
+        if (myDir == dir) {
+            continue;  // Skip if we're already facing this direction
+        }
+        return rotateToward(myDir, dir);
+    }
+    
+    // If we can't find any safe moves, get new battle info
+    return ActionRequest::GetBattleInfo;
 }
 
-// ====== BFS and Support ======
+int manhattanDistance(Position a, Position b) {
+    return std::abs(a.x - b.x) + std::abs(a.y - b.y);
+}
+
+
 void ConcreteTankAlgorithm::bfsToEnemy(Position start, Position goal) {
-    // TODO: fix the bfs, write player 2, fix logger
+    const int maxDepth = 15;
     std::queue<std::pair<Position, std::vector<Position>>> q;
     std::unordered_set<std::string> visited;
+
+    std::vector<Position> bestPath;
+    int bestDistance = std::numeric_limits<int>::max();
 
     q.push({start, {start}});
     visited.insert(start.toString());
@@ -202,29 +275,75 @@ void ConcreteTankAlgorithm::bfsToEnemy(Position start, Position goal) {
     while (!q.empty()) {
         auto [current, path] = q.front(); q.pop();
 
+        // Record best path so far (closest to goal)
+        int dist = manhattanDistance(current, goal);
+        if (dist < bestDistance) {
+            bestDistance = dist;
+            bestPath = path;
+        }
+
         if (current == goal) {
             bfsPath = path;
             return;
         }
 
-        for (int d = 0; d < NUM_DIRECTIONS ; ++d) {
+        if (path.size() > maxDepth)
+            continue;
+
+        for (int d = 0; d < NUM_DIRECTIONS; ++d) {
             Direction dir = static_cast<Direction>(d);
             Position next = wrap(current + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
 
-            // Skip walls, mines, and previously visited positions
-            if (isWalkable(next) &&
-                visited.count(next.toString()) == 0) {
+            if (!isWalkable(next) || visited.count(next.toString()))
+                continue;
 
-                visited.insert(next.toString());
-                auto newPath = path;
-                newPath.push_back(next);
-                q.push({next, newPath});
-            }
+            visited.insert(next.toString());
+            auto newPath = path;
+            newPath.push_back(next);
+            q.push({next, newPath});
         }
     }
 
-    bfsPath = std::vector<Position>{};
+    // Fallback to best-effort path (even if goal not reached)
+    bfsPath = bestPath;
 }
+
+
+//// ====== BFS and Support ======
+//void ConcreteTankAlgorithm::bfsToEnemy(Position start, Position goal) {
+//    // TODO: write player 2, fix logger
+//    std::queue<std::pair<Position, std::vector<Position>>> q;
+//    std::unordered_set<std::string> visited;
+//
+//    q.push({start, {start}});
+//    visited.insert(start.toString());
+//
+//    while (!q.empty()) {
+//        auto [current, path] = q.front(); q.pop();
+//
+//        if (current == goal) {
+//            bfsPath = path;
+//            return;
+//        }
+//
+//        for (int d = 0; d < NUM_DIRECTIONS ; ++d) {
+//            Direction dir = static_cast<Direction>(d);
+//            Position next = wrap(current + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
+//
+//            // Skip walls, mines, and previously visited positions
+//            if (isWalkable(next) &&
+//                visited.count(next.toString()) == 0) {
+//
+//                visited.insert(next.toString());
+//                auto newPath = path;
+//                newPath.push_back(next);
+//                q.push({next, newPath});
+//            }
+//        }
+//    }
+//
+//    bfsPath = std::vector<Position>{};
+//}
 
 bool ConcreteTankAlgorithm::canShoot() const {
     return (tankState.roundCounter - lastShotRound > SHOOTING_COOLDOWN) && tankState.remainingShells > 0;
@@ -241,11 +360,55 @@ bool ConcreteTankAlgorithm::isWalkable(const Position& pos) const {
            !isMine(playerState.latestMap, pos);
 }
 
-std::optional<Position> ConcreteTankAlgorithm::getFirstEnemy() const {
-    for (const auto& [pos, _] : playerState.enemyTanksInfo) {
-        return pos;
+void ConcreteTankAlgorithm::updateShellPositions() {
+    if (playerState.latestMap.size() == 0){
+        return;
     }
-    return std::nullopt;
+    // First clear all shells from the map
+    for (size_t x = 0; x < mapWidth; ++x) {
+        for (size_t y = 0; y < mapHeight; ++y) {
+            if (playerState.latestMap[x][y] == '*') {
+                playerState.latestMap[x][y] = ' ';
+            }
+        }
+    }
+
+    // Update shell positions and map
+    std::unordered_map<Position, Direction> updatedShells;
+    for (const auto& [oldPos, shellDir] : playerState.shellInfo) {
+        // Calculate new position (2 cells in shell's direction)
+        Position dirVector = DirectionUtils::dirToVector(shellDir);
+        int newX = (oldPos.x + 2 * dirVector.x + static_cast<int>(mapWidth)) % static_cast<int>(mapWidth);
+        int newY = (oldPos.y + 2 * dirVector.y + static_cast<int>(mapHeight)) % static_cast<int>(mapHeight);
+        Position newPos{newX, newY};
+        
+        // Only keep shell if it hasn't hit a wall
+        if (!isWall(playerState.latestMap, newPos)) {
+            updatedShells[newPos] = shellDir;
+            // Update the map with the new shell position
+            playerState.latestMap[newPos.x][newPos.y] = '*';
+        }
+    }
+    // Update shell info with the new positions
+    playerState.shellInfo = std::move(updatedShells);
+}
+
+std::optional<Position> ConcreteTankAlgorithm::getNearestEnemy(const Position& myPos) {
+    // Find the nearest enemy
+    Position nearestPos;
+    int minDistance = std::numeric_limits<int>::max();
+    bool foundEnemy = false;
+
+    for (const auto& [pos, _] : playerState.enemyTanksInfo) {
+        int distance = std::abs(pos.x - myPos.x) + std::abs(pos.y - myPos.y);
+        if (distance < minDistance) {
+            minDistance = distance;
+            nearestPos = pos;
+            foundEnemy = true;
+        }
+    }
+
+    return foundEnemy ? std::optional<Position>(nearestPos) : std::nullopt;
 }
 
 bool ConcreteTankAlgorithm::shouldRecalculatePath(const Position& enemyPos) const {
@@ -566,9 +729,16 @@ bool ConcreteTankAlgorithm::canShootEnemy(Direction dir, const Position& myPos, 
 
 
 void ConcreteTankAlgorithm::updateBattleInfo(BattleInfo& info) {
+    // Get a copy of all the data we need before doing any dynamic casting
     auto* concreteInfo = dynamic_cast<ConcreteBattleInfo*>(&info);
+
+    auto playerUpdates = concreteInfo->getPlayerUpdates();
+
+    // Now we can safely cast and update our state
+
     if (concreteInfo) {
-        playerState = concreteInfo->getPlayerUpdates();
+        // Update our state with the copies we made
+        playerState = playerUpdates;
         concreteInfo->setTankUpdates(tankState);
         numTanks = playerState.myTanksInfo.size();
         if(tankState.remainingShells == UNINITIALIZED){

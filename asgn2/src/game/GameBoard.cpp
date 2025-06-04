@@ -31,7 +31,7 @@ void GameBoard::printBoard() const {
             if (!grid[x][y].empty())
                 std::cout << grid[x][y].back()->getSymbol();  // print top-most object
             else
-                std::cout << "_";
+                std::cout << " ";
         }
         std::cout << std::endl;
     }

@@ -1,6 +1,6 @@
 Urban Combat Simulation
 MaxSteps =200
-NumShells= 4
+NumShells= 19
 Rows = 10
 Cols=16
 ################

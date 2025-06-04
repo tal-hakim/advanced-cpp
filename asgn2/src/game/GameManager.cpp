@@ -93,6 +93,7 @@ void GameManager::runGame() {
     logger.logGameStart();
     stalemateSteps = UNINITIALIZED;  // Initialize stalemate steps
     while (!isGameOver()) {
+        std::cout << "game step: " << getGameStep() << std::endl;
         board.printBoard();
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
@@ -253,12 +254,16 @@ void GameManager::executeTanksStep() {
 
     // Handle all tanks' actions in a single pass
     for (const auto& [playerId, tanks] : playersArmy) {
+        int tankId = 0;
         for (const auto& tank : tanks) {
             if (!tank || tank->isDestroyed()) {
                 logger.logAction(playerId, "killed");
                 continue;
             }
-
+            if(tankId == 3){
+                cout << "hello" << endl;
+            }
+            tankId++;
             // Get action from the tank's algorithm
             ActionRequest action = requestTankAction(tank);
             if (action == ActionRequest::DoNothing) {

@@ -30,6 +30,8 @@ private:
     Position lastEnemyPos;  // Store last known enemy position for path recalculation
     int lastShotRound;  // Track the last round we shot
 
+    void updateShellPositions();  // Helper function to update shell positions
+
 public:
     // ====== ThreatInfo Struct ======
     struct ThreatInfo {
@@ -78,7 +80,7 @@ public:
 
     std::vector<Direction> getAllDirections() const;
 
-    std::optional<Position> getFirstEnemy() const;
+    std::optional<Position> getNearestEnemy(const Position& myPos);
 
     bool pathBlocked(const std::vector<Position> &path) const;
 
@@ -86,6 +88,8 @@ public:
     void bfsToEnemy(Position start, Position goal);
 
     ActionRequest rotateToward(Direction current, Direction target);
+
+    bool canMoveForward(Position myPos, Direction myDir);
 };
 
 #endif // CONCRETE_TANK_ALGORITHM_H 
