@@ -2,7 +2,8 @@
 #define TANK_ALGORITHM_FACTORY_H
 
 #include "../../common/TankAlgorithmFactory.h"
-#include "game/ConcreteTankAlgorithm.h"
+#include "game/AlgorithmOne.h"
+#include "game/AlgorithmTwo.h"
 #include "game/Direction.h"
 #include <stdexcept>
 
@@ -18,7 +19,12 @@ public:
         }
 
         // Create algorithm with validated inputs
-        auto algo = std::make_unique<ConcreteTankAlgorithm>(player_index, tank_index);
+        std::unique_ptr<ConcreteTankAlgorithm> algo;
+        if (player_index == 1) {
+            algo = std::make_unique<AlgorithmOne>(player_index, tank_index);
+        } else {
+            algo = std::make_unique<AlgorithmTwo>(player_index, tank_index);
+        }
         
         // Set initial direction based on player index (1 = LEFT, 2 = RIGHT)
         const Direction initialDirection = (player_index == 1) ? Direction::L : Direction::R;

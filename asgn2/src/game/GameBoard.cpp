@@ -1,5 +1,6 @@
 #include "game/GameBoard.h"
 #include "game/BoardSatelliteView.h"
+#include "definitions.h"
 #include <iostream>
 #include <algorithm>
 
@@ -92,7 +93,7 @@ bool GameBoard::isTank(const Position& pos) const {
 }
 
 std::vector<std::vector<char>> GameBoard::getBoardMat() const {
-    std::vector<std::vector<char>> mat(width, std::vector<char>(height, ' '));  // use space for empty
+    std::vector<std::vector<char>> mat(width, std::vector<char>(height, EMPTY));  // use EMPTY for empty
 
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {

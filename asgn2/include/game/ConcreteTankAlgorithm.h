@@ -16,21 +16,24 @@
 #include <optional>
 #include "Direction.h"
 #include "definitions.h"
+#include "MapUtils.h"
 
 class ConcreteTankAlgorithm : public TankAlgorithm {
 private:
-    ConcreteBattleInfo::PlayerUpdates playerState;
-    ConcreteBattleInfo::TankUpdates tankState;
     int playerId;
-    int tankId;
     size_t numTanks;  // Track total number of tanks in the game
     size_t mapWidth;  // Map width, updated with battle info
     size_t mapHeight; // Map height, updated with battle info
-    std::vector<Position> bfsPath;  // Store the current BFS path
     Position lastEnemyPos;  // Store last known enemy position for path recalculation
     int lastShotRound;  // Track the last round we shot
+protected:
+    ConcreteBattleInfo::PlayerUpdates playerState;
+    int tankId;
+    ConcreteBattleInfo::TankUpdates tankState;
+    std::vector<Position> bfsPath;  // Store the current BFS path
 
     void updateShellPositions();  // Helper function to update shell positions
+
 
 public:
     // ====== ThreatInfo Struct ======
@@ -42,16 +45,15 @@ public:
     };
 
     ConcreteTankAlgorithm(int player_index, int tank_index)
-            : playerId(player_index), tankId(tank_index),
-              numTanks(0), mapWidth(static_cast<size_t>(UNINITIALIZED)), mapHeight(static_cast<size_t>(UNINITIALIZED)),
-              lastEnemyPos(Position{0,0}), lastShotRound(-4) {
+            : playerId(player_index), numTanks(0),
+              mapWidth(static_cast<size_t>(UNINITIALIZED)), mapHeight(static_cast<size_t>(UNINITIALIZED)), lastEnemyPos(Position{0,0}),
+              lastShotRound(-4), tankId(tank_index) {
         playerState.turnId = tank_index;  // Set turnId to be the tank's index
         tankState.roundCounter = UNINITIALIZED;
         tankState.remainingShells = UNINITIALIZED;
     }
     virtual ~ConcreteTankAlgorithm() = default;
 
-    ActionRequest getAction() override;
     void updateBattleInfo(BattleInfo& info) override;
     int getTankId() const {return tankId;}
     void setTankDir(Direction dir) { tankState.tankDir = dir; }
@@ -64,13 +66,11 @@ public:
 
     bool shouldRecalculatePath(const Position &enemyPos) const;
 
-    bool isWalkable(const Position &pos) const;
-
     ActionRequest shoot();
 
     bool canShoot() const;
 
-    ActionRequest chaseEnemy(Position myPos, Direction myDir);
+    virtual ActionRequest chaseEnemy(Position myPos, Direction myDir);
 
     ActionRequest evadeThreat(const ThreatInfo &threat, Position myPos, Direction myDir);
 
@@ -83,9 +83,6 @@ public:
     std::optional<Position> getNearestEnemy(const Position& myPos);
 
     bool pathBlocked(const std::vector<Position> &path) const;
-
-
-    void bfsToEnemy(Position start, Position goal);
 
     ActionRequest rotateToward(Direction current, Direction target);
 

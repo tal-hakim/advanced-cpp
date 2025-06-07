@@ -31,7 +31,7 @@ void Logger::logBadStep(int playerId, const std::string& reason) {
 }
 
 void Logger::logResult(const std::string& result) {
-    stepLogs.push_back("\n====== Game Over ====== \n" + result);
+    stepLogs.push_back(result);
 }
 
 void Logger::logGameStart()  {
@@ -58,4 +58,35 @@ void Logger::finalize() {
     if (hasInputErrors && inputErrorLog.is_open()) {
         inputErrorLog.close();
     }
+}
+
+void Logger::addAction(const std::string& action) {
+    currentActions.push_back(action);
+}
+
+void Logger::clearActions() {
+    currentActions.clear();
+}
+
+void Logger::logActions() {
+    if (currentActions.empty()) {
+        return;
+    }
+    
+    std::string combined;
+    for (size_t i = 0; i < currentActions.size(); ++i) {
+        combined += currentActions[i];
+        if (i < currentActions.size() - 1) {
+            combined += ", ";
+        }
+    }
+    stepLogs.push_back(combined);
+    clearActions();  // Clear after logging
+}
+
+void Logger::appendToAction(size_t index, const std::string& str) {
+    if (index >= currentActions.size()) {
+        return;  // Index out of bounds, do nothing
+    }
+    currentActions[index] += str;
 }

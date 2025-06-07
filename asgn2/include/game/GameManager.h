@@ -25,7 +25,8 @@ private:
     GameBoard board{0, 0};  // Initialize with 0x0 dimensions, will be properly set in readBoard
     Logger logger;
     std::vector<std::unique_ptr<Player>> players;  // Vector of all players
-    std::map<int, std::vector<std::shared_ptr<Tank>>> playersArmy;  // Map of player_id to their tanks
+    std::vector<std::shared_ptr<Tank>> allTanks;  // Vector of all tanks
+    std::map<int, int> tankCountPerPlayer;  // Track number of tanks per player for algorithm creation
     std::vector<std::shared_ptr<Shell>> shells;
     std::map<int, int> aliveTanksPerPlayer;  // Track number of alive tanks per player
     int stepCount = 0;

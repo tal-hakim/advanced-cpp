@@ -7,4 +7,9 @@ ConcreteBattleInfo::ConcreteBattleInfo(PlayerUpdates updates)
     tankUpdates.tankDir = Direction::R;
     tankUpdates.remainingShells = 0;
     tankUpdates.roundCounter = 0;
-} 
+}
+
+void ConcreteBattleInfo::setEnemy(std::pair<Position, Direction> enemy) {
+    playerUpdates.enemyTanksInfo.clear();
+    playerUpdates.enemyTanksInfo.emplace_back(enemy);  // cleaner and avoids copy
+}

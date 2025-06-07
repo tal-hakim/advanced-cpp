@@ -3,7 +3,8 @@
 
 #include "../../common/PlayerFactory.h"
 #include "ConcretePlayer.h"
-#include "AnalyticalPlayer.h"
+#include "PlayerOne.h"
+#include "PlayerTwo.h"
 #include <stdexcept>
 
 class ConcretePlayerFactory : public PlayerFactory {
@@ -26,9 +27,9 @@ public:
 
         // Create player with validated inputs
         if (player_index == 1) {
-            return std::make_unique<ConcretePlayer>(player_index, x, y, max_steps, num_shells);
+            return std::make_unique<PlayerOne>(player_index, x, y, max_steps, num_shells);
         } else {
-            return std::make_unique<AnalyticalPlayer>(player_index, x, y, max_steps, num_shells);
+            return std::make_unique<PlayerTwo>(player_index, x, y, max_steps, num_shells);
         }
     }
 };

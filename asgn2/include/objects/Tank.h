@@ -20,10 +20,11 @@ protected:
     std::string collisionType = "";
     std::unique_ptr<TankAlgorithm> algorithm;
     Direction getNewDir(int angle);
+    int index;
 
 public:
-    Tank(Position p, Direction dir, int id, int numShells = INITIAL_SHELLS_AMOUNT)
-        : MovingElement(p, '0' + id, dir, id), shellsRemaining(numShells) {}
+    Tank(Position p, Direction dir, int id, int index, int numShells = INITIAL_SHELLS_AMOUNT)
+        : MovingElement(p, '0' + id, dir, id), shellsRemaining(numShells), index(index) {}
 
     void shoot();
     void rotate(int angle);
@@ -46,6 +47,7 @@ public:
 
     void setAlgorithm(std::unique_ptr<TankAlgorithm> algo) { algorithm = std::move(algo); }
     TankAlgorithm* getAlgorithm() { return algorithm.get(); }
+    int getIndex() const {return index; }
 };
 
 #endif // TANK_H

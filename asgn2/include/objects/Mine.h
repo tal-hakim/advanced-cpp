@@ -1,11 +1,12 @@
 #ifndef MINE_H
 #define MINE_H
 
-#include "GameObject.h"
+#include "objects/GameObject.h"
+#include "definitions.h"
 
 class Mine : public GameObject {
 public:
-    Mine(Position p): GameObject(p, '@'){};
+    Mine(Position p): GameObject(p, MINE){};
     std::string toString() const override {
         return "Mine";
     }

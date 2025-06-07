@@ -21,6 +21,7 @@ public:
         std::unordered_map<Position, Direction> shellInfo;  // Maps shell positions to their directions
         size_t turnId;
         int initShells;
+        std::vector<Position> bfsToEnemy;  // Store the BFS path to the enemy
     };
     struct TankUpdates {
         Direction tankDir;
@@ -50,8 +51,12 @@ public:
         tankUpdates = updates;
     }
 
+    void setEnemy(std::pair<Position, Direction> enemy);
+
 private:
     PlayerUpdates playerUpdates;
     TankUpdates tankUpdates;
+
+
 };
 #endif // CONCRETE_BATTLE_INFO_H 

@@ -4,6 +4,16 @@
 
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
+
+// Game object constants
+constexpr char WALL = '#';
+constexpr char PLAYER1_TANK = '1';
+constexpr char PLAYER2_TANK = '2';
+constexpr char SHELL = '*';
+constexpr char MINE = '@';
+constexpr char EMPTY = ' ';
+
+// Game constants
 constexpr int BACKWARDS_STEP_COUNT = 2;
 constexpr int UNINITIALIZED = -1;
 constexpr int PLAYER_1_ID = 1;

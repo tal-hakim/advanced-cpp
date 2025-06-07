@@ -25,6 +25,9 @@ set(GAME_SOURCES
     src/game/ConcreteBattleInfo.cpp
     src/game/ConcreteTankAlgorithm.cpp
     src/game/DirectionUtils.cpp
+        src/game/PlayerOne.cpp
+        src/game/PlayerTwo.cpp
+        src/game/AlgorithmOne.cpp
 )
 
 set(OBJECT_SOURCES
@@ -39,6 +42,13 @@ set(SOURCES
     ${OBJECT_SOURCES}
     ${ALGORITHM_SOURCES}
     src/main.cpp
+        include/game/AlgorithmOne.h
+        src/game/AlgorithmOne.cpp
+        include/game/AlgorithmTwo.h
+        src/game/AlgorithmTwo.cpp
+        src/game/MapUtils.cpp
+        include/game/MapUtils.h
+        src/game/MapUtils.h
 )
 
 # Add executable
