@@ -1,0 +1,14 @@
+player_type=radius
+radius_value=3
+wall_lives=2
+max_turns_no_shells=40
+caller_tank_sign=%
+out_of_bounds_sign=&
+mine_sign=@
+wall_sign=#
+shell_sign=*
+tank1_sign=1
+tank2_sign=2
+battle_info_request_period=3
+backward_wating_turns=2
+shooting_waiting_turns=4

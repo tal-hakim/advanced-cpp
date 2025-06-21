@@ -19,19 +19,14 @@ public:
     ~Logger();
     Logger(const Logger&) = delete;
     Logger& operator=(const Logger&) = delete;
-    
-    void logBadStep(int playerId, const std::string& reason);
+
     void logResult(const std::string& result);
     void logInputError(const std::string& message);
 
     void flushStepLog();
     void finalize();
 
-    void logAction(int playerId, const std::string &action);
-
     void logStepNum(int step);
-
-    void logGameStart();
 
     // Action logging methods
     void addAction(const std::string& action);  // Add a single action

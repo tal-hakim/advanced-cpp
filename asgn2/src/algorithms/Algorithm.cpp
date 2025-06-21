@@ -2,7 +2,7 @@
 // Created by talta on 23/04/2025.
 //
 #include "algorithms/Algorithm.h"
-#include "game/DirectionUtils.h"
+#include "utils/DirectionUtils.h"
 
 int Algorithm::stepsUntilShellHitsTank(const Shell& shell, const Tank& tank, const GameBoard& board, int maxSteps) {
     Shell tmpShell = shell;

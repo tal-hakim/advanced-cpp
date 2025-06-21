@@ -22,13 +22,7 @@ set(GAME_SOURCES
     src/game/Logger.cpp
     src/game/GameBoard.cpp
     src/game/GameManager.cpp
-        implementations/ConcretePlayer.cpp
-        implementations/ConcreteBattleInfo.cpp
-        implementations/ConcreteTankAlgorithm.cpp
         utils/DirectionUtils.cpp
-        implementations/PlayerOne.cpp
-        implementations/PlayerTwo.cpp
-        implementations/AlgorithmOne.cpp
 )
 
 set(OBJECT_SOURCES
@@ -43,12 +37,29 @@ set(SOURCES
     ${OBJECT_SOURCES}
     ${ALGORITHM_SOURCES}
         src/main.cpp
-        implementations/AlgorithmOne.h
-        implementations/AlgorithmOne.cpp
-        implementations/AlgorithmTwo.h
-        implementations/AlgorithmTwo.cpp
         utils/MapUtils.cpp
         utils/MapUtils.h
+        configuration/Config.cpp
+        configuration/Config.h
+        game_objects/CanonDirection.h
+        hila/BFSTankAlgorithm.cpp
+        hila/BFSTankAlgorithm.h
+        hila/PlayerImp.cpp
+        hila/PlayerImp.h
+        hila/RadiusPlayer.cpp
+        hila/RadiusPlayer.h
+        hila/RotatingTankAlgorithm.cpp
+        hila/RotatingTankAlgorithm.h
+        hila/SatelliteViewImp.cpp
+        hila/SatelliteViewImp.h
+        hila/SimpleBattleInfo.cpp
+        hila/SimpleBattleInfo.h
+        hila/SimplePlayer.cpp
+        hila/SimplePlayer.h
+        hila/SimplePlayerFactory.cpp
+        hila/SimplePlayerFactory.h
+        hila/SimpleTankAlgorithmFactory.cpp
+        hila/SimpleTankAlgorithmFactory.h
 )
 
 # Add executable

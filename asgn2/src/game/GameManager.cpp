@@ -1,5 +1,4 @@
 #include "game/GameManager.h"
-#include "game/ConcreteBattleInfo.h"
 #include "definitions.h"
 
 GameManager::GameManager(const PlayerFactory& playerFactory, const TankAlgorithmFactory& algorithmFactory, const std::string& inputFile)
@@ -88,14 +87,12 @@ void GameManager::runGame() {
     }
     stalemateSteps = UNINITIALIZED;  // Initialize stalemate steps
     while (!isGameOver()) {
-        std::cout << "game step: " << getGameStep() << std::endl;
-        board.printBoard();
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
 
         // check shells collisions
         for (const auto& shell : shells) {
-            checkShellCollisions(shell, markedForDestruction);
+            if (shell && !shell->isDestroyed()) checkShellCollisions(shell, markedForDestruction);
         }
 
         if (isPlayerTurn()) {  // On even steps, all players act simultaneously
@@ -104,16 +101,20 @@ void GameManager::runGame() {
 
             // check tanks collisions
             for (const auto& tank : allTanks) {
-                if (tank) checkTankCollisions(tank, markedForDestruction);
+                if (tank && !tank->isDestroyed()) checkTankCollisions(tank, markedForDestruction);
             }
 
             for (const auto& shell : shells) {
-                checkShellCollisions(shell, markedForDestruction);
+                if (shell && !shell->isDestroyed()) checkShellCollisions(shell, markedForDestruction);
             }
         }
 
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
+        }
+        if(isPlayerTurn()){
+            logger.logActions();
+            logger.clearActions();
         }
         ++stepCount;
     }
@@ -239,7 +240,6 @@ void GameManager::executeAction(const std::shared_ptr<Tank>& tank, ActionRequest
 }
 
 void GameManager::executeTanksStep() {
-    logger.logActions();
     logger.clearActions();
 
     // Update cooldown for all tanks
@@ -265,11 +265,6 @@ void GameManager::executeTanksStep() {
         // Execute the action
         executeAction(tank, action);
     }
-}
-
-void GameManager::logState() {
-    logger.logStepNum(getGameStep() + 1);
-    board.printBoard();
 }
 
 Position GameManager::getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd) {
@@ -317,7 +312,7 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
 
     // 1. Passing collision with other tanks
     for (const auto& other : allTanks) {
-        if (!other || other == tank) continue;
+        if (!other || other == tank || other->isDestroyed()) continue;
 
         if (checkPassingCollision(tank, other)) {
             tank->setCollisionType(other->toString());
@@ -329,7 +324,7 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
 
     // 2. Passing collision with shells
     for (const auto& shell : shells) {
-        if (!shell) continue;
+        if (!shell || shell->isDestroyed()) continue;
 
         if (checkPassingCollision(tank, shell)) {
             tank->setCollisionType(shell->toString());
@@ -349,13 +344,13 @@ void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered
 
 // TODO: add collision type
 void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr>& marked) {
-    if (!shell) return;
+    if (!shell || shell->isDestroyed()) return;
 
     Position currPos = shell->getPosition();
 
     // 1. Check passing collisions with other shells
     for (const auto& other : shells) {
-        if (!other || other == shell) continue;
+        if (!other || other == shell || other->isDestroyed()) continue;
 
         if (checkPassingCollision(shell, other)) {
             marked.insert(other);
@@ -388,7 +383,6 @@ bool GameManager::isActionLegal(ActionRequest act, std::shared_ptr<Tank> tank) {
 
 bool GameManager::canTankShoot(std::shared_ptr<Tank> tank){
     if (!tank->canShoot()){
-        logger.logBadStep(tank->getPlayerId(), "Tried to shoot before cooldown ended.");
         return false;
     }
     return true;
@@ -422,7 +416,7 @@ bool GameManager::shoot(const std::shared_ptr<Tank>& tank) {
 }
 
 void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
-    if (!obj) return;
+    if (!obj || obj->isDestroyed()) return;
 
     obj->destroy();  // calls GameObject's destroy logic
 
@@ -432,7 +426,7 @@ void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
             if (aliveTanksPerPlayer[playerId] > 0) {
                 aliveTanksPerPlayer[playerId]--;
             }
-            logger.appendToAction(tank->getIndex(), " (killed)");
+            logger.appendToAction(tank->getGlobalIndex(), " (killed)");
             totalShells -= tank->getShellsLeft();
         }
         board.removeSpecificObject(obj);  // ✅ remove only if marked destroyed
@@ -589,7 +583,7 @@ bool GameManager::readMapContent(std::ifstream& file, int rows, int cols, int nu
 
     // If there's only one player with tanks, they win immediately
     if (players.size() == 1) {
-        // Find which player exists (should be at index 0 or 1)
+        // Find which player exists (should be at globalIndex 0 or 1)
         int playerId = players[0] ? 1 : 2;
         logger.logResult("Player " + std::to_string(playerId) + " won with " + std::to_string(aliveTanksPerPlayer[playerId]) + " tanks still alive");
         return false;  // Don't start the game since it's already over
@@ -605,6 +599,7 @@ bool GameManager::readBoard(const std::string& inputFile) {
     std::ifstream file(inputFile);
     if (!file.is_open()) {
         logger.logInputError("Could not open file " + inputFile);
+        cerr << "Could not open file " + inputFile << endl;
         return false;
     }
 

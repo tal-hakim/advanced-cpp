@@ -7,7 +7,7 @@
 #include "objects/Mine.h"
 #include "objects/Shell.h"
 #include "objects/Tank.h"
-#include "game/Position.h"
+#include "utils/Position.h"
 #include "common/SatelliteView.h"
 #include <vector>
 #include <memory>

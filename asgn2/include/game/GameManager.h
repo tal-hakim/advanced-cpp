@@ -5,7 +5,7 @@
 #include "objects/Tank.h"
 #include "objects/Shell.h"
 #include "game/Logger.h"
-#include "game/BoardSatelliteView.h"
+#include "implementations/BoardSatelliteView.h"
 #include "../../common/PlayerFactory.h"
 #include "../../common/TankAlgorithmFactory.h"
 #include "../../common/SatelliteView.h"
@@ -36,7 +36,7 @@ private:
     bool validGame = false;
 
     void executeTanksStep();
-    void logState();
+
     bool shoot(const std::shared_ptr<Tank>& tank);
     void move(std::shared_ptr<MovingElement> elem, bool bkwd);
     Position getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd);

@@ -1,5 +1,5 @@
 #include "game/GameBoard.h"
-#include "game/BoardSatelliteView.h"
+#include "implementations/BoardSatelliteView.h"
 #include "definitions.h"
 #include <iostream>
 #include <algorithm>

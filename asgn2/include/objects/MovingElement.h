@@ -2,8 +2,8 @@
 #define MOVINGELEMENT_H
 
 #include "objects/GameObject.h"
-#include "game/Direction.h"
-#include "game/DirectionUtils.h"
+#include "utils/Direction.h"
+#include "utils/DirectionUtils.h"
 
 class GameManager;  // Forward declaration
 

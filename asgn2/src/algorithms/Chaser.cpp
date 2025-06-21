@@ -1,8 +1,8 @@
 #include "algorithms/Chaser.h"
 #include "objects/Shell.h"
-#include "game/Direction.h"
+#include "utils/Direction.h"
 #include "../../common/ActionRequest.h"
-#include "game/DirectionUtils.h"
+#include "utils/DirectionUtils.h"
 #include <queue>
 #include <unordered_set>
 #include <string>

@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "MovingElement.h"
-#include "game/Direction.h"
+#include "utils/Direction.h"
 #include "../../common/ActionRequest.h"
 #include "../../common/TankAlgorithm.h"
 #include "common/ActionRequest.h"
@@ -20,11 +20,11 @@ protected:
     std::string collisionType = "";
     std::unique_ptr<TankAlgorithm> algorithm;
     Direction getNewDir(int angle);
-    int index;
+    int globalIndex;
 
 public:
     Tank(Position p, Direction dir, int id, int index, int numShells = INITIAL_SHELLS_AMOUNT)
-        : MovingElement(p, '0' + id, dir, id), shellsRemaining(numShells), index(index) {}
+        : MovingElement(p, '0' + id, dir, id), shellsRemaining(numShells), globalIndex(index) {}
 
     void shoot();
     void rotate(int angle);
@@ -47,7 +47,7 @@ public:
 
     void setAlgorithm(std::unique_ptr<TankAlgorithm> algo) { algorithm = std::move(algo); }
     TankAlgorithm* getAlgorithm() { return algorithm.get(); }
-    int getIndex() const {return index; }
+    int getGlobalIndex() const {return globalIndex; }
 };
 
 #endif // TANK_H
