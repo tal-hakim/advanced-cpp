@@ -6,8 +6,8 @@
 #include "common/BattleInfo.h"
 #include "ConcreteBattleInfo.h"
 #include "game/GameBoard.h"
-#include "objects/Tank.h"
-#include "objects/Shell.h"
+//#include "objects/Tank.h"
+//#include "objects/Shell.h"
 #include "algorithms/Algorithm.h"
 #include "definitions.h"
 #include <vector>
