@@ -12,6 +12,7 @@ namespace UserCommon_322213836_212054837 {
 
         Position(int x = 0, int y = 0) : x(x), y(y) {}
 
+        Position(size_t x = 0, size_t y = 0) : x(static_cast<int>(x)), y(static_cast<int>(y)) {}
         // Equality comparison
         bool operator==(const Position &other) const {
             return x == other.x && y == other.y;

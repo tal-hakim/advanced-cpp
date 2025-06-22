@@ -1,5 +1,5 @@
 #include "GameBoard.h"
-#include "../Common/definitions.h"
+#include "../UserCommon/utils/definitions.h"
 #include <iostream>
 #include <algorithm>
 

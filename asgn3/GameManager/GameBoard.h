@@ -1,12 +1,12 @@
 #ifndef ASGN3_GAMEBOARD_H
 #define ASGN3_GAMEBOARD_H
 
-#include "../UserCommon/objects/GameObject.h"
-#include "../UserCommon/objects/MovingElement.h"
-#include "../UserCommon/objects/Wall.h"
-#include "../UserCommon/objects/Mine.h"
-#include "../UserCommon/objects/Shell.h"
-#include "../UserCommon/objects/Tank.h"
+#include "objects/GameObject.h"
+#include "objects/MovingElement.h"
+#include "objects/Wall.h"
+#include "objects/Mine.h"
+#include "objects/Shell.h"
+#include "objects/Tank.h"
 #include "../UserCommon/utils/Position.h"
 #include "../Common/SatelliteView.h"
 #include <vector>
@@ -20,13 +20,13 @@ using GameGrid = std::vector<std::vector<std::vector<GameObjectPtr>>>;
 
 class GameBoard {
 private:
-    int width;
-    int height;
+    size_t width;
+    size_t height;
     GameGrid grid;
 
 public:
     GameBoard() : width(0), height(0) {}
-    GameBoard(int w, int h)
+    GameBoard(size_t w, size_t h)
         : width(w),
           height(h),
           grid(w, std::vector<std::vector<GameObjectPtr>>(h)) {}
@@ -39,8 +39,8 @@ public:
     void moveObj(const std::shared_ptr<MovingElement>& elem);
 
     void printBoard() const;
-    int getWidth() const { return width; }
-    int getHeight() const { return height; }
+    size_t getWidth() const { return width; }
+    size_t getHeight() const { return height; }
 
     bool isWall(const Position &pos) const;
     bool isMine(const Position &pos) const;

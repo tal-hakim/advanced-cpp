@@ -17,7 +17,7 @@ namespace GameManager_322213836_212054837 {
     class Tank : public MovingElement {
         friend class GameManager_322213836_212054837;  // Allow GameManager_322213836_212054837 to access protected members
     protected:
-        int shellsRemaining;
+        size_t shellsRemaining;
         int shootCooldown = 0;
         int backwardTimer = UNINITIALIZED;
         int lastBackwardStep = INT_MIN;
@@ -29,14 +29,14 @@ namespace GameManager_322213836_212054837 {
         int globalIndex;
 
     public:
-        Tank(Position p, Direction dir, int id, int index, int numShells = INITIAL_SHELLS_AMOUNT)
+        Tank(Position p, Direction dir, int id, int index, size_t numShells = INITIAL_SHELLS_AMOUNT)
                 : MovingElement(p, '0' + id, dir, id), shellsRemaining(numShells), globalIndex(index) {}
 
         void shoot();
 
         void rotate(int angle);
 
-        int getShellsLeft() const { return shellsRemaining; }
+        size_t getShellsLeft() const { return shellsRemaining; }
 
         bool isGoingBack() const { return backwardTimer != UNINITIALIZED; }
 

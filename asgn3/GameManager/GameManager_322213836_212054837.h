@@ -10,6 +10,8 @@
 #include "../Common/TankAlgorithm.h"
 #include "objects/Tank.h"
 #include "objects/Shell.h"
+#include "objects/Wall.h"
+#include "objects/Mine.h"
 #include "GameBoard.h"
 #include "Logger.h"
 #include "../UserCommon/utils/Position.h"
@@ -34,7 +36,7 @@ class GameManager_322213836_212054837 : AbstractGameManager{
         std::vector<std::shared_ptr<Shell>> shells;
         std::map<int, int> aliveTanksPerPlayer;  // Track number of alive tanks per player
         int stepCount = 0;
-        int maxSteps = 0;
+        size_t maxSteps = 0;
         int stalemateSteps = STALEMATE_STEPS;
         int totalShells = 0;  // Track total shells in the game
         bool validGame = false;
@@ -68,13 +70,13 @@ class GameManager_322213836_212054837 : AbstractGameManager{
 
         // Board reading helper functions
         bool readBoardHeader(std::ifstream& file, int& numShells, int& rows, int& cols);
-        bool processMapCell(char cell, const Position& pos, int numShells);
-        bool readMapContent(std::ifstream& file, int rows, int cols, int numShells);
+        void processMapCell(char cell, const Position& pos, int numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
+        void
+        readSatelliteView(SatelliteView& view, int numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
         void runGame();
-        // bool readBoard(const std::string& inputFile); // TODO: move to simulator
 
     public:
-        GameManager_322213836_212054837(bool verbose) : verbose(verbose);
+        GameManager_322213836_212054837(bool verbose) : verbose(verbose) {};
         GameResult run(size_t map_width, size_t map_height, SatelliteView& map, // <= assume it is a snapshot, NOT updated
                        size_t max_steps, size_t num_shells,
                        Player& player1, Player& player2,
