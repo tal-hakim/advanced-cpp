@@ -7,7 +7,8 @@
 #include "../Common/SatelliteView.h"
 #include <vector>
 
-namespace GameManager_322213836_212054837 {
+
+namespace UserCommon_322213836_212054837 {
     class BoardSatelliteView : public SatelliteView {
     private:
         std::vector<std::vector<char>> boardView;  // boardView[y][x] for row-major order

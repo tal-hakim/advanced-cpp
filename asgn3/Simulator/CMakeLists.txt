@@ -23,7 +23,11 @@ set(HEADER_FILES
         GameManagerRegistrar.h
         GameManagerRegistrar.cpp
         ../UserCommon/utils/DirectionUtils.cpp
-        ../UserCommon/utils/MapUtils.h)
+        ../UserCommon/utils/MapUtils.h
+        Simulator.h
+        ../Common/SatelliteView.h
+        ../UserCommon/BoardSatelliteView.h
+        Simulator.cpp)
 
 # Create executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})

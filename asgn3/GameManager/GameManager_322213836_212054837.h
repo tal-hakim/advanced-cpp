@@ -13,7 +13,7 @@
 #include "objects/Wall.h"
 #include "objects/Mine.h"
 #include "GameBoard.h"
-#include "BoardSatelliteView.h"
+#include "../UserCommon/BoardSatelliteView.h"
 #include "Logger.h"
 #include "../UserCommon/utils/Position.h"
 #include "../Common/GameManagerRegistration.h"

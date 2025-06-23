@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="GameManager_322213836_212054837"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="GameManager_322213836_212054837">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameManager_322213836_212054837.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../UserCommon"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="GameManager_322213836_212054837/fast">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameManager_322213836_212054837.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../UserCommon"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837/fast"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/GameManagerRegistration.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/PlayerRegistration.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/TankAlgorithmRegistration.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameBoard.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameBoard.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameManager_322213836_212054837.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameManager_322213836_212054837.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/Logger.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/Logger.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/GameObject.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/GameObject.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/Mine.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/MovingElement.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/MovingElement.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/Tank.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/Tank.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/objects/Wall.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/BoardSatelliteView.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/MapUtils.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/MapUtils.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/definitions.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
