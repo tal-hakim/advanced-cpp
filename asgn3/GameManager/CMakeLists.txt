@@ -30,7 +30,6 @@ set(HEADER_FILES
         ../Common/GameManagerRegistration.h
         ../Common/PlayerRegistration.h
         ../Common/TankAlgorithmRegistration.h
-        ../Simulator/TankAlgorithmRegistration.cpp
         ../UserCommon/utils/MapUtils.h
         ../UserCommon/utils/DirectionUtils.cpp
         ../UserCommon/utils/MapUtils.h
@@ -49,7 +48,7 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 
 
 # Link against UserCommon
-target_link_libraries(${PROJECT_NAME} PRIVATE UserCommon)
+target_link_libraries(${PROJECT_NAME})
 
 # Set output name without lib prefix
-set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "") 
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "")

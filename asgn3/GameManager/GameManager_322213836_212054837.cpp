@@ -5,7 +5,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
-#include <GameManagerRegistration.h>
+
 
 namespace GameManager_322213836_212054837 {
 using namespace UserCommon_322213836_212054837;

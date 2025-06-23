@@ -107,4 +107,4 @@ std::vector<std::vector<char>> GameBoard::getBoardMat() const {
     return mat;
 }
 
-} // namespace GameManager_322213836_212054837 
+} // namespace GameManager_322213836_212054837

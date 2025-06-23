@@ -19,6 +19,6 @@ public:
             TankAlgorithmFactory player2_tank_algo_factory) = 0;
 };
 
-using GameManagerFactory = std::function<std::unique_ptr<AbstractGameManager>(bool)>;
+using GameManagerFactory = std::function<std::unique_ptr<AbstractGameManager>(bool verbose)>;
 
 #endif //ASGN3_ABSTRACTGAMEMANAGER_H

@@ -6,6 +6,7 @@
 #define ASGN3_PLAYER_H
 
 #include "TankAlgorithm.h"
+#include "SatelliteView.h"
 #include <memory>
 #include <functional>
 

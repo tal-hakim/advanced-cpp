@@ -5,35 +5,52 @@
 #ifndef ASGN3_PLAYER_322213836_212054837_H
 #define ASGN3_PLAYER_322213836_212054837_H
 
-#include "Common/Player.h"
-#include "Common/TankAlgorithm.h"
-#include "Common/SatelliteView.h"
+#include "../Common/Player.h"
+#include "../Common/TankAlgorithm.h"
+#include "../Common/SatelliteView.h"
+#include "../Common/BattleInfo.h"
+#include "../Common/SatelliteView.h"
+#include "ConcreteBattleInfo.h"
+#include "../UserCommon/utils/Position.h"
 #include <vector>
-
+using namespace UserCommon_322213836_212054837;
 namespace Algorithm_322213836_212054837 {
 
 using std::unique_ptr;
 using std::vector;
 
 class Player_322213836_212054837: public Player {
-public:
-    Player_322213836_212054837(int player_id, size_t x, size_t y, size_t max_steps, size_t num_shells)
-        : playerId(player_id), startX(x), startY(y), maxSteps(max_steps), numShells(num_shells) {}
+    private:
+        // Base class parameters
 
-    void updateTankWithBattleInfo(TankAlgorithm& tank, SatelliteView& satellite_view) override {
-        // Create battle info with current game state
-        BattleInfo info;
-        // Update tank's battle info
-        tank.updateBattleInfo(info);
-    }
+        size_t maxSteps;
+        size_t numShells;
 
-private:
-    int playerId;
-    size_t startX;
-    size_t startY;
-    size_t maxSteps;
-    size_t numShells;
-};
+        // State variables
+        int aliveTanks;
+        bool reorderTurns;
+
+
+        // Helper functions for board analysis
+    protected:
+        int playerId;
+        void analyzeWindowAroundObject(const Position& pos, int windowSize, const std::vector<std::vector<char>>& map);
+        ConcreteBattleInfo::PlayerUpdates playerState;
+        size_t boardWidth;
+        size_t boardHeight;
+        std::unordered_map<int, int> tankTurns;
+        void handleTankTurnReordering(int tankId);
+        size_t roundCounter = 0;
+        std::map<int, int> remainingShells;
+
+
+    public:
+        Player_322213836_212054837(int playerIndex, size_t x, size_t y, size_t maxSteps, size_t numShells);
+        void initializeTanksInfo(int numTanks) { playerState.myTanksInfo.resize(numTanks, {Position{0,0}, Direction::R}); }
+        void updateTankWithBattleInfo(TankAlgorithm &tank, SatelliteView &satellite_view) override;
+        std::vector<std::vector<char>> readView(int tankId, SatelliteView &view);
+        void analyzeBoard(int tankId, SatelliteView& view);
+    };
 
 }
 
