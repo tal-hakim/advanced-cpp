@@ -16,6 +16,7 @@ namespace UserCommon_322213836_212054837 {
 // Game constants
     constexpr int BACKWARDS_STEP_COUNT = 2;
     constexpr int UNINITIALIZED = -1;
+    constexpr int TIE = 0;
     constexpr int PLAYER_1_ID = 1;
     constexpr int PLAYER_2_ID = 2;
     constexpr int INITIAL_SHELLS_AMOUNT = 16;

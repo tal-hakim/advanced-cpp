@@ -13,6 +13,7 @@
 #include "objects/Wall.h"
 #include "objects/Mine.h"
 #include "GameBoard.h"
+#include "BoardSatelliteView.h"
 #include "Logger.h"
 #include "../UserCommon/utils/Position.h"
 #include <memory>
@@ -30,17 +31,17 @@ class GameManager_322213836_212054837 : AbstractGameManager{
         GameBoard board{0, 0};  // Initialize with 0x0 dimensions, will be properly set in readBoard
         Logger logger;
         bool verbose;
-        std::vector<std::unique_ptr<Player>> players;  // Vector of all players
+        std::vector<Player*> players;  // Vector of all players
         std::vector<std::shared_ptr<Tank>> allTanks;  // Vector of all tanks
         std::map<int, int> tankCountPerPlayer;  // Track number of tanks per player for algorithm creation
         std::vector<std::shared_ptr<Shell>> shells;
-        std::map<int, int> aliveTanksPerPlayer;  // Track number of alive tanks per player
+        std::vector<size_t> aliveTanksPerPlayer;  // Track number of alive tanks per player
         int stepCount = 0;
         size_t maxSteps = 0;
         int stalemateSteps = STALEMATE_STEPS;
-        int totalShells = 0;  // Track total shells in the game
+        size_t totalShells = 0;  // Track total shells in the game
         bool validGame = false;
-
+        GameResult finalResult;
         void executeTanksStep();
 
         bool shoot(const std::shared_ptr<Tank>& tank);
@@ -66,17 +67,21 @@ class GameManager_322213836_212054837 : AbstractGameManager{
         bool validateAndLogAction(const std::shared_ptr<Tank>& tank, ActionRequest action);
         bool isMaxStepsReached();
         bool isStalemate();
-        std::map<int, int> getPlayerTankCounts() const;
+        std::vector<size_t> getPlayerTankCounts() const;
 
         // Board reading helper functions
         bool readBoardHeader(std::ifstream& file, int& numShells, int& rows, int& cols);
-        void processMapCell(char cell, const Position& pos, int numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
+        void processMapCell(char cell, const Position& pos, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
         void
-        readSatelliteView(SatelliteView& view, int numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
+        readSatelliteView(SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
         void runGame();
 
     public:
-        GameManager_322213836_212054837(bool verbose) : verbose(verbose) {};
+        GameManager_322213836_212054837(bool verbose) : verbose(verbose) {
+            if (verbose){
+                logger.setLogFile("TBD"); // TODO: waiting for Amir to tell us
+            }
+        };
         GameResult run(size_t map_width, size_t map_height, SatelliteView& map, // <= assume it is a snapshot, NOT updated
                        size_t max_steps, size_t num_shells,
                        Player& player1, Player& player2,

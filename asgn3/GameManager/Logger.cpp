@@ -4,6 +4,7 @@
 
 namespace GameManager_322213836_212054837 {
 
+    // TODO: Maybe change the input to whole path, depending on forum Answer
 void Logger::setLogFile(const std::string &inputFile) {
     std::filesystem::path inputPath(inputFile);
     inputFilename = inputPath.filename().string();

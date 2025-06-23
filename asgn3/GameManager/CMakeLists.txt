@@ -39,7 +39,8 @@ set(HEADER_FILES
         objects/GameObject.cpp
         objects/Wall.h
         objects/Mine.h
-        objects/Tank.cpp)
+        objects/Tank.cpp
+        BoardSatelliteView.h)
 
 # Create shared library
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})

@@ -8,7 +8,7 @@
 #include <GameManagerRegistration.h>
 
 namespace GameManager_322213836_212054837 {
-
+using namespace UserCommon_322213836_212054837;
 using std::cerr;
 using std::endl;
     REGISTER_GAME_MANAGER(GameManager_322213836_212054837);
@@ -34,10 +34,10 @@ bool GameManager_322213836_212054837::isPlayerTurn() const {
 bool GameManager_322213836_212054837::isMaxStepsReached() {
     if (getGameStep() >= maxSteps) {
         std::string result = "Tie, reached max steps = " + std::to_string(maxSteps);
-        for (const auto& [playerId, tankCount] : aliveTanksPerPlayer) {
-            result += ", player " + std::to_string(playerId) + " has " + std::to_string(tankCount) + " tanks";
+        for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
+            result += ", player " + std::to_string(i + 1) + " has " + std::to_string(aliveTanksPerPlayer[i]) + " tanks";
         }
-        logger.logResult(result);
+        if (verbose) logger.logResult(result);
         return true;
     }
     return false;
@@ -45,24 +45,31 @@ bool GameManager_322213836_212054837::isMaxStepsReached() {
 
 bool GameManager_322213836_212054837::isStalemate() {
     if (stalemateSteps == 0) {
-        logger.logResult("Tie, both players have zero shells for " + std::to_string(STALEMATE_STEPS) + " steps");
+        if (verbose) logger.logResult("Tie, both players have zero shells for " + std::to_string(STALEMATE_STEPS) + " steps");
         return true;
     }
     return false;
 }
 
-std::map<int, int> GameManager_322213836_212054837::getPlayerTankCounts() const {
+std::vector<size_t> GameManager_322213836_212054837::getPlayerTankCounts() const {
     return aliveTanksPerPlayer;
 }
 
 bool GameManager_322213836_212054837::isGameOver() {
-    if (isMaxStepsReached()) return true;
-    if (isStalemate()) return true;
+    if (isMaxStepsReached()) {
+        finalResult = {TIE, GameResult::Reason::MAX_STEPS, aliveTanksPerPlayer};
+        return true;
+    }
+    if (isStalemate()) {
+        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer};
+        return true;
+    }
 
     bool anyPlayerHasTanks = false;
     int playersWithTanks = 0;
 
-    for (const auto& [playerId, tankCount] : aliveTanksPerPlayer) {
+    for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
+        auto tankCount = aliveTanksPerPlayer[i];
         if (tankCount > 0) {
             anyPlayerHasTanks = true;
             playersWithTanks++;
@@ -70,15 +77,19 @@ bool GameManager_322213836_212054837::isGameOver() {
     }
 
     if (!anyPlayerHasTanks) {
-        logger.logResult("Tie, both players have zero tanks");
+        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer};
+        if (verbose) logger.logResult("Tie, both players have zero tanks");
         return true;
     }
 
     if (playersWithTanks == 1) {
         // Find the winning player
-        for (const auto& [playerId, tankCount] : aliveTanksPerPlayer) {
+        for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
+            auto playerId = i + 1;
+            auto tankCount = aliveTanksPerPlayer[i];
             if (tankCount > 0) {
-                logger.logResult("Player " + std::to_string(playerId) + " won with " + std::to_string(tankCount) + " tanks still alive");
+                finalResult = {playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer};
+                if (verbose) logger.logResult("Player " + std::to_string(playerId) + " won with " + std::to_string(tankCount) + " tanks still alive");
                 return true;
             }
         }
@@ -118,13 +129,13 @@ void GameManager_322213836_212054837::runGame() {
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
-        if(isPlayerTurn()){
+        if(isPlayerTurn() && verbose){
             logger.logActions();
             logger.clearActions();
         }
         ++stepCount;
     }
-    logger.finalize();
+    if (verbose) logger.finalize();
 }
 
 void GameManager_322213836_212054837::moveShells() {
@@ -160,7 +171,7 @@ ActionRequest GameManager_322213836_212054837::requestTankAction(const std::shar
             return ActionRequest::MoveBackward;
         }
         else if (action == ActionRequest::MoveForward) {
-            logger.addAction(actionToString(action));
+            if (verbose) logger.addAction(actionToString(action));
             tank->setForward();
             return ActionRequest::DoNothing;
         }
@@ -172,12 +183,12 @@ ActionRequest GameManager_322213836_212054837::requestTankAction(const std::shar
 bool GameManager_322213836_212054837::validateAndLogAction(const std::shared_ptr<Tank>& tank, ActionRequest action) {
     tank->setPrevPos();
     if (!isActionLegal(action, tank)) {
-        logger.addAction(actionToString(action) + " (ignored)");
+        if (verbose) logger.addAction(actionToString(action) + " (ignored)");
         return false;
     }
 
     if (action != ActionRequest::MoveBackward) {
-        logger.addAction(actionToString(action));
+        if (verbose) logger.addAction(actionToString(action));
         tank->setForward();
     }
     return true;
@@ -228,11 +239,8 @@ void GameManager_322213836_212054837::executeAction(const std::shared_ptr<Tank>&
                 break;
             }
 
-            try {
-                players[pid - 1]->updateTankWithBattleInfo(*tank->getAlgorithm(), *satelliteView);
-            } catch (const std::exception& e) {
-            } catch (...) {
-            }
+            players[pid - 1]->updateTankWithBattleInfo(*tank->getAlgorithm(), *satelliteView);
+
             break;
         }
         case ActionRequest::DoNothing:
@@ -243,7 +251,7 @@ void GameManager_322213836_212054837::executeAction(const std::shared_ptr<Tank>&
 }
 
 void GameManager_322213836_212054837::executeTanksStep() {
-    logger.clearActions();
+    if (verbose) logger.clearActions();
 
     // Update cooldown for all tanks
     decreaseTanksCooldown();
@@ -251,14 +259,14 @@ void GameManager_322213836_212054837::executeTanksStep() {
     // Handle all tanks' actions in a single pass
     for (const auto& tank : allTanks) {
         if (!tank || tank->isDestroyed()) {
-            logger.addAction("killed");
+            if (verbose) logger.addAction("killed");
             continue;
         }
 
         // Get action from the tank's algorithm
         ActionRequest action = requestTankAction(tank);
         if (action == ActionRequest::DoNothing) {
-            logger.addAction(actionToString(action));
+            if (verbose) logger.addAction(actionToString(action));
             continue;
         }
 
@@ -421,10 +429,10 @@ void GameManager_322213836_212054837::destroyAndRemove(const GameObjectPtr& obj)
     if (obj->isDestroyed()) {
         if (auto tank = std::dynamic_pointer_cast<Tank>(obj)) {
             int playerId = tank->getPlayerId();
-            if (aliveTanksPerPlayer[playerId] > 0) {
-                aliveTanksPerPlayer[playerId]--;
+            if (aliveTanksPerPlayer[playerId - 1] > 0) {
+                aliveTanksPerPlayer[playerId - 1]--;
             }
-            logger.appendToAction(tank->getGlobalIndex(), " (killed)");
+            if (verbose) logger.appendToAction(tank->getGlobalIndex(), " (killed)");
             totalShells -= tank->getShellsLeft();
         }
         board.removeSpecificObject(obj);  // ✅ remove only if marked destroyed
@@ -443,7 +451,7 @@ std::unique_ptr<SatelliteView> GameManager_322213836_212054837::getSatelliteView
 }
 
 
-void GameManager_322213836_212054837::processMapCell(char cell, const Position& pos, int numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
+void GameManager_322213836_212054837::processMapCell(char cell, const Position& pos, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
     switch (cell) {
         case WALL: // Wall
             board.placeObject(std::make_shared<Wall>(pos));
@@ -471,13 +479,13 @@ void GameManager_322213836_212054837::processMapCell(char cell, const Position& 
                 tank->setAlgorithm(std::move(algorithm));
 
                 // Initialize alive tanks counter for this player
-                aliveTanksPerPlayer[playerId]++;
+                aliveTanksPerPlayer[playerId - 1]++;
             }
             break;
     }
 }
 
-void GameManager_322213836_212054837::readSatelliteView(SatelliteView& view, int numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
+void GameManager_322213836_212054837::readSatelliteView(SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
     // Read the map content
 
     for(size_t i = 0; i < board.getWidth() ; i++){
@@ -495,11 +503,30 @@ int GameManager_322213836_212054837::getGameStep() const {
 
 GameResult GameManager_322213836_212054837::run(size_t map_width, size_t map_height, SatelliteView &map, size_t max_steps, size_t num_shells,
                                                 Player &player1, Player &player2, TankAlgorithmFactory player1_tank_algo_factory,TankAlgorithmFactory player2_tank_algo_factory) {
-    maxSteps = max_steps;   // TODO: find where this is problematic
+
+    // Clear
+    players.clear();
+    allTanks.clear();
+    shells.clear();
+    aliveTanksPerPlayer.clear();
+    tankCountPerPlayer.clear();
+    maxSteps = max_steps;
+
+    // initialize board
     board = GameBoard(map_width, map_height);
     readSatelliteView(map, num_shells, player1_tank_algo_factory, player2_tank_algo_factory);
-// TODO: here: store players
-// TODO: in game manager generally: add verbose + change logger
+
+    // set players
+    players.push_back(&player1);
+    players.push_back(&player2);
+
+    // count total shells
+    totalShells = allTanks.size() * num_shells;
+
+    // run the game
+    runGame();
+
+    return finalResult;
     }
 
 } // namespace GameManager_322213836_212054837
