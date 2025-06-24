@@ -189,10 +189,6 @@ void Simulator::closeAllSharedObjects() {
 }
 
 void Simulator::setup() {
-    if (algorithmsSONames.size() < 2)
-    {
-        // TODO: error
-    }
     readAllMaps();
     loadAlgorithmSharedObjectsFromFiles();
     loadGameManagerSharedObjectsFromFiles();

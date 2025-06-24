@@ -22,6 +22,10 @@ public:
                          const std::string &algsFolder, bool verbose) : Simulator(verbose),
                          gameManagerFile(gameManagerFile), mapsFolder(mapsFolder), algorithmsFolder(algsFolder) {
         algorithmsSONames = getFilenamesInFolder(algorithmsFolder);
+        if (algorithmsSONames.size() < 2)
+        {
+            // TODO: error
+        }
         gameManagerSONames = {gameManagerFile};
         mapsNames = getFilenamesInFolder(mapsFolder);
     };
