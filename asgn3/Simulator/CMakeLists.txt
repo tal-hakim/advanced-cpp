@@ -27,7 +27,15 @@ set(HEADER_FILES
         Simulator.h
         ../Common/SatelliteView.h
         ../UserCommon/BoardSatelliteView.h
-        Simulator.cpp)
+        Simulator.cpp
+        CompetitiveSimulator.h
+        CompetitiveSimulator.cpp
+        ComparativeSimulator.h
+        ComparativeSimulator.cpp
+        GameContainer.h
+        BoardInitInfo.h
+        GameContainer.cpp
+)
 
 # Create executable
 add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})

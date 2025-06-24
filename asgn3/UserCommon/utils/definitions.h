@@ -28,6 +28,9 @@ namespace UserCommon_322213836_212054837 {
     constexpr int STALEMATE_STEPS = 40;
     constexpr int NUM_DIRECTIONS = 8;
     constexpr char CURR_TANK = '%';
+    constexpr int TIE_SCORE = 1;
+    constexpr int WINNING_SCORE = 3;
+    constexpr int LOSING_SCORE = 0;
 }
 
 #endif //DEFINITIONS_H

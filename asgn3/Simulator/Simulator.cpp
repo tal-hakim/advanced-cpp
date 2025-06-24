@@ -5,7 +5,21 @@
 
 #include <algorithm>
 #include <filesystem>
+#include <dlfcn.h>
+#include <iostream>
 #include "Simulator.h"
+
+
+
+std::vector<std::string> Simulator::getFilenamesInFolder(const std::string& folderName) {
+    std::vector<std::string> filenames;
+    for (const auto& entry : std::filesystem::directory_iterator(folderName)) {
+        if (entry.is_regular_file())
+            filenames.push_back(entry.path().string()); // FULL PATH
+    }
+    return filenames;
+}
+
 
 Simulator::BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
     // TODO: handle input errors
@@ -70,29 +84,50 @@ Simulator::BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
 }
 
 
-/* TODO: func that returns all filenames inside folder
- * TODO: func that loads a .so
- * TODO: func that goes over vec of files and loads .so
+/* v func that returns all filenames inside folder
+ * v func that loads a .so
+ * v func that goes over vec of files and loads .so
  * TODO: CompareSim and CompetitiveSim derived classes
  * TODO: log results
  * TODO: log errors
  * TODO: main
- * TODO: threads :(*/
+ * TODO: threads :(
+ * TODO: func that builds the list to run
+ * TODO: make class "gameContainer" that holds: relevant gameManager, map ..., GameResult. has func run */
 
 
 
 void Simulator::readAllMapsInDirectory(const std::string &dirPath) {
-    namespace fs = std::filesystem;
-    for (const auto& entry : fs::directory_iterator(dirPath)) {
-        if (entry.is_regular_file()) {
-            std::string filePath = entry.path().string();
+    auto files = getFilenamesInFolder(dirPath);
+    for (const auto& filePath : files) {
+        BoardInitInfo info = readMapFromFile(filePath);
+        if (info.satelliteView) {
+            boards.push_back(std::move(info));
+        } else {
+            // std::cerr << "Failed to read board: " << filePath << std::endl;
+        }
+    }
+}
 
-            BoardInitInfo info = readMapFromFile(filePath);
-            if (info.satelliteView) { // Only add if loaded successfully
-                boards.push_back(std::move(info));
-            } else {
-                // Optionally log/handle invalid file
-                // std::cerr << "Failed to read board: " << filePath << std::endl;
+void Simulator::loadSharedObject(const std::string& soName) {
+    void* handle = dlopen(soName.c_str(), RTLD_LAZY);
+    if (!handle) {
+        throw std::runtime_error(dlerror()); // You can handle/log error differently if you prefer
+    }
+    handles.push_back(handle);
+}
+
+
+// Function to load all .so files in a folder
+void Simulator::loadAllSharedObjectsInFolder(const std::string& folderName) {
+    auto allFiles = getFilenamesInFolder(folderName);
+    for (const auto& filePath : allFiles) {
+        if (std::filesystem::path(filePath).extension() == ".so") {
+            try {
+                loadSharedObject(filePath);
+                std::cout << "Loaded: " << filePath << std::endl;
+            } catch (const std::exception& ex) {
+                std::cerr << "Failed to load " << filePath << ": " << ex.what() << std::endl;
             }
         }
     }

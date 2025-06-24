@@ -12,6 +12,7 @@
 #include <vector>
 
 class GameManagerRegistrar {
+public:
     class GameManagerEntry {
         std::string so_name;
         GameManagerFactory gameManagerFactory;
@@ -29,6 +30,7 @@ class GameManagerRegistrar {
             return gameManagerFactory != nullptr;
         }
     };
+private:
     std::vector<GameManagerEntry> managers;
     static GameManagerRegistrar registrar;
 public:

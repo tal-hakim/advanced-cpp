@@ -13,6 +13,7 @@
 #include <string>
 
 class AlgorithmRegistrar {
+public:
     class AlgorithmAndPlayerFactories {
         std::string so_name;
         TankAlgorithmFactory tankAlgorithmFactory;
@@ -31,8 +32,8 @@ class AlgorithmRegistrar {
         std::unique_ptr<Player> createPlayer(int player_index, size_t x, size_t y, size_t max_steps, size_t num_shells) const {
             return playerFactory(player_index, x, y, max_steps, num_shells);
         }
-        std::unique_ptr<TankAlgorithm> createTankAlgorithm(int player_index, int tank_index) const {
-            return tankAlgorithmFactory(player_index, tank_index);
+        TankAlgorithmFactory getTankAlgorithmFactory() const {
+            return tankAlgorithmFactory;
         }
         bool hasPlayerFactory() const {
             return playerFactory != nullptr;
@@ -41,6 +42,7 @@ class AlgorithmRegistrar {
             return tankAlgorithmFactory != nullptr;
         }
     };
+private:
     std::vector<AlgorithmAndPlayerFactories> algorithms;
     static AlgorithmRegistrar registrar;
 public:
