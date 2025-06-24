@@ -14,8 +14,8 @@
 class GameContainer {
     const BoardInitInfo& initInfo;
     std::unique_ptr<AbstractGameManager> gameManager;
-    Player& player1;
-    Player& player2;
+    std::unique_ptr<Player> player1;
+    std::unique_ptr<Player> player2;
     const TankAlgorithmFactory& player1AlgoFactory = nullptr;
     const TankAlgorithmFactory& player2AlgoFactory = nullptr;
     GameResult gameResult;
@@ -25,15 +25,15 @@ class GameContainer {
 public:
     GameContainer(const BoardInitInfo& initInfo,
                   std::unique_ptr<AbstractGameManager> gm,
-                  Player& p1,
-                  Player& p2,
+                  std::unique_ptr<Player> p1,
+                  std::unique_ptr<Player> p2,
                   const TankAlgorithmFactory& f1,
                   const TankAlgorithmFactory& f2,
                   const std::string& alg1Name, const std::string& alg2Name)
             : initInfo(std::move(initInfo)),
               gameManager(std::move(gm)),
-              player1(p1),
-              player2(p2),
+              player1(std::move(p1)),
+              player2(std::move(p2)),
               player1AlgoFactory(f1),
               player2AlgoFactory(f2),
               alg1Name(alg1Name),
@@ -47,12 +47,14 @@ public:
                 *(initInfo.satelliteView), // Assuming SatelliteView is the base of BoardSatelliteView
                 initInfo.maxSteps,
                 initInfo.numShells,
-                player1,
-                player2,
+                *player1,
+                *player2,
                 player1AlgoFactory,
                 player2AlgoFactory
         );
     }
+
+
 
     void setGameResult(GameResult result){
         gameResult = std::move(result);

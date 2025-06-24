@@ -6,8 +6,29 @@
 #define SIMULATOR_COMPETITIVESIMULATOR_H
 #include "Simulator.h"
 
-class CompetitiveSimulator : public Simulator {
 
+// Competition between multiple ALGS. only one GameManager
+
+class CompetitiveSimulator : public Simulator {
+private:
+    const std::string& mapsFolder;
+    const std::string& gameManagerFile;
+    const std::string& algorithmsFolder;
+
+    void logResults() override;
+
+public:
+    CompetitiveSimulator(const std::string &mapsFolder, const std::string &gameManagerFile,
+                         const std::string &algsFolder, bool verbose) : Simulator(verbose),
+                         gameManagerFile(gameManagerFile), mapsFolder(mapsFolder), algorithmsFolder(algsFolder) {
+        algorithmsSONames = getFilenamesInFolder(algorithmsFolder);
+        gameManagerSONames = {gameManagerFile};
+        mapsNames = getFilenamesInFolder(mapsFolder);
+    };
+
+    void readAllMaps();
+
+    void buildGameContainers() override;
 };
 
 

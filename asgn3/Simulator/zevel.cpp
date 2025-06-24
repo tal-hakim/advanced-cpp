@@ -178,3 +178,21 @@ bool GameManager_322213836_212054837::readBoard(const std::string& inputFile) {
     validGame = true;
     return true;
 }
+
+
+/* v func that returns all filenames inside folder
+ * v func that loads a .so
+ * v func that goes over vec of files and loads .so
+ * v CompareSim and CompetitiveSim derived classes
+ * TODO: log results
+ * TODO: log errors
+ * TODO: main
+ * TODO: check arg list
+ * TODO: threads :(
+ * v func that builds the list to run
+ * v make class "gameContainer" that holds: relevant gameManager, map ..., GameResult. has func run */
+
+
+/*
+ * TODO: create unique log name (for verbose mode)
+*/

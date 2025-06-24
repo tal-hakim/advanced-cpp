@@ -21,7 +21,7 @@ std::vector<std::string> Simulator::getFilenamesInFolder(const std::string& fold
 }
 
 
-Simulator::BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
+BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
     // TODO: handle input errors
     BoardInitInfo info;
 
@@ -84,30 +84,8 @@ Simulator::BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
 }
 
 
-/* v func that returns all filenames inside folder
- * v func that loads a .so
- * v func that goes over vec of files and loads .so
- * TODO: CompareSim and CompetitiveSim derived classes
- * TODO: log results
- * TODO: log errors
- * TODO: main
- * TODO: threads :(
- * TODO: func that builds the list to run
- * TODO: make class "gameContainer" that holds: relevant gameManager, map ..., GameResult. has func run */
 
 
-
-void Simulator::readAllMapsInDirectory(const std::string &dirPath) {
-    auto files = getFilenamesInFolder(dirPath);
-    for (const auto& filePath : files) {
-        BoardInitInfo info = readMapFromFile(filePath);
-        if (info.satelliteView) {
-            boards.push_back(std::move(info));
-        } else {
-            // std::cerr << "Failed to read board: " << filePath << std::endl;
-        }
-    }
-}
 
 void Simulator::loadSharedObject(const std::string& soName) {
     void* handle = dlopen(soName.c_str(), RTLD_LAZY);
@@ -117,18 +95,117 @@ void Simulator::loadSharedObject(const std::string& soName) {
     handles.push_back(handle);
 }
 
+void Simulator::loadGameManagerSharedObjectsFromFiles() {
+    auto& registrar = GameManagerRegistrar::getGameManagerRegistrar();
 
-// Function to load all .so files in a folder
-void Simulator::loadAllSharedObjectsInFolder(const std::string& folderName) {
-    auto allFiles = getFilenamesInFolder(folderName);
-    for (const auto& filePath : allFiles) {
+    for (const auto& filePath : gameManagerSONames) {
         if (std::filesystem::path(filePath).extension() == ".so") {
+            std::string filename = std::filesystem::path(filePath).filename().string();
+            std::string managerName = filename.substr(0, filename.find_last_of('.')); // remove .so
+
+            registrar.createAlgorithmFactoryEntry(managerName);
+
             try {
                 loadSharedObject(filePath);
-                std::cout << "Loaded: " << filePath << std::endl;
+                std::cout << "Loaded game manager: " << filePath << std::endl;
             } catch (const std::exception& ex) {
                 std::cerr << "Failed to load " << filePath << ": " << ex.what() << std::endl;
+                registrar.removeLast();
+                continue;
             }
+
+            try {
+                registrar.validateLastRegistration();
+            } catch (GameManagerRegistrar::BadRegistrationException& e) {
+                std::cout << "---------------------------------" << std::endl;
+                std::cout << "BadRegistrationException for: " << managerName << std::endl;
+                std::cout << "Name as registered: " << e.name << std::endl;
+                std::cout << "Has GameManager factory? " << std::boolalpha << e.hasGameManagerFactory << std::endl;
+                std::cout << "---------------------------------" << std::endl;
+                registrar.removeLast();
+            }
+        }
+    }
+}
+
+
+// Function to load all .so files in a folder
+void Simulator::loadAlgorithmSharedObjectsFromFiles() {
+    auto& registrar = AlgorithmRegistrar::getAlgorithmRegistrar();
+
+    for (const auto& filePath : algorithmsSONames) {
+        if (std::filesystem::path(filePath).extension() == ".so") {
+            std::string filename = std::filesystem::path(filePath).filename().string();
+            std::string algName = filename.substr(0, filename.find_last_of('.')); // remove .so
+
+            registrar.createAlgorithmFactoryEntry(algName);
+
+            try {
+                loadSharedObject(filePath);
+                std::cout << "Loaded algorithm: " << filePath << std::endl;
+            } catch (const std::exception& ex) {
+                std::cerr << "Failed to load " << filePath << ": " << ex.what() << std::endl;
+                registrar.removeLast();
+                continue;
+            }
+
+            try {
+                registrar.validateLastRegistration();
+            } catch (AlgorithmRegistrar::BadRegistrationException& e) {
+                std::cout << "---------------------------------" << std::endl;
+                std::cout << "BadRegistrationException for: " << algName << std::endl;
+                std::cout << "Name as registered: " << e.name << std::endl;
+                std::cout << "Has tank algorithm factory? " << std::boolalpha << e.hasTankAlgorithmFactory << std::endl;
+                std::cout << "Has Player factory? " << std::boolalpha << e.hasPlayerFactory << std::endl;
+                std::cout << "---------------------------------" << std::endl;
+                registrar.removeLast();
+            }
+        }
+    }
+}
+
+
+void Simulator::runAllGames(){
+    for (auto& game : gameContainers) {
+        game.startGame();
+    }
+
+}
+
+void Simulator::simulate() {
+    setup();
+    runAllGames();
+    logResults();
+    closeAllSharedObjects();
+}
+
+void Simulator::closeAllSharedObjects() {
+    for (void* handle : handles) {
+        if (handle) {
+            dlclose(handle);
+        }
+    }
+    handles.clear();
+}
+
+void Simulator::setup() {
+    if (algorithmsSONames.size() < 2)
+    {
+        // TODO: error
+    }
+    readAllMaps();
+    loadAlgorithmSharedObjectsFromFiles();
+    loadGameManagerSharedObjectsFromFiles();
+    buildGameContainers();
+}
+
+void Simulator::readAllMaps() {
+    for (const auto& filePath : mapsNames) {
+        BoardInitInfo info = readMapFromFile(filePath);
+        if (info.satelliteView) {
+            boards.push_back(std::move(info));
+        } else {
+            // std::cerr << "Failed to read board: " << filePath << std::endl;
         }
     }
 }

@@ -20,24 +20,43 @@ using std::string;
 class Simulator {
 
 private:
+
+    void setup(); // TODO: Goal: build the games that should run according to mode == gameContainers
+
+    virtual void buildGameContainers() = 0;
+
+    virtual void logResults() = 0;
+
+    void runAllGames();
+
+    void closeAllSharedObjects();
+
+protected:
     std::vector<BoardInitInfo> boards;
     std::vector<void*> handles;
     std::vector<GameContainer> gameContainers;
+    bool verbose;
+    std::vector<string> algorithmsSONames;
+    std::vector<string> gameManagerSONames;
+    std::vector<string> mapsNames;
 
     BoardInitInfo readMapFromFile(const string& inputFile);
 
-    void readAllMapsInDirectory(const std::string &dirPath);
-
-    virtual void buildSetup() = 0; // Goal: build the games that should run according to mode == gameContainers
+    void readAllMaps();
 
     std::vector<string> getFilenamesInFolder(const string &folderName);
 
     void loadSharedObject(const string &soName);
 
-    void loadAllSharedObjectsInFolder(const string &folderName);
+    void loadAlgorithmSharedObjectsFromFiles();
+    void loadGameManagerSharedObjectsFromFiles();
 
 public:
-    void simulate(){};
+    Simulator(bool verbose) : verbose(verbose) {
+    };
+    void simulate();
+
+
 };
 
 
