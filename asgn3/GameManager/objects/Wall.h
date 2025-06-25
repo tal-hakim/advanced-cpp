@@ -2,7 +2,7 @@
 #define WALL_H
 
 #include "GameObject.h"
-#include "UserCommon/utils/definitions.h"
+
 namespace GameManager_322213836_212054837 {
     class Wall : public GameObject {
     private:

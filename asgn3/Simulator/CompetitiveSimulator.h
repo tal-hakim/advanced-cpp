@@ -5,6 +5,10 @@
 #ifndef SIMULATOR_COMPETITIVESIMULATOR_H
 #define SIMULATOR_COMPETITIVESIMULATOR_H
 #include "Simulator.h"
+#include <vector>
+#include <string>
+#include <cassert>
+#include "GameContainer.h"
 
 
 // Competition between multiple ALGS. only one GameManager

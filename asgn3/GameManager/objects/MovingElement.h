@@ -2,8 +2,8 @@
 #define ASGN3_MOVINGELEMENT_H
 
 #include "GameObject.h"
-#include "../UserCommon/utils/Position.h"
-#include "../UserCommon/utils/DirectionUtils.h"
+#include "../../UserCommon/utils/Position.h"
+#include "../../UserCommon/utils/DirectionUtils.h"
 
 namespace GameManager_322213836_212054837 {
     using namespace UserCommon_322213836_212054837;

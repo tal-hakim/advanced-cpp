@@ -72,7 +72,7 @@ namespace GameManager_322213836_212054837 {
             // Board reading helper functions
             void processMapCell(char cell, const Position& pos, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
             void
-            readSatelliteView(SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
+            readSatelliteView(const SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory);
             void runGame();
 
         public:
@@ -81,7 +81,7 @@ namespace GameManager_322213836_212054837 {
                     logger.setLogFile("TBD"); // TODO: waiting for Amir to tell us
                 }
             };
-            GameResult run(size_t map_width, size_t map_height, SatelliteView& map, // <= assume it is a snapshot, NOT updated
+            GameResult run(size_t map_width, size_t map_height, const SatelliteView& map, // <= assume it is a snapshot, NOT updated
                            size_t max_steps, size_t num_shells,
                            Player& player1, Player& player2,
                            TankAlgorithmFactory player1_tank_algo_factory,

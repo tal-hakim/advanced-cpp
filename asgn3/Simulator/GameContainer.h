@@ -6,10 +6,11 @@
 #define SIMULATOR_GAMECONTAINER_H
 #include "GameManagerRegistrar.h"
 #include "AlgorithmRegistrar.h"
-#include "Simulator.h"
 #include "BoardInitInfo.h"
 #include "../UserCommon/utils/definitions.h"
 #include <map>
+using std::string;
+
 
 class GameContainer {
     const BoardInitInfo& initInfo;
@@ -21,6 +22,7 @@ class GameContainer {
     GameResult gameResult;
     const std::string& alg1Name;
     const std::string& alg2Name;
+    const std::string& gameManagerName;
 
 public:
     GameContainer(const BoardInitInfo& initInfo,
@@ -29,7 +31,7 @@ public:
                   std::unique_ptr<Player> p2,
                   const TankAlgorithmFactory& f1,
                   const TankAlgorithmFactory& f2,
-                  const std::string& alg1Name, const std::string& alg2Name)
+                  const std::string& alg1Name, const std::string& alg2Name, const std::string& gameManagerName)
             : initInfo(std::move(initInfo)),
               gameManager(std::move(gm)),
               player1(std::move(p1)),
@@ -37,11 +39,11 @@ public:
               player1AlgoFactory(f1),
               player2AlgoFactory(f2),
               alg1Name(alg1Name),
-              alg2Name(alg2Name)
-    {}
-    GameResult startGame() {
+              alg2Name(alg2Name),
+              gameManagerName(gameManagerName) {}
+    void startGame() {
         // Note: we dereference the unique_ptr to get the SatelliteView
-        return gameManager->run(
+        gameResult = gameManager->run(
                 initInfo.width,
                 initInfo.height,
                 *(initInfo.satelliteView), // Assuming SatelliteView is the base of BoardSatelliteView
@@ -61,10 +63,32 @@ public:
     }
 
     GameResult getGameResult(){
-        return gameResult;
+        return std::move(gameResult);
     }
 
-    std::map<std::string, int> getGameScore();
+    std::map<std::string, int> getGameScore() const;
+
+    bool isSameResult(const GameContainer &other) const;
+
+    string getAlg1Name(){
+        return alg1Name;
+    }
+
+    string getAlg2Name(){
+        return alg2Name;
+    }
+
+    string getGameManagerName(){
+        return gameManagerName;
+    }
+
+    int getMapWidth() const{
+        return initInfo.width;
+    }
+
+    int getMapHeight() const{
+        return initInfo.height;
+    }
 };
 
 

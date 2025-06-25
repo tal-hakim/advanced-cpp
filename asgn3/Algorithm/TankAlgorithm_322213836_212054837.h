@@ -5,9 +5,9 @@
 #ifndef ASGN3_TANKALGORITHM_322213836_212054837_H
 #define ASGN3_TANKALGORITHM_322213836_212054837_H
 
-#include "Common/TankAlgorithm.h"
-#include "Common/BattleInfo.h"
-#include "Common/ActionRequest.h"
+#include "../Common/TankAlgorithm.h"
+#include "../Common/BattleInfo.h"
+#include "../Common/ActionRequest.h"
 #include "../UserCommon/utils/Direction.h"
 #include "../UserCommon/utils/Position.h"
 #include "../UserCommon/utils/definitions.h"

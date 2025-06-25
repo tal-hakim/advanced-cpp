@@ -3,12 +3,7 @@
 //
 
 #include "CompetitiveSimulator.h"
-#include <vector>
-#include <string>
-#include <memory>
-#include <iostream>
-#include <cassert>
-#include "GameContainer.h"
+
 
 void CompetitiveSimulator::buildGameContainers() {
     auto& algoRegistrar = AlgorithmRegistrar::getAlgorithmRegistrar();
@@ -47,7 +42,8 @@ void CompetitiveSimulator::buildGameContainers() {
                     alg1Entry.getTankAlgorithmFactory(),
                     alg2Entry.getTankAlgorithmFactory(),
                     alg1Name,
-                    alg2Name
+                    alg2Name,
+                    gmEntry.name()
             );
         }
     }
@@ -57,5 +53,43 @@ void CompetitiveSimulator::buildGameContainers() {
 
 
 void CompetitiveSimulator::logResults() {
+    if (gameContainers.empty()) return;
 
+    // Output file name (as required)
+    std::string outFile = algorithmsFolder + "/competition_" + getCurrentTimeString() + ".txt";
+    std::ofstream out(outFile);
+    bool toScreen = false;
+    if (!out) {
+        std::cerr << "Failed to open output file '" << outFile << "'. Printing to screen instead.\n";
+        toScreen = true;
+    }
+    std::ostream& outStream = toScreen ? std::cout : out;
+
+    // 1st and 2nd lines
+    outStream << "game_maps_folder=" << mapsFolder << "\n";
+    outStream << "game_manager=" << gameContainers[0].getGameManagerName() << "\n\n";
+
+    // Accumulate scores
+    std::map<std::string, int> totalScores;
+    for (const auto& alg : algorithmsSONames){
+        std::filesystem::path algPath(alg);
+        totalScores[algPath.filename()] = 0;
+    }
+         // ensure all algorithms appear, even if they lost all games
+
+    for (const auto& gc : gameContainers) {
+        std::map<std::string, int> gameScore = gc.getGameScore();
+        for (const auto& [alg, score] : gameScore)
+            totalScores[alg] += score;
+    }
+
+    // Sort algorithms by score, descending
+    std::vector<std::pair<std::string, int>> sortedScores(totalScores.begin(), totalScores.end());
+    std::sort(sortedScores.begin(), sortedScores.end(),
+              [](const auto& a, const auto& b) { return a.second > b.second; });
+
+    // Output the results
+    for (const auto& [alg, score] : sortedScores)
+        outStream << alg << " " << score << "\n";
 }
+

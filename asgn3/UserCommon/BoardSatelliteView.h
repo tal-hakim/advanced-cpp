@@ -6,10 +6,10 @@
 #define ASGN2_BOARDSATELLITEVIEW_H
 #include "../Common/SatelliteView.h"
 #include <vector>
-
+#include <cstddef>
 
 namespace UserCommon_322213836_212054837 {
-    class BoardSatelliteView : public SatelliteView {
+    class BoardSatelliteView : public ::SatelliteView {  // Explicitly use global namespace for base class
     private:
         std::vector<std::vector<char>> boardView;  // boardView[y][x] for row-major order
 
@@ -37,6 +37,7 @@ namespace UserCommon_322213836_212054837 {
         size_t getHeight() const {
             return boardView.size();
         }
+
     };
 }
 #endif //ASGN2_BOARDSATELLITEVIEW_H

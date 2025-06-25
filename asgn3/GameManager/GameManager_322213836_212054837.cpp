@@ -57,11 +57,11 @@ std::vector<size_t> GameManager_322213836_212054837::getPlayerTankCounts() const
 
 bool GameManager_322213836_212054837::isGameOver() {
     if (isMaxStepsReached()) {
-        finalResult = {TIE, GameResult::Reason::MAX_STEPS, aliveTanksPerPlayer};
+        finalResult = {TIE, GameResult::Reason::MAX_STEPS, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
         return true;
     }
     if (isStalemate()) {
-        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer};
+        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
         return true;
     }
 
@@ -77,7 +77,7 @@ bool GameManager_322213836_212054837::isGameOver() {
     }
 
     if (!anyPlayerHasTanks) {
-        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer};
+        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
         if (verbose) logger.logResult("Tie, both players have zero tanks");
         return true;
     }
@@ -441,12 +441,14 @@ void GameManager_322213836_212054837::destroyAndRemove(const GameObjectPtr& obj)
 
 std::unique_ptr<SatelliteView> GameManager_322213836_212054837::getSatelliteView(const std::shared_ptr<Tank>& tank) const {
     auto boardMat = board.getBoardMat();
-    Position pos = tank->getPosition();
 
-    if (pos.y < board.getHeight() && pos.x < board.getWidth()) {
-        boardMat[pos.x][pos.y] = CURR_TANK;
+    if (tank) { // Only if tank is provided
+        Position pos = tank->getPosition();
+
+        if (pos.y < board.getHeight() && pos.x < board.getWidth()) {
+            boardMat[pos.x][pos.y] = CURR_TANK;
+        }
     }
-
     return std::make_unique<BoardSatelliteView>(std::move(boardMat));
 }
 
@@ -485,7 +487,7 @@ void GameManager_322213836_212054837::processMapCell(char cell, const Position& 
     }
 }
 
-void GameManager_322213836_212054837::readSatelliteView(SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
+void GameManager_322213836_212054837::readSatelliteView(const SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
     // Read the map content
 
     for(size_t i = 0; i < board.getWidth() ; i++){
@@ -501,7 +503,7 @@ int GameManager_322213836_212054837::getGameStep() const {
     return stepCount / 2;  // Each game step consists of two stepCount increments
 }
 
-GameResult GameManager_322213836_212054837::run(size_t map_width, size_t map_height, SatelliteView &map, size_t max_steps, size_t num_shells,
+GameResult GameManager_322213836_212054837::run(size_t map_width, size_t map_height, const SatelliteView &map, size_t max_steps, size_t num_shells,
                                                 Player &player1, Player &player2, TankAlgorithmFactory player1_tank_algo_factory,TankAlgorithmFactory player2_tank_algo_factory) {
 
     // Clear
@@ -526,7 +528,7 @@ GameResult GameManager_322213836_212054837::run(size_t map_width, size_t map_hei
     // run the game
     runGame();
 
-    return finalResult;
+    return std::move(finalResult);
     }
 
 } // namespace GameManager_322213836_212054837

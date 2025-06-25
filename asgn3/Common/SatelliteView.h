@@ -7,6 +7,7 @@
 //-------------------------------
 // common/SatelliteView.h
 //-------------------------------
+#include <cstddef>
 
 class SatelliteView {
 public:

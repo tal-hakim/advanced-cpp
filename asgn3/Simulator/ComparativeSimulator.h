@@ -40,6 +40,8 @@ public:
     }
 
     void buildGameContainers() override;
+
+    void logResults() override;
 };
 
 

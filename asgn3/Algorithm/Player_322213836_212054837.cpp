@@ -2,7 +2,7 @@
 // Created by talta on 21/06/2025.
 //
 
-#include <PlayerRegistration.h>
+#include "../Common/PlayerRegistration.h"
 #include "Player_322213836_212054837.h"
 #include "ConcreteBattleInfo.h"
 #include "../Common/SatelliteView.h"

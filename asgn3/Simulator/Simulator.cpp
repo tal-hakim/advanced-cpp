@@ -2,11 +2,6 @@
 // Created by talta on 23/06/2025.
 //
 
-
-#include <algorithm>
-#include <filesystem>
-#include <dlfcn.h>
-#include <iostream>
 #include "Simulator.h"
 
 
@@ -205,3 +200,50 @@ void Simulator::readAllMaps() {
         }
     }
 }
+
+
+std::string Simulator::gameResultMessage(const GameResult& result) {
+    std::ostringstream oss;
+    if (result.winner == 0)
+        oss << "Tie: " << getReasonString(result.reason);
+    else
+        oss << "Player " << result.winner << " wins: " << getReasonString(result.reason);
+    return oss.str();
+}
+
+std::string Simulator::getReasonString(GameResult::Reason reason) {
+    switch (reason) {
+        case GameResult::ALL_TANKS_DEAD: return "All tanks dead";
+        case GameResult::MAX_STEPS:      return "Max steps";
+        case GameResult::ZERO_SHELLS:    return "Zero shells";
+        default:                         return "Unknown";
+    }
+}
+
+std::string Simulator::getCurrentTimeString() {
+    auto now = std::chrono::system_clock::now();
+    auto now_time = std::chrono::system_clock::to_time_t(now);
+    std::tm tm;
+#ifdef _WIN32
+    localtime_s(&tm, &now_time);
+#else
+    localtime_r(&now_time, &tm);
+#endif
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%Y%m%d_%H%M%S");
+    return oss.str();
+}
+
+// Helper to get the final map as vector of strings
+std::vector<std::string> Simulator::getMapAsStrings(const SatelliteView& view, size_t width, size_t height) {
+    std::vector<std::string> mapLines;
+    for (size_t y = 0; y < height; ++y) {
+        std::string row;
+        for (size_t x = 0; x < width; ++x) {
+            row += view.getObjectAt(x, y);
+        }
+        mapLines.push_back(row);
+    }
+    return mapLines;
+}
+

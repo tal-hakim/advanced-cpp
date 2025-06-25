@@ -2,6 +2,42 @@
 	"entries" : 
 	[
 		{
+			"name" : "Algorithm_322213836_212054837_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/tal/dev/advanced-cpp/asgn3/Algorithm"
+		},
+		{
+			"name" : "Algorithm_322213836_212054837_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "Algorithm_322213836_212054837_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/tal/dev/advanced-cpp/asgn3/Algorithm"
+		},
+		{
 			"name" : "CMAKE_ADDR2LINE",
 			"properties" : 
 			[
@@ -55,7 +91,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/tal/dev/advanced-cpp/asgn3/GameManager"
+			"value" : "/home/tal/dev/advanced-cpp/asgn3/Algorithm"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -475,7 +511,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/tal/dev/advanced-cpp/asgn3/GameManager/CMakeFiles/pkgRedirects"
+			"value" : "/home/tal/dev/advanced-cpp/asgn3/Algorithm/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -535,7 +571,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/tal/dev/advanced-cpp/asgn3/GameManager"
+			"value" : "/home/tal/dev/advanced-cpp/asgn3/Algorithm"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -779,7 +815,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "GameManager_322213836_212054837"
+			"value" : "Algorithm_322213836_212054837"
 		},
 		{
 			"name" : "CMAKE_RANLIB",
@@ -1076,42 +1112,6 @@
 			],
 			"type" : "BOOL",
 			"value" : "FALSE"
-		},
-		{
-			"name" : "GameManager_322213836_212054837_BINARY_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/tal/dev/advanced-cpp/asgn3/GameManager"
-		},
-		{
-			"name" : "GameManager_322213836_212054837_IS_TOP_LEVEL",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "ON"
-		},
-		{
-			"name" : "GameManager_322213836_212054837_SOURCE_DIR",
-			"properties" : 
-			[
-				{
-					"name" : "HELPSTRING",
-					"value" : "Value Computed by CMake"
-				}
-			],
-			"type" : "STATIC",
-			"value" : "/home/tal/dev/advanced-cpp/asgn3/GameManager"
 		},
 		{
 			"name" : "ProcessorCount_cmd_nproc",

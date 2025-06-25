@@ -5,9 +5,18 @@
 #ifndef SIMULATOR_SIMULATOR_H
 #define SIMULATOR_SIMULATOR_H
 #include "../UserCommon/BoardSatelliteView.h"
-#include <string>
-#include <fstream>
 #include <memory>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <iomanip>
+#include <chrono>
+#include <sstream>
+#include <set>
+#include <algorithm>
+#include <filesystem>
+#include <dlfcn.h>
+#include <iostream>
 #include "../Common/AbstractGameManager.h"
 #include "../Common/TankAlgorithm.h"
 #include "../Common/Player.h"
@@ -52,11 +61,19 @@ protected:
     void loadGameManagerSharedObjectsFromFiles();
 
 public:
+
     Simulator(bool verbose) : verbose(verbose) {
     };
     void simulate();
 
 
+    static string gameResultMessage(const GameResult &result);
+
+    static std::string getReasonString(GameResult::Reason reason);
+
+    static std::vector<string> getMapAsStrings(const SatelliteView &view, size_t width, size_t height);
+
+    static string getCurrentTimeString();
 };
 
 

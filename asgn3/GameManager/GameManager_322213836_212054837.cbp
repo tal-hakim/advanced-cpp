@@ -11,10 +11,10 @@
 				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="GameManager_322213836_212054837">
@@ -36,10 +36,10 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="GameManager_322213836_212054837/fast">
@@ -61,30 +61,30 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837/fast"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>

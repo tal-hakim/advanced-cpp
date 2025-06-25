@@ -1,8 +1,8 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
-#include "../UserCommon/utils/Position.h"
-#include "../UserCommon/utils/definitions.h"
+#include "../../UserCommon/utils/Position.h"
+#include "../../UserCommon/utils/definitions.h"
 #include <climits>
 
 namespace GameManager_322213836_212054837 {

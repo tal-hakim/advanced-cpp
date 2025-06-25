@@ -27,6 +27,7 @@ set(HEADER_FILES
     ../UserCommon/utils/Position.h
     ../UserCommon/utils/DirectionUtils.h
     ../UserCommon/utils/MapUtils.h
+        ../Common/Player.h
 )
 
 # Create shared library
