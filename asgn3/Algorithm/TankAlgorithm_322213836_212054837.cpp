@@ -5,10 +5,11 @@
 #include "../Common/TankAlgorithmRegistration.h"
 #include "TankAlgorithm_322213836_212054837.h"
 
-
+using namespace Algorithm_322213836_212054837;
+REGISTER_TANK_ALGORITHM(TankAlgorithm_322213836_212054837);
 namespace Algorithm_322213836_212054837 {
     using namespace MapUtils;
-    REGISTER_TANK_ALGORITHM(TankAlgorithm_322213836_212054837);
+
 // Helper function to determine rotation action
     ActionRequest TankAlgorithm_322213836_212054837::rotateToward(Direction current, Direction target) {
         if (current == target) {

@@ -8,10 +8,10 @@
 namespace GameManager_322213836_212054837 {
     using namespace UserCommon_322213836_212054837;
 
-    class GameManager_322213836_212054837;  // Forward declaration
+    class GameManager;  // Forward declaration
 
     class MovingElement : public GameObject {
-        friend class GameManager_322213836_212054837;  // Allow GameManager_322213836_212054837 to access protected members
+        friend class GameManager;  // Allow GameManager to access protected members
     protected:
         Direction dir;
         int playerId;

@@ -6,13 +6,14 @@
 #include <algorithm>
 #include <iostream>
 
+using namespace GameManager_322213836_212054837;
+REGISTER_GAME_MANAGER(GameManager);
 
 namespace GameManager_322213836_212054837 {
 using namespace UserCommon_322213836_212054837;
 using std::cerr;
 using std::endl;
-    REGISTER_GAME_MANAGER(GameManager_322213836_212054837);
-std::string GameManager_322213836_212054837::actionToString(ActionRequest action) const {
+std::string GameManager::actionToString(ActionRequest action) const {
     switch (action) {
         case ActionRequest::MoveForward: return "MoveForward";
         case ActionRequest::MoveBackward: return "MoveBackwards";
@@ -27,11 +28,11 @@ std::string GameManager_322213836_212054837::actionToString(ActionRequest action
     }
 }
 
-bool GameManager_322213836_212054837::isPlayerTurn() const {
+bool GameManager::isPlayerTurn() const {
     return stepCount % 2 == 0;  // Players only act on even steps
 }
 
-bool GameManager_322213836_212054837::isMaxStepsReached() {
+bool GameManager::isMaxStepsReached() {
     if (getGameStep() >= maxSteps) {
         std::string result = "Tie, reached max steps = " + std::to_string(maxSteps);
         for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
@@ -43,7 +44,7 @@ bool GameManager_322213836_212054837::isMaxStepsReached() {
     return false;
 }
 
-bool GameManager_322213836_212054837::isStalemate() {
+bool GameManager::isStalemate() {
     if (stalemateSteps == 0) {
         if (verbose) logger.logResult("Tie, both players have zero shells for " + std::to_string(STALEMATE_STEPS) + " steps");
         return true;
@@ -51,11 +52,11 @@ bool GameManager_322213836_212054837::isStalemate() {
     return false;
 }
 
-std::vector<size_t> GameManager_322213836_212054837::getPlayerTankCounts() const {
+std::vector<size_t> GameManager::getPlayerTankCounts() const {
     return aliveTanksPerPlayer;
 }
 
-bool GameManager_322213836_212054837::isGameOver() {
+bool GameManager::isGameOver() {
     if (isMaxStepsReached()) {
         finalResult = {TIE, GameResult::Reason::MAX_STEPS, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
         return true;
@@ -98,7 +99,7 @@ bool GameManager_322213836_212054837::isGameOver() {
     return false;  // game continues
 }
 
-void GameManager_322213836_212054837::runGame() {
+void GameManager::runGame() {
     if (!validGame) {
         return;
     }
@@ -138,7 +139,7 @@ void GameManager_322213836_212054837::runGame() {
     if (verbose) logger.finalize();
 }
 
-void GameManager_322213836_212054837::moveShells() {
+void GameManager::moveShells() {
     std::vector<std::shared_ptr<Shell>> updatedShells;
 
     for (auto& shell : shells) {
@@ -151,7 +152,7 @@ void GameManager_322213836_212054837::moveShells() {
     shells = std::move(updatedShells);
 }
 
-void GameManager_322213836_212054837::decreaseTanksCooldown() {
+void GameManager::decreaseTanksCooldown() {
     for (const auto& tank : allTanks) {
         if (tank && !tank->isDestroyed()) {
             tank->decreaseShootCooldown();
@@ -159,7 +160,7 @@ void GameManager_322213836_212054837::decreaseTanksCooldown() {
     }
 }
 
-ActionRequest GameManager_322213836_212054837::requestTankAction(const std::shared_ptr<Tank>& tank) {
+ActionRequest GameManager::requestTankAction(const std::shared_ptr<Tank>& tank) {
     auto action = tank->getAlgorithm()->getAction();
     if (!tank->isGoingBack()) {
         return action;
@@ -180,7 +181,7 @@ ActionRequest GameManager_322213836_212054837::requestTankAction(const std::shar
     return action;
 }
 
-bool GameManager_322213836_212054837::validateAndLogAction(const std::shared_ptr<Tank>& tank, ActionRequest action) {
+bool GameManager::validateAndLogAction(const std::shared_ptr<Tank>& tank, ActionRequest action) {
     tank->setPrevPos();
     if (!isActionLegal(action, tank)) {
         if (verbose) logger.addAction(actionToString(action) + " (ignored)");
@@ -194,7 +195,7 @@ bool GameManager_322213836_212054837::validateAndLogAction(const std::shared_ptr
     return true;
 }
 
-void GameManager_322213836_212054837::executeAction(const std::shared_ptr<Tank>& tank, ActionRequest action) {
+void GameManager::executeAction(const std::shared_ptr<Tank>& tank, ActionRequest action) {
     std::unique_ptr<SatelliteView> satelliteView;  // Move declaration outside switch
     switch (action) {
         case ActionRequest::MoveForward:
@@ -250,7 +251,7 @@ void GameManager_322213836_212054837::executeAction(const std::shared_ptr<Tank>&
     }
 }
 
-void GameManager_322213836_212054837::executeTanksStep() {
+void GameManager::executeTanksStep() {
     if (verbose) logger.clearActions();
 
     // Update cooldown for all tanks
@@ -278,11 +279,11 @@ void GameManager_322213836_212054837::executeTanksStep() {
     }
 }
 
-Position GameManager_322213836_212054837::getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd) {
+Position GameManager::getNextPosOnBoard(std::shared_ptr<MovingElement> elem, bool bkwd) {
     return board.wrap(elem->getNextPos(bkwd));
 }
 
-bool GameManager_322213836_212054837::canMove(std::shared_ptr<Tank> tank, bool bkwd) {
+bool GameManager::canMove(std::shared_ptr<Tank> tank, bool bkwd) {
     Position next = getNextPosOnBoard(tank, bkwd);
     if(board.isWall(next)){
         if (bkwd) {
@@ -294,7 +295,7 @@ bool GameManager_322213836_212054837::canMove(std::shared_ptr<Tank> tank, bool b
     return true;  // ✅ No wall → we can move
 }
 
-void GameManager_322213836_212054837::move(std::shared_ptr<MovingElement> elem, bool bkwd){
+void GameManager::move(std::shared_ptr<MovingElement> elem, bool bkwd){
     Position newPos = getNextPosOnBoard(elem, bkwd);
     board.removeSpecificObject(elem);  // move tank
     elem->setPrevPos();
@@ -302,7 +303,7 @@ void GameManager_322213836_212054837::move(std::shared_ptr<MovingElement> elem, 
     board.placeObject(elem);
 }
 
-bool GameManager_322213836_212054837::checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2){
+bool GameManager::checkPassingCollision(std::shared_ptr<MovingElement> elem1, std::shared_ptr<MovingElement> elem2){
     Position p1 = elem1->getPosition();
     Position p2 = elem2->getPosition();
 
@@ -313,7 +314,7 @@ bool GameManager_322213836_212054837::checkPassingCollision(std::shared_ptr<Movi
     return (p1 == prev2 && p2 == prev1);
 }
 
-void GameManager_322213836_212054837::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr>& marked) {
+void GameManager::checkTankCollisions(std::shared_ptr<Tank> tank, std::unordered_set<GameObjectPtr>& marked) {
     if (!tank) return;
 
     Position currPos = tank->getPosition();
@@ -350,7 +351,7 @@ void GameManager_322213836_212054837::checkTankCollisions(std::shared_ptr<Tank> 
     }
 }
 
-void GameManager_322213836_212054837::checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr>& marked) {
+void GameManager::checkShellCollisions(std::shared_ptr<Shell> shell, std::unordered_set<GameObjectPtr>& marked) {
     if (!shell || shell->isDestroyed()) return;
 
     Position currPos = shell->getPosition();
@@ -377,7 +378,7 @@ void GameManager_322213836_212054837::checkShellCollisions(std::shared_ptr<Shell
     }
 }
 
-bool GameManager_322213836_212054837::isActionLegal(ActionRequest act, std::shared_ptr<Tank> tank) {
+bool GameManager::isActionLegal(ActionRequest act, std::shared_ptr<Tank> tank) {
     switch (act) {
         case ActionRequest::MoveForward:
             return canMove(tank, false);
@@ -387,14 +388,14 @@ bool GameManager_322213836_212054837::isActionLegal(ActionRequest act, std::shar
     }
 }
 
-bool GameManager_322213836_212054837::canTankShoot(std::shared_ptr<Tank> tank){
+bool GameManager::canTankShoot(std::shared_ptr<Tank> tank){
     if (!tank->canShoot()){
         return false;
     }
     return true;
 }
 
-bool GameManager_322213836_212054837::shoot(const std::shared_ptr<Tank>& tank) {
+bool GameManager::shoot(const std::shared_ptr<Tank>& tank) {
     Position start = tank->getPosition();
     Direction dir = tank->getDirection();
     int shooterId = tank->getPlayerId();
@@ -421,7 +422,7 @@ bool GameManager_322213836_212054837::shoot(const std::shared_ptr<Tank>& tank) {
     return true;
 }
 
-void GameManager_322213836_212054837::destroyAndRemove(const GameObjectPtr& obj) {
+void GameManager::destroyAndRemove(const GameObjectPtr& obj) {
     if (!obj || obj->isDestroyed()) return;
 
     obj->destroy();  // calls GameObject's destroy logic
@@ -439,7 +440,7 @@ void GameManager_322213836_212054837::destroyAndRemove(const GameObjectPtr& obj)
     }
 }
 
-std::unique_ptr<SatelliteView> GameManager_322213836_212054837::getSatelliteView(const std::shared_ptr<Tank>& tank) const {
+std::unique_ptr<SatelliteView> GameManager::getSatelliteView(const std::shared_ptr<Tank>& tank) const {
     auto boardMat = board.getBoardMat();
 
     if (tank) { // Only if tank is provided
@@ -453,7 +454,7 @@ std::unique_ptr<SatelliteView> GameManager_322213836_212054837::getSatelliteView
 }
 
 
-void GameManager_322213836_212054837::processMapCell(char cell, const Position& pos, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
+void GameManager::processMapCell(char cell, const Position& pos, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
     switch (cell) {
         case WALL: // Wall
             board.placeObject(std::make_shared<Wall>(pos));
@@ -487,7 +488,7 @@ void GameManager_322213836_212054837::processMapCell(char cell, const Position& 
     }
 }
 
-void GameManager_322213836_212054837::readSatelliteView(const SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
+void GameManager::readSatelliteView(const SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
     // Read the map content
 
     for(size_t i = 0; i < board.getWidth() ; i++){
@@ -499,12 +500,12 @@ void GameManager_322213836_212054837::readSatelliteView(const SatelliteView& vie
 }
 
 
-int GameManager_322213836_212054837::getGameStep() const {
+int GameManager::getGameStep() const {
     return stepCount / 2;  // Each game step consists of two stepCount increments
 }
 
-GameResult GameManager_322213836_212054837::run(size_t map_width, size_t map_height, const SatelliteView &map, size_t max_steps, size_t num_shells,
-                                                Player &player1, Player &player2, TankAlgorithmFactory player1_tank_algo_factory,TankAlgorithmFactory player2_tank_algo_factory) {
+GameResult GameManager::run(size_t map_width, size_t map_height, const SatelliteView &map, size_t max_steps, size_t num_shells,
+                            Player &player1, Player &player2, TankAlgorithmFactory player1_tank_algo_factory, TankAlgorithmFactory player2_tank_algo_factory) {
 
     // Clear
     players.clear();
@@ -531,4 +532,4 @@ GameResult GameManager_322213836_212054837::run(size_t map_width, size_t map_hei
     return std::move(finalResult);
     }
 
-} // namespace GameManager_322213836_212054837
+} // namespace GameManager

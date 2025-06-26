@@ -79,4 +79,4 @@ void Logger::appendToAction(size_t index, const std::string& str) {
     currentActions[index] += str;
 }
 
-} // namespace GameManager_322213836_212054837
+} // namespace GameManager

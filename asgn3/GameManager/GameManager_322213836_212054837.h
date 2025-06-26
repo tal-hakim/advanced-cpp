@@ -27,7 +27,7 @@ namespace GameManager_322213836_212054837 {
 
     using GameObjectPtr = std::shared_ptr<GameObject>;
 
-    class GameManager_322213836_212054837 : public AbstractGameManager{
+    class GameManager : public AbstractGameManager{
         private:
             GameBoard board{0, 0};  // Initialize with 0x0 dimensions, will be properly set in readBoard
             Logger logger;
@@ -76,11 +76,12 @@ namespace GameManager_322213836_212054837 {
             void runGame();
 
         public:
-            GameManager_322213836_212054837(bool verbose) : verbose(verbose) {
+            GameManager(bool verbose) : verbose(verbose) {
                 if (verbose){
                     logger.setLogFile("TBD"); // TODO: waiting for Amir to tell us
                 }
             };
+            ~GameManager() = default;
             GameResult run(size_t map_width, size_t map_height, const SatelliteView& map, // <= assume it is a snapshot, NOT updated
                            size_t max_steps, size_t num_shells,
                            Player& player1, Player& player2,
@@ -89,6 +90,6 @@ namespace GameManager_322213836_212054837 {
         };
 
 
-} // namespace GameManager_322213836_212054837
+} // namespace GameManager
 
 #endif // ASGN3_GAMEMANAGER_322213836_212054837_H 

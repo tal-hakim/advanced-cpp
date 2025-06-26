@@ -46,6 +46,7 @@ class Player_322213836_212054837: public Player {
 
     public:
         Player_322213836_212054837(int playerIndex, size_t x, size_t y, size_t maxSteps, size_t numShells);
+        ~Player_322213836_212054837() = default;
         void initializeTanksInfo(int numTanks) { playerState.myTanksInfo.resize(numTanks, {Position{0,0}, Direction::R}); }
         void updateTankWithBattleInfo(TankAlgorithm &tank, SatelliteView &satellite_view) override;
         std::vector<std::vector<char>> readView(int tankId, SatelliteView &view);

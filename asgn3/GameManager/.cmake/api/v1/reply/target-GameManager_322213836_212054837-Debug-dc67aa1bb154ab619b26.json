@@ -70,6 +70,10 @@
 				{
 					"backtrace" : 2,
 					"fragment" : "-fvisibility-inlines-hidden"
+				},
+				{
+					"backtrace" : 2,
+					"fragment" : "-fPIC"
 				}
 			],
 			"defines" : 

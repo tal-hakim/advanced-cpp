@@ -24,14 +24,14 @@ int main(int argc, char* argv[]) {
             else if (arg.find("game_managers_folder=") == 0) gameManagersFolder = arg.substr(21);
             else if (arg.find("algorithms_folder=") == 0) algorithmsFolder = arg.substr(19);
             else if (arg.find("game_maps_folder=") == 0) gameMapsFolder = arg.substr(17);
-            else if (arg.find("algorithm1=") == 0) alg1 = arg.substr(5);
-            else if (arg.find("algorithm2=") == 0) alg2 = arg.substr(5);
+            else if (arg.find("algorithm1=") == 0) alg1 = arg.substr(11);
+            else if (arg.find("algorithm2=") == 0) alg2 = arg.substr(11);
             else if (arg.find("game_manager=") == 0) gameManagerFile = arg.substr(13);
             else if (arg == "-verbose") verbose = true;
         }
 
         if (mode == "comparative") {
-            if (gameMap.empty() || gameManagersFolder.empty() || algorithmsFolder.empty() || alg1.empty() || alg2.empty()) {
+            if (gameMap.empty() || gameManagersFolder.empty() || alg1.empty() || alg2.empty()) {
                 std::cerr << "Missing required arguments for comparative mode." << std::endl;
                 return 1;
             }

@@ -16,6 +16,6 @@ namespace GameManager_322213836_212054837 {
     };
 
 
-} // GameManager_322213836_212054837
+} // GameManager
 
 #endif // ASGN3_SHELL_H 

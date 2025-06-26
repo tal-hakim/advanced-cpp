@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Simulator"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\Algorithm\;CMake Files\GameManager\;CMake Files\Simulator\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Simulator"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Simulator">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Simulator"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 Simulator"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Simulator/fast">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Simulator"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 Simulator/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/SatelliteView.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/AlgorithmRegistrar.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/AlgorithmRegistrar.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/BoardInitInfo.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/ComparativeSimulator.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/ComparativeSimulator.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CompetitiveSimulator.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CompetitiveSimulator.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameContainer.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameContainer.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistrar.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistrar.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistration.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/TankAlgorithmRegistration.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/main.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/BoardSatelliteView.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.cpp">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Algorithm\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\GameManager\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Simulator\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

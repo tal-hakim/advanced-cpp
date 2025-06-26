@@ -5,7 +5,7 @@
 		<Option title="GameManager_322213836_212054837"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\Algorithm\;CMake Files\GameManager\;CMake Files\Simulator\;"/>
 		<Build>
 			<Target title="all">
 				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
@@ -24,9 +24,9 @@
 				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../Common"/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../UserCommon"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
 					<Add directory="/usr/include/c++/13/backward"/>
@@ -49,9 +49,9 @@
 				<Option type="3"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../Common"/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/GameManager/../UserCommon"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
 					<Add directory="/usr/include/c++/13/backward"/>
@@ -62,26 +62,6 @@
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 GameManager_322213836_212054837/fast"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="rebuild_cache">
-				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/GameManager"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/GameManager/Makefile&quot;  VERBOSE=1 clean"/>
@@ -157,8 +137,17 @@
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/definitions.h">
 			<Option target="GameManager_322213836_212054837"/>
 		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/CMakeLists.txt">
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Algorithm\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\GameManager\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Simulator\"/>
 		</Unit>
 	</Project>
 </CodeBlocks_project_file>

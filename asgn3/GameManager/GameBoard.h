@@ -50,6 +50,6 @@ public:
     std::vector<std::vector<char>> getBoardMat() const;
 };
 
-} // namespace GameManager_322213836_212054837
+} // namespace GameManager
 
 #endif // ASGN3_GAMEBOARD_H 

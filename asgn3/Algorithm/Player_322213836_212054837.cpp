@@ -18,11 +18,12 @@
 #include <limits>
 #include <iostream>
 
-
+using namespace Algorithm_322213836_212054837;
+REGISTER_PLAYER(Player_322213836_212054837);
 
 namespace Algorithm_322213836_212054837 {
     using namespace MapUtils;  // Add MapUtils namespace at file scope
-    REGISTER_PLAYER(Player_322213836_212054837);
+
     Player_322213836_212054837::Player_322213836_212054837(int playerIndex, size_t x, size_t y, size_t maxSteps, size_t numShells)
             : playerId(playerIndex), boardWidth(x), boardHeight(y), maxSteps(maxSteps), numShells(numShells), aliveTanks(UNINITIALIZED), reorderTurns(false){
         // Initialize context with empty state

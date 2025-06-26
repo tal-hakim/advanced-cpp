@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.28"
@@ -19,7 +19,7 @@
 					]
 				}
 			],
-			"name" : "",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Algorithm_322213836_212054837::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Algorithm_322213836_212054837-8decf6dfddd3640ffb28.json",
+					"jsonFile" : "target-Algorithm_322213836_212054837-Debug-de6f440e868f7a717551.json",
 					"name" : "Algorithm_322213836_212054837",
 					"projectIndex" : 0
 				}

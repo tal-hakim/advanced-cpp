@@ -3,8 +3,9 @@ project(Algorithm_322213836_212054837 CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-add_compile_options(-fvisibility=hidden -fvisibility-inlines-hidden)
+add_compile_options(-fvisibility=hidden -fvisibility-inlines-hidden -fPIC)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/..)
@@ -27,7 +28,8 @@ set(HEADER_FILES
     ../UserCommon/utils/Position.h
     ../UserCommon/utils/DirectionUtils.h
     ../UserCommon/utils/MapUtils.h
-        ../Common/Player.h
+    ../Common/Player.h
+    ../Common/PlayerRegistration.h
 )
 
 # Create shared library
@@ -37,4 +39,4 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(${PROJECT_NAME})
 
 # Set output name without lib prefix
-set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "") 
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON)

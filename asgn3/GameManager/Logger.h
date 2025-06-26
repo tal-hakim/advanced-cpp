@@ -37,6 +37,6 @@ public:
     void appendToAction(size_t index, const std::string& str);  // Append to a specific action
 };
 
-} // namespace GameManager_322213836_212054837
+} // namespace GameManager
 
 #endif // ASGN3_LOGGER_H 
