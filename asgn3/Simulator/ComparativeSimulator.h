@@ -23,7 +23,7 @@ public:
         gameManagersFolder(gameManagersFolder),
         mapFile(mapFile)
     {
-        gameManagerSONames = getFilenamesInFolder(gameManagersFolder);
+        gameManagerSONames = getSoFilesInFolder(gameManagersFolder);
         mapsNames = {mapFile};
         if (haveSameFilename(alg1File, alg2File)){
             algorithmsSONames = {alg1File};

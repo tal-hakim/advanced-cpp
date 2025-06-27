@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-add_compile_options(-fvisibility=hidden -fvisibility-inlines-hidden -fPIC)
+add_compile_options(-fPIC)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/..)
@@ -39,4 +39,4 @@ add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(${PROJECT_NAME})
 
 # Set output name without lib prefix
-set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON)
+set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON )

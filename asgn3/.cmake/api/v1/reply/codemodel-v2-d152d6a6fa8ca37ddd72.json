@@ -62,7 +62,8 @@
 					"source" : "Simulator",
 					"targetIndexes" : 
 					[
-						2
+						2,
+						3
 					]
 				}
 			],
@@ -115,7 +116,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						2
+						2,
+						3
 					]
 				}
 			],
@@ -124,22 +126,29 @@
 				{
 					"directoryIndex" : 1,
 					"id" : "Algorithm_322213836_212054837::@0717138d1b5d78d31daf",
-					"jsonFile" : "target-Algorithm_322213836_212054837-Debug-1fd6e42ee6bfb2bfed93.json",
+					"jsonFile" : "target-Algorithm_322213836_212054837-Debug-83452839812a5bb6b691.json",
 					"name" : "Algorithm_322213836_212054837",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 2,
 					"id" : "GameManager_322213836_212054837::@6bd5da28b4dba184c0cc",
-					"jsonFile" : "target-GameManager_322213836_212054837-Debug-af3c08cded5251e6e91e.json",
+					"jsonFile" : "target-GameManager_322213836_212054837-Debug-f8ea601e58ceee99c430.json",
 					"name" : "GameManager_322213836_212054837",
 					"projectIndex" : 2
 				},
 				{
 					"directoryIndex" : 3,
 					"id" : "Simulator::@a346c7eb8af351c25daa",
-					"jsonFile" : "target-Simulator-Debug-b0bd69748ad4289b5fc2.json",
+					"jsonFile" : "target-Simulator-Debug-5526a2590b5b56248bf1.json",
 					"name" : "Simulator",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "SimulatorRegistration::@a346c7eb8af351c25daa",
+					"jsonFile" : "target-SimulatorRegistration-Debug-130e54fa5fe9e045a752.json",
+					"name" : "SimulatorRegistration",
 					"projectIndex" : 3
 				}
 			]

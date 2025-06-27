@@ -107,6 +107,9 @@
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistration.cpp">
 			<Option target="Simulator"/>
 		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/PlayerRegistration.cpp">
+			<Option target="Simulator"/>
+		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator.cpp">
 			<Option target="Simulator"/>
 		</Unit>

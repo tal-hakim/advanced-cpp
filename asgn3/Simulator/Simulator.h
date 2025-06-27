@@ -74,6 +74,8 @@ public:
     static std::vector<string> getMapAsStrings(const SatelliteView &view, size_t width, size_t height);
 
     static string getCurrentTimeString();
+
+    std::vector<string> getSoFilesInFolder(const string &folderName);
 };
 
 

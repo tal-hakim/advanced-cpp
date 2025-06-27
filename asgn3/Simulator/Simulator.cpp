@@ -15,6 +15,18 @@ std::vector<std::string> Simulator::getFilenamesInFolder(const std::string& fold
     return filenames;
 }
 
+std::vector<std::string> Simulator::getSoFilesInFolder(const std::string& folderName) {
+    std::vector<std::string> soFiles;
+    for (const auto& entry : std::filesystem::directory_iterator(folderName)) {
+        if (entry.is_regular_file()) {
+            const auto& path = entry.path();
+            if (path.extension() == ".so") {
+                soFiles.push_back(path.string()); // Full path
+            }
+        }
+    }
+    return soFiles;
+}
 
 BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
     // TODO: handle input errors
@@ -83,7 +95,7 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
 
 
 void Simulator::loadSharedObject(const std::string& soName) {
-    void* handle = dlopen(soName.c_str(), RTLD_LAZY);
+    void* handle = dlopen(soName.c_str(), RTLD_LAZY | RTLD_GLOBAL);
     if (!handle) {
         throw std::runtime_error(dlerror()); // You can handle/log error differently if you prefer
     }

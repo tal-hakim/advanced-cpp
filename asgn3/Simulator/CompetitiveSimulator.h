@@ -25,7 +25,7 @@ public:
     CompetitiveSimulator(const std::string &mapsFolder, const std::string &gameManagerFile,
                          const std::string &algsFolder, bool verbose) : Simulator(verbose),
                          gameManagerFile(gameManagerFile), mapsFolder(mapsFolder), algorithmsFolder(algsFolder) {
-        algorithmsSONames = getFilenamesInFolder(algorithmsFolder);
+        algorithmsSONames = getSoFilesInFolder(algorithmsFolder);
         if (algorithmsSONames.size() < 2)
         {
             // TODO: error

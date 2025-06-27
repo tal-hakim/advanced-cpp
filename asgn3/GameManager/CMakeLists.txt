@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Add visibility flags
-add_compile_options(-fvisibility=hidden -fvisibility-inlines-hidden -fPIC)
+add_compile_options(-fPIC)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/..)

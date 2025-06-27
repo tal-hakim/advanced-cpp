@@ -26,31 +26,31 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 42,
+				"line" : 54,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 45,
+				"line" : 57,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 9,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 10,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
 				"line" : 11,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 12,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 13,
 				"parent" : 0
 			}
 		]
@@ -61,7 +61,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++20 -fPIE -fvisibility=hidden -fvisibility-inlines-hidden -fdiagnostics-color=always"
+					"fragment" : "-g -std=gnu++20 -fPIE -fdiagnostics-color=always"
 				}
 			],
 			"includes" : 
@@ -95,12 +95,15 @@
 				2,
 				3,
 				4,
-				5,
-				6,
-				7,
-				8,
-				9
+				5
 			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "SimulatorRegistration::@a346c7eb8af351c25daa"
 		}
 	],
 	"id" : "Simulator::@a346c7eb8af351c25daa",
@@ -115,6 +118,15 @@
 			{
 				"fragment" : "",
 				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/tal/dev/advanced-cpp/asgn3/Simulator",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 2,
+				"fragment" : "SimulatorRegistration.so",
+				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
@@ -147,55 +159,27 @@
 				2,
 				3,
 				4,
-				5,
-				6,
-				7,
-				8,
-				9
+				5
 			]
 		},
 		{
 			"name" : "Header Files",
 			"sourceIndexes" : 
 			[
+				6,
+				7,
+				8,
+				9,
 				10,
 				11,
 				12,
 				13,
-				14,
-				15,
-				16,
-				17,
-				18
+				14
 			]
 		}
 	],
 	"sources" : 
 	[
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Simulator/AlgorithmRegistrar.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Simulator/TankAlgorithmRegistration.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Simulator/GameManagerRegistration.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "Simulator/GameManagerRegistrar.cpp",
-			"sourceGroupIndex" : 0
-		},
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,

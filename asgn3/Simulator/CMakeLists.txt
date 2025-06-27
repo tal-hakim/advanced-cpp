@@ -4,27 +4,38 @@ project(Simulator CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/..)
 include_directories(${CMAKE_SOURCE_DIR}/../Common)
 include_directories(${CMAKE_SOURCE_DIR}/../UserCommon)
 
-# Source files
-set(SOURCE_FILES
-    AlgorithmRegistrar.cpp
+# Registration library source files
+set(REGISTRATION_SOURCE_FILES
     PlayerRegistration.cpp
     TankAlgorithmRegistration.cpp
     GameManagerRegistration.cpp
+    AlgorithmRegistrar.cpp
     GameManagerRegistrar.cpp
+)
+
+# Create registration shared library
+add_library(SimulatorRegistration SHARED ${REGISTRATION_SOURCE_FILES})
+target_link_libraries(SimulatorRegistration PRIVATE dl)
+set_target_properties(SimulatorRegistration PROPERTIES
+    PREFIX ""
+    POSITION_INDEPENDENT_CODE ON
+)
+
+# Main simulator source files
+set(SIMULATOR_SOURCE_FILES
     ../UserCommon/utils/DirectionUtils.cpp
     Simulator.cpp
     CompetitiveSimulator.cpp
     ComparativeSimulator.cpp
     GameContainer.cpp
-    main.cpp)
+    main.cpp
+)
 
 # Header files
 set(HEADER_FILES
@@ -40,7 +51,7 @@ set(HEADER_FILES
 )
 
 # Create executable
-add_executable(${PROJECT_NAME} ${SOURCE_FILES} ${HEADER_FILES})
+add_executable(${PROJECT_NAME} ${SIMULATOR_SOURCE_FILES} ${HEADER_FILES})
 
-# Link against UserCommon and dl library for dynamic loading
-target_link_libraries(${PROJECT_NAME} PRIVATE dl pthread)
+# Link against registration library and other dependencies
+target_link_libraries(${PROJECT_NAME} PRIVATE SimulatorRegistration dl pthread)
