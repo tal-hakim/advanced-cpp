@@ -189,6 +189,8 @@ bool GameManager_322213836_212054837::readBoard(const std::string& inputFile) {
  * TODO: main
  * TODO: check arg list
  * TODO: threads :(
+ * TODO: move the timeStamp func to userCommon so it will we accessible from gameManager
+ * TODO: change the folder names to lower case
  * v func that builds the list to run
  * v make class "gameContainer" that holds: relevant gameManager, map ..., GameResult. has func run */
 

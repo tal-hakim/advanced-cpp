@@ -1,0 +1,8 @@
+game_map=../maps/input_a.txt
+algorithm1=Algorithm_322213836_212054837
+algorithm2=Algorithm_322213836_212054837
+
+GameManager_322213836_212054837
+Player 1 wins: All tanks dead
+5
+lalala OUTSIDE

@@ -9,6 +9,8 @@
 #include "BoardInitInfo.h"
 #include "../UserCommon/utils/definitions.h"
 #include <map>
+#include <iostream>
+
 using std::string;
 
 
@@ -17,22 +19,22 @@ class GameContainer {
     std::unique_ptr<AbstractGameManager> gameManager;
     std::unique_ptr<Player> player1;
     std::unique_ptr<Player> player2;
-    const TankAlgorithmFactory& player1AlgoFactory = nullptr;
-    const TankAlgorithmFactory& player2AlgoFactory = nullptr;
+    const TankAlgorithmFactory& player1AlgoFactory;
+    const TankAlgorithmFactory& player2AlgoFactory;
     GameResult gameResult;
     const std::string& alg1Name;
     const std::string& alg2Name;
     const std::string& gameManagerName;
 
 public:
-    GameContainer(const BoardInitInfo& initInfo,
+    GameContainer(BoardInitInfo& initInfo,
                   std::unique_ptr<AbstractGameManager> gm,
                   std::unique_ptr<Player> p1,
                   std::unique_ptr<Player> p2,
                   const TankAlgorithmFactory& f1,
                   const TankAlgorithmFactory& f2,
                   const std::string& alg1Name, const std::string& alg2Name, const std::string& gameManagerName)
-            : initInfo(std::move(initInfo)),
+            : initInfo(initInfo),
               gameManager(std::move(gm)),
               player1(std::move(p1)),
               player2(std::move(p2)),
@@ -41,6 +43,7 @@ public:
               alg1Name(alg1Name),
               alg2Name(alg2Name),
               gameManagerName(gameManagerName) {}
+
     void startGame() {
         // Note: we dereference the unique_ptr to get the SatelliteView
         gameResult = gameManager->run(

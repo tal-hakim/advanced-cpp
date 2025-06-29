@@ -9,7 +9,7 @@ void ComparativeSimulator::buildGameContainers() {
     auto& algoRegistrar = AlgorithmRegistrar::getAlgorithmRegistrar();
     auto& gmRegistrar = GameManagerRegistrar::getGameManagerRegistrar();
 
-    const BoardInitInfo& board = boards[0];
+    BoardInitInfo& board = boards[0];
 
     // Assume algorithmsSONames[0] and algorithmsSONames[1] are your two algorithms
 
@@ -43,7 +43,8 @@ void ComparativeSimulator::logResults(){
     if (gameContainers.empty()) return;
 
     // 1. Output file name
-    std::string outFile = gameManagersFolder + "/comparative_results_" + getCurrentTimeString() + ".txt";
+//    std::string outFile = gameManagersFolder + "/comparative_results_" + getCurrentTimeString() + ".txt";
+    std::string outFile = gameManagersFolder + "/comparative_results.txt";
     std::ofstream out(outFile);
     bool toScreen = false;
     if (!out) {
@@ -99,13 +100,16 @@ void ComparativeSimulator::logResults(){
 
         // 8th+: final map
         if (res.gameState) {
-            for (const auto& row : getMapAsStrings(*res.gameState, gameContainers[0].getMapWidth(), gameContainers[0].getMapHeight()))
+            for (const auto& row : getMapAsStrings(*res.gameState, gameContainers[0].getMapWidth(), gameContainers[0].getMapHeight())){
                 outStream << row << "\n";
+            }
         }
 
         // Separate groups with a blank line if there are more groups
         if (left > 0)
             outStream << "\n";
     }
+    outStream << "lalala OUTSIDE" << std::endl;
+    outStream.flush();
 }
 

@@ -174,6 +174,7 @@ void Simulator::loadAlgorithmSharedObjectsFromFiles() {
 
 void Simulator::runAllGames(){
     for (auto& game : gameContainers) {
+        std::cout << "before start game" << std::endl;
         game.startGame();
     }
 

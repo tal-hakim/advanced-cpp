@@ -16,6 +16,7 @@ include_directories(${CMAKE_SOURCE_DIR}/../UserCommon)
 set(SOURCE_FILES
     Player_322213836_212054837.cpp
     TankAlgorithm_322213836_212054837.cpp
+        ConcreteBattleInfo.cpp
     ../UserCommon/utils/DirectionUtils.cpp
     ../UserCommon/utils/MapUtils.cpp
 )
@@ -24,6 +25,7 @@ set(SOURCE_FILES
 set(HEADER_FILES
     Player_322213836_212054837.h
     TankAlgorithm_322213836_212054837.h
+        ConcreteBattleInfo.h
     ../UserCommon/utils/Direction.h
     ../UserCommon/utils/Position.h
     ../UserCommon/utils/DirectionUtils.h

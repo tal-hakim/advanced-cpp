@@ -89,7 +89,7 @@ bool GameManager::isGameOver() {
             auto playerId = i + 1;
             auto tankCount = aliveTanksPerPlayer[i];
             if (tankCount > 0) {
-                finalResult = {playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer};
+                finalResult = {playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
                 if (verbose) logger.logResult("Player " + std::to_string(playerId) + " won with " + std::to_string(tankCount) + " tanks still alive");
                 return true;
             }
@@ -512,6 +512,7 @@ GameResult GameManager::run(size_t map_width, size_t map_height, const Satellite
     allTanks.clear();
     shells.clear();
     aliveTanksPerPlayer.clear();
+    aliveTanksPerPlayer.resize(NUM_PLAYERS, 0);
     tankCountPerPlayer.clear();
     maxSteps = max_steps;
 
@@ -525,7 +526,6 @@ GameResult GameManager::run(size_t map_width, size_t map_height, const Satellite
 
     // count total shells
     totalShells = allTanks.size() * num_shells;
-
     // run the game
     runGame();
 

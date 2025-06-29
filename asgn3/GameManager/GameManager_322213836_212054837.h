@@ -41,7 +41,7 @@ namespace GameManager_322213836_212054837 {
             size_t maxSteps = 0;
             int stalemateSteps = STALEMATE_STEPS;
             size_t totalShells = 0;  // Track total shells in the game
-            bool validGame = false;
+            bool validGame = true;
             GameResult finalResult;
             void executeTanksStep();
 
@@ -78,7 +78,7 @@ namespace GameManager_322213836_212054837 {
         public:
             GameManager(bool verbose) : verbose(verbose) {
                 if (verbose){
-                    logger.setLogFile("TBD"); // TODO: waiting for Amir to tell us
+                    logger.setLogFile("TBD"); // TODO: name the log file
                 }
             };
             ~GameManager() = default;
@@ -87,6 +87,7 @@ namespace GameManager_322213836_212054837 {
                            Player& player1, Player& player2,
                            TankAlgorithmFactory player1_tank_algo_factory,
                            TankAlgorithmFactory player2_tank_algo_factory) override;
+
         };
 
 

@@ -68,6 +68,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/ConcreteBattleInfo.cpp">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/ConcreteBattleInfo.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/Player_322213836_212054837.cpp">
 			<Option target="Algorithm_322213836_212054837"/>
 		</Unit>

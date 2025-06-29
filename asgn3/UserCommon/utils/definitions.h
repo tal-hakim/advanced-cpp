@@ -31,6 +31,7 @@ namespace UserCommon_322213836_212054837 {
     constexpr int TIE_SCORE = 1;
     constexpr int WINNING_SCORE = 3;
     constexpr int LOSING_SCORE = 0;
+    constexpr int NUM_PLAYERS = 2;
 }
 
 #endif //DEFINITIONS_H
