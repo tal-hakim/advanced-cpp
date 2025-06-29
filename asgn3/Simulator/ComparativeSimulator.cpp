@@ -61,7 +61,6 @@ void ComparativeSimulator::logResults(){
     // 3. Prepare for grouping
     std::vector<bool> handled(gameContainers.size(), false);
     size_t left = gameContainers.size();
-
     // 4. Group by identical results using isSameResult
     while (left > 0) {
         std::vector<size_t> thisGroup;
@@ -93,6 +92,7 @@ void ComparativeSimulator::logResults(){
 
         // 6th line: game result message
         const GameResult& res = gameContainers[thisGroup[0]].getGameResult();
+
         outStream << gameResultMessage(res) << "\n";
 
         // 7th line: round number
@@ -104,12 +104,11 @@ void ComparativeSimulator::logResults(){
                 outStream << row << "\n";
             }
         }
-
+        break;
         // Separate groups with a blank line if there are more groups
         if (left > 0)
             outStream << "\n";
     }
-    outStream << "lalala OUTSIDE" << std::endl;
     outStream.flush();
 }
 

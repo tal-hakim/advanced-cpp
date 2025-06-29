@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
             }
             ComparativeSimulator sim(gameMap, gameManagersFolder, alg1, alg2, verbose);
             sim.simulate();
-            sim.logResults();
         }
         else if (mode == "competition") {
             if (gameMapsFolder.empty() || algorithmsFolder.empty() || gameManagerFile.empty()) {

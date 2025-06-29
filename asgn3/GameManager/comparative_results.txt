@@ -5,4 +5,9 @@ algorithm2=Algorithm_322213836_212054837
 GameManager_322213836_212054837
 Player 1 wins: All tanks dead
 5
-lalala OUTSIDE
+            
+   *        
+            
+           *
+  1         
+            
