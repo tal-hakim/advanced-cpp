@@ -24,6 +24,10 @@
 #include "AlgorithmRegistrar.h"
 #include "GameContainer.h"
 #include "BoardInitInfo.h"
+#include <optional>
+#include <vector>
+#include <memory>
+#include "../Common/GameResult.h"
 
 using std::string;
 class Simulator {
@@ -76,6 +80,8 @@ public:
     static string getCurrentTimeString();
 
     std::vector<string> getSoFilesInFolder(const string &folderName);
+
+    std::optional<GameResult> checkGameValidity(const std::vector<std::vector<char>> &boardView);
 };
 
 

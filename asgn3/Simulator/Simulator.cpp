@@ -28,6 +28,7 @@ std::vector<std::string> Simulator::getSoFilesInFolder(const std::string& folder
     return soFiles;
 }
 
+
 BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
     // TODO: handle input errors
     BoardInitInfo info;
@@ -77,12 +78,12 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
         mapLines.push_back(line);
     }
 
-    std::vector<std::vector<char>> boardView(info.height, std::vector<char>(info.width, ' '));
+    std::vector<std::vector<char>> boardView(info.width, std::vector<char>(info.height, ' '));
     for (int y = 0; y < info.height; ++y) {
         std::string currentLine = (y < (int)mapLines.size()) ? mapLines[y] : "";
         for (int x = 0; x < info.width; ++x) {
             char cell = (x < (int)currentLine.size()) ? currentLine[x] : ' ';
-            boardView[y][x] = cell;
+            boardView[x][y] = cell;
         }
     }
 

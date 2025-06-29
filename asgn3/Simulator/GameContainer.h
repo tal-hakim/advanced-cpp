@@ -15,7 +15,7 @@ using std::string;
 
 
 class GameContainer {
-    const BoardInitInfo& initInfo;
+    BoardInitInfo& initInfo;
     std::unique_ptr<AbstractGameManager> gameManager;
     std::unique_ptr<Player> player1;
     std::unique_ptr<Player> player2;
@@ -46,6 +46,9 @@ public:
 
     void startGame() {
         // Note: we dereference the unique_ptr to get the SatelliteView
+        if(!checkGameValidity()){
+            return;
+        }
         gameResult = gameManager->run(
                 initInfo.width,
                 initInfo.height,
@@ -60,6 +63,7 @@ public:
     }
 
 
+    bool checkGameValidity();
 
     void setGameResult(GameResult result){
         gameResult = std::move(result);
