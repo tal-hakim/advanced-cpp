@@ -5,11 +5,11 @@
 #ifndef ASGN3_PLAYER_322213836_212054837_H
 #define ASGN3_PLAYER_322213836_212054837_H
 
-#include "../Common/Player.h"
-#include "../Common/TankAlgorithm.h"
-#include "../Common/SatelliteView.h"
-#include "../Common/BattleInfo.h"
-#include "../Common/SatelliteView.h"
+#include "../common/Player.h"
+#include "../common/TankAlgorithm.h"
+#include "../common/SatelliteView.h"
+#include "../common/BattleInfo.h"
+#include "../common/SatelliteView.h"
 #include "ConcreteBattleInfo.h"
 #include "../UserCommon/utils/Position.h"
 #include <vector>

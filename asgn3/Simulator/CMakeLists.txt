@@ -7,7 +7,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/..)
-include_directories(${CMAKE_SOURCE_DIR}/../Common)
+include_directories(${CMAKE_SOURCE_DIR}/../common)
 include_directories(${CMAKE_SOURCE_DIR}/../UserCommon)
 
 # Registration library source files
@@ -35,6 +35,7 @@ set(SIMULATOR_SOURCE_FILES
     ComparativeSimulator.cpp
     GameContainer.cpp
     main.cpp
+        ../UserCommon/utils/timeUtil.cpp
 )
 
 # Header files
@@ -42,12 +43,13 @@ set(HEADER_FILES
     AlgorithmRegistrar.h
     GameManagerRegistrar.h
     Simulator.h
-    ../Common/SatelliteView.h
+        ../common/SatelliteView.h
     ../UserCommon/BoardSatelliteView.h
     CompetitiveSimulator.h
     ComparativeSimulator.h
     GameContainer.h
     BoardInitInfo.h
+        ../UserCommon/utils/timeUtil.h
 )
 
 # Create executable

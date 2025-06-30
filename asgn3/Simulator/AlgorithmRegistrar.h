@@ -5,8 +5,8 @@
 #ifndef ASGN3_ALGORITHMREGISTRAR_H
 #define ASGN3_ALGORITHMREGISTRAR_H
 
-#include "../Common/TankAlgorithm.h"
-#include "../Common/Player.h"
+#include "../common/TankAlgorithm.h"
+#include "../common/Player.h"
 
 #include <cassert>
 #include <vector>

@@ -82,7 +82,7 @@
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/tal/dev/advanced-cpp/asgn3/GameManager/../Common"
+					"path" : "/home/tal/dev/advanced-cpp/asgn3/GameManager/../common"
 				},
 				{
 					"backtrace" : 5,
@@ -206,17 +206,17 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "/home/tal/dev/advanced-cpp/asgn3/Common/PlayerRegistration.h",
+			"path" : "/home/tal/dev/advanced-cpp/asgn3/common/PlayerRegistration.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "/home/tal/dev/advanced-cpp/asgn3/Common/GameManagerRegistration.h",
+			"path" : "/home/tal/dev/advanced-cpp/asgn3/common/GameManagerRegistration.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "/home/tal/dev/advanced-cpp/asgn3/Common/TankAlgorithmRegistration.h",
+			"path" : "/home/tal/dev/advanced-cpp/asgn3/common/TankAlgorithmRegistration.h",
 			"sourceGroupIndex" : 1
 		},
 		{

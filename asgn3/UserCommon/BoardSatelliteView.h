@@ -4,7 +4,7 @@
 
 #ifndef ASGN2_BOARDSATELLITEVIEW_H
 #define ASGN2_BOARDSATELLITEVIEW_H
-#include "../Common/SatelliteView.h"
+#include "../common/SatelliteView.h"
 #include <vector>
 #include <cstddef>
 

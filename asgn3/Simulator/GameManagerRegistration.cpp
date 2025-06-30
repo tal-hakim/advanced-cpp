@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <iostream>
 
-#include "../Common/GameManagerRegistration.h"
+#include "../common/GameManagerRegistration.h"
 #include "GameManagerRegistrar.h"
 
 GameManagerRegistration::GameManagerRegistration(GameManagerFactory factory) {

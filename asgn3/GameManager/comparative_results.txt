@@ -4,10 +4,10 @@ algorithm2=Algorithm_322213836_212054837
 
 GameManager_322213836_212054837
 Player 2 wins: All tanks dead
-0
-        2  
+13
+            
       # #   
-           2
-   @     @ 
-  2   ##   
-           
+            
+ 2 @     @  
+      ##    
+            

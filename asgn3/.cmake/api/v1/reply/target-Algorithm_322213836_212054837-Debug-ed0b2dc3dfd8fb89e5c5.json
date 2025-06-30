@@ -82,7 +82,7 @@
 				},
 				{
 					"backtrace" : 4,
-					"path" : "/home/tal/dev/advanced-cpp/asgn3/../Common"
+					"path" : "/home/tal/dev/advanced-cpp/asgn3/../common"
 				},
 				{
 					"backtrace" : 5,
@@ -225,12 +225,12 @@
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Common/Player.h",
+			"path" : "common/Player.h",
 			"sourceGroupIndex" : 1
 		},
 		{
 			"backtrace" : 1,
-			"path" : "Common/PlayerRegistration.h",
+			"path" : "common/PlayerRegistration.h",
 			"sourceGroupIndex" : 1
 		}
 	],

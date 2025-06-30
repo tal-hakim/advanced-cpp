@@ -1,7 +1,7 @@
 #include "GameManager_322213836_212054837.h"
 #include "../UserCommon/utils/definitions.h"
-#include "../Common/Player.h"
-#include "../Common/TankAlgorithm.h"
+#include "../common/Player.h"
+#include "../common/TankAlgorithm.h"
 #include <fstream>
 #include <algorithm>
 #include <iostream>
@@ -515,7 +515,10 @@ GameResult GameManager::run(size_t map_width, size_t map_height, const Satellite
     aliveTanksPerPlayer.resize(NUM_PLAYERS, 0);
     tankCountPerPlayer.clear();
     maxSteps = max_steps;
-
+    if (verbose){
+//        logger.setLogFile(typeid(player1).name()); // TODO: name the log file
+        logger.setLogFile(getCurrentTimeString());
+    }
     // initialize board
     board = GameBoard(map_width, map_height);
     readSatelliteView(map, num_shells, player1_tank_algo_factory, player2_tank_algo_factory);

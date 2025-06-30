@@ -6,7 +6,7 @@
 #define ASGN3_GAMEMANAGERREGISTRAR_H
 
 
-#include "../Common/AbstractGameManager.h"
+#include "../common/AbstractGameManager.h"
 
 #include <cassert>
 #include <vector>
@@ -42,7 +42,7 @@ public:
         managers.back().setGameManagerFactory(std::move(factory));
     }
 
-    struct BadRegistrationException {
+    struct BadRegistrationException  {
         std::string name;
         bool hasName, hasGameManagerFactory;
     };

@@ -24,6 +24,9 @@ public:
         mapFile(mapFile)
     {
         gameManagerSONames = getSoFilesInFolder(gameManagersFolder);
+        if (gameManagerSONames.empty()) {
+            throw MissingFilesException("No GameManagers in folder: " + gameManagersFolder);
+        }
         mapsNames = {mapFile};
         if (haveSameFilename(alg1File, alg2File)){
             algorithmsSONames = {alg1File};

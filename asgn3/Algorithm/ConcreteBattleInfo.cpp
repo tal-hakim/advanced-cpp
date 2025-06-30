@@ -1,5 +1,5 @@
 #include "ConcreteBattleInfo.h"
-#include "../Common/SatelliteView.h"
+#include "../common/SatelliteView.h"
 namespace Algorithm_322213836_212054837 {
     ConcreteBattleInfo::ConcreteBattleInfo(PlayerUpdates updates)
             : playerUpdates(updates) {

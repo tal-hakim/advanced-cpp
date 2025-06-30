@@ -10,16 +10,15 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <chrono>
 #include <sstream>
 #include <set>
 #include <algorithm>
 #include <filesystem>
 #include <dlfcn.h>
 #include <iostream>
-#include "../Common/AbstractGameManager.h"
-#include "../Common/TankAlgorithm.h"
-#include "../Common/Player.h"
+#include "../common/AbstractGameManager.h"
+#include "../common/TankAlgorithm.h"
+#include "../common/Player.h"
 #include "GameManagerRegistrar.h"
 #include "AlgorithmRegistrar.h"
 #include "GameContainer.h"
@@ -27,14 +26,16 @@
 #include <optional>
 #include <vector>
 #include <memory>
-#include "../Common/GameResult.h"
+#include "../common/GameResult.h"
+#include "../UserCommon/utils/timeUtil.h"
+using namespace UserCommon_322213836_212054837;
 
 using std::string;
 class Simulator {
 
 private:
 
-    void setup(); // TODO: Goal: build the games that should run according to mode == gameContainers
+    void setup();
 
     virtual void buildGameContainers() = 0;
 
@@ -44,6 +45,8 @@ private:
 
     void closeAllSharedObjects();
 
+
+
 protected:
     std::vector<BoardInitInfo> boards;
     std::vector<void*> handles;
@@ -52,7 +55,6 @@ protected:
     std::vector<string> algorithmsSONames;
     std::vector<string> gameManagerSONames;
     std::vector<string> mapsNames;
-
     BoardInitInfo readMapFromFile(const string& inputFile);
 
     void readAllMaps();
@@ -77,11 +79,10 @@ public:
 
     static std::vector<string> getMapAsStrings(const SatelliteView &view, size_t width, size_t height);
 
-    static string getCurrentTimeString();
-
     std::vector<string> getSoFilesInFolder(const string &folderName);
-
-    std::optional<GameResult> checkGameValidity(const std::vector<std::vector<char>> &boardView);
+    struct MissingFilesException {
+        std::string message;
+    };
 };
 
 

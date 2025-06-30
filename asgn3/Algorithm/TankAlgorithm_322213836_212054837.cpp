@@ -2,7 +2,7 @@
 // Created by talta on 21/06/2025.
 //
 
-#include "../Common/TankAlgorithmRegistration.h"
+#include "../common/TankAlgorithmRegistration.h"
 #include "TankAlgorithm_322213836_212054837.h"
 
 using namespace Algorithm_322213836_212054837;

@@ -9,7 +9,7 @@ add_compile_options(-fPIC)
 
 # Include directories
 include_directories(${CMAKE_SOURCE_DIR}/..)
-include_directories(${CMAKE_SOURCE_DIR}/../Common)
+include_directories(${CMAKE_SOURCE_DIR}/../common)
 include_directories(${CMAKE_SOURCE_DIR}/../UserCommon)
 
 # Source files
@@ -30,8 +30,8 @@ set(HEADER_FILES
     ../UserCommon/utils/Position.h
     ../UserCommon/utils/DirectionUtils.h
     ../UserCommon/utils/MapUtils.h
-    ../Common/Player.h
-    ../Common/PlayerRegistration.h
+        ../common/Player.h
+        ../common/PlayerRegistration.h
 )
 
 # Create shared library

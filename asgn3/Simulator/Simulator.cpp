@@ -233,20 +233,6 @@ std::string Simulator::getReasonString(GameResult::Reason reason) {
     }
 }
 
-std::string Simulator::getCurrentTimeString() {
-    auto now = std::chrono::system_clock::now();
-    auto now_time = std::chrono::system_clock::to_time_t(now);
-    std::tm tm;
-#ifdef _WIN32
-    localtime_s(&tm, &now_time);
-#else
-    localtime_r(&now_time, &tm);
-#endif
-    std::ostringstream oss;
-    oss << std::put_time(&tm, "%Y%m%d_%H%M%S");
-    return oss.str();
-}
-
 // Helper to get the final map as vector of strings
 std::vector<std::string> Simulator::getMapAsStrings(const SatelliteView& view, size_t width, size_t height) {
     std::vector<std::string> mapLines;

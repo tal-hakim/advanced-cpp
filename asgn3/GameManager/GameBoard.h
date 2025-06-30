@@ -8,7 +8,7 @@
 #include "objects/Shell.h"
 #include "objects/Tank.h"
 #include "../UserCommon/utils/Position.h"
-#include "../Common/SatelliteView.h"
+#include "../common/SatelliteView.h"
 #include <vector>
 #include <memory>
 #include <algorithm>

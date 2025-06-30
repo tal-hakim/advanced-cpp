@@ -2,12 +2,12 @@
 // Created by talta on 21/06/2025.
 //
 
-#include "../Common/PlayerRegistration.h"
+#include "../common/PlayerRegistration.h"
 #include "Player_322213836_212054837.h"
 #include "ConcreteBattleInfo.h"
-#include "../Common/SatelliteView.h"
-#include "../Common/TankAlgorithm.h"
-#include "../Common/BattleInfo.h"
+#include "../common/SatelliteView.h"
+#include "../common/TankAlgorithm.h"
+#include "../common/BattleInfo.h"
 #include "TankAlgorithm_322213836_212054837.h"
 #include "../UserCommon/utils/MapUtils.h"
 #include "../UserCommon/utils/definitions.h"

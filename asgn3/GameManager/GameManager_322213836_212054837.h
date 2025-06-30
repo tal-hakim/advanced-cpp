@@ -1,13 +1,13 @@
 #ifndef ASGN3_GAMEMANAGER_322213836_212054837_H
 #define ASGN3_GAMEMANAGER_322213836_212054837_H
 
-#include "../Common/AbstractGameManager.h"
-#include "../Common/GameResult.h"
-#include "../Common/BattleInfo.h"
-#include "../Common/ActionRequest.h"
-#include "../Common/SatelliteView.h"
-#include "../Common/Player.h"
-#include "../Common/TankAlgorithm.h"
+#include "../common/AbstractGameManager.h"
+#include "../common/GameResult.h"
+#include "../common/BattleInfo.h"
+#include "../common/ActionRequest.h"
+#include "../common/SatelliteView.h"
+#include "../common/Player.h"
+#include "../common/TankAlgorithm.h"
 #include "objects/Tank.h"
 #include "objects/Shell.h"
 #include "objects/Wall.h"
@@ -16,12 +16,14 @@
 #include "../UserCommon/BoardSatelliteView.h"
 #include "Logger.h"
 #include "../UserCommon/utils/Position.h"
-#include "../Common/GameManagerRegistration.h"
+#include "../UserCommon/utils/timeUtil.h"
+#include "../common/GameManagerRegistration.h"
 #include <memory>
 #include <vector>
 #include <map>
 #include <string>
 #include <unordered_set>
+
 
 namespace GameManager_322213836_212054837 {
 
@@ -77,9 +79,6 @@ namespace GameManager_322213836_212054837 {
 
         public:
             GameManager(bool verbose) : verbose(verbose) {
-                if (verbose){
-                    logger.setLogFile("TBD"); // TODO: name the log file
-                }
             };
             ~GameManager() = default;
             GameResult run(size_t map_width, size_t map_height, const SatelliteView& map, // <= assume it is a snapshot, NOT updated

@@ -2,7 +2,7 @@
 #define ASGN3_TANK_H
 
 #include "MovingElement.h"
-#include "../../Common/TankAlgorithm.h"
+#include "../../common/TankAlgorithm.h"
 #include "../../UserCommon/utils/Position.h"
 #include "../../UserCommon/utils/Direction.h"
 #include <memory>

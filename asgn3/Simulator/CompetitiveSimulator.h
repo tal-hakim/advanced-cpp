@@ -28,10 +28,11 @@ public:
         algorithmsSONames = getSoFilesInFolder(algorithmsFolder);
         if (algorithmsSONames.size() < 2)
         {
-            // TODO: error
+            throw MissingFilesException("Not enough algorithms in folder: " + algsFolder);
         }
         gameManagerSONames = {gameManagerFile};
         mapsNames = getFilenamesInFolder(mapsFolder);
+        if (mapsNames.empty()) throw MissingFilesException("No maps in folder: " + mapsFolder);
     };
 
     void readAllMaps();

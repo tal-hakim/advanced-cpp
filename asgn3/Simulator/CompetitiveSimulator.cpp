@@ -4,7 +4,6 @@
 
 #include "CompetitiveSimulator.h"
 
-
 void CompetitiveSimulator::buildGameContainers() {
     auto& algoRegistrar = AlgorithmRegistrar::getAlgorithmRegistrar();
     auto& gmRegistrar = GameManagerRegistrar::getGameManagerRegistrar();

@@ -45,7 +45,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -70,7 +70,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -95,7 +95,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -120,7 +120,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -145,7 +145,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -170,7 +170,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -195,7 +195,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -220,7 +220,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -255,22 +255,6 @@
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/TankAlgorithm_322213836_212054837.h">
 			<Option target="Algorithm_322213836_212054837"/>
-		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/GameManagerRegistration.h">
-			<Option target="GameManager_322213836_212054837"/>
-		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/Player.h">
-			<Option target="Algorithm_322213836_212054837"/>
-		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/PlayerRegistration.h">
-			<Option target="Algorithm_322213836_212054837"/>
-			<Option target="GameManager_322213836_212054837"/>
-		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/SatelliteView.h">
-			<Option target="Simulator"/>
-		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/TankAlgorithmRegistration.h">
-			<Option target="GameManager_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/GameBoard.cpp">
 			<Option target="GameManager_322213836_212054837"/>
@@ -392,6 +376,30 @@
 			<Option target="Algorithm_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/definitions.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/timeUtil.cpp">
+			<Option target="GameManager_322213836_212054837"/>
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/timeUtil.h">
+			<Option target="GameManager_322213836_212054837"/>
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/GameManagerRegistration.h">
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/Player.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/PlayerRegistration.h">
+			<Option target="Algorithm_322213836_212054837"/>
+			<Option target="GameManager_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/SatelliteView.h">
+			<Option target="Simulator"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/TankAlgorithmRegistration.h">
 			<Option target="GameManager_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/CMakeLists.txt">

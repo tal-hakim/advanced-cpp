@@ -25,7 +25,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -50,7 +50,7 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
-					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../Common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
 					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
 					<Add directory="/usr/include/c++/13"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
@@ -86,12 +86,6 @@
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/TankAlgorithm_322213836_212054837.h">
 			<Option target="Algorithm_322213836_212054837"/>
 		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/Player.h">
-			<Option target="Algorithm_322213836_212054837"/>
-		</Unit>
-		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Common/PlayerRegistration.h">
-			<Option target="Algorithm_322213836_212054837"/>
-		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/Direction.h">
 			<Option target="Algorithm_322213836_212054837"/>
 		</Unit>
@@ -108,6 +102,12 @@
 			<Option target="Algorithm_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/Position.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/Player.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/PlayerRegistration.h">
 			<Option target="Algorithm_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/CMakeLists.txt">

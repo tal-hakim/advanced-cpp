@@ -184,9 +184,9 @@ bool GameManager_322213836_212054837::readBoard(const std::string& inputFile) {
  * v func that loads a .so
  * v func that goes over vec of files and loads .so
  * v CompareSim and CompetitiveSim derived classes
- * TODO: log results
+ * v log results
  * TODO: log errors
- * TODO: main
+ * v main
  * TODO: check arg list
  * TODO: threads :(
  * TODO: move the timeStamp func to userCommon so it will we accessible from gameManager

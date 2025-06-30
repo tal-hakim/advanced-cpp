@@ -2,7 +2,7 @@
 // Created by talta on 21/06/2025.
 //
 
-#include "../Common/PlayerRegistration.h"
+#include "../common/PlayerRegistration.h"
 #include "AlgorithmRegistrar.h"
 
 PlayerRegistration::PlayerRegistration(PlayerFactory factory) {
