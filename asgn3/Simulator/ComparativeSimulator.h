@@ -18,8 +18,9 @@ public:
             const std::string& gameManagersFolder,
             const std::string& alg1File,
             const std::string& alg2File,
-            bool verbose
-    ) : Simulator(verbose),
+            bool verbose,
+            int numThreads
+    ) : Simulator(verbose, numThreads),
         gameManagersFolder(gameManagersFolder),
         mapFile(mapFile)
     {

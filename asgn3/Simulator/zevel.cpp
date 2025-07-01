@@ -185,12 +185,18 @@ bool GameManager_322213836_212054837::readBoard(const std::string& inputFile) {
  * v func that goes over vec of files and loads .so
  * v CompareSim and CompetitiveSim derived classes
  * v log results
- * TODO: log errors
+ * TODO: log errors (maybe we missed some errors ?)
+ * TODO: fix API with Amir's changes
+ * TODO: go over assignment again
+ * TODO: ask Chat to help us write tests
+    * TODO: test competitive
+    * TODO: test threads
+ * TODO: make sure the algorithm / player meet the requirements
  * v main
- * TODO: check arg list
- * TODO: threads :(
- * TODO: move the timeStamp func to userCommon so it will we accessible from gameManager
- * TODO: change the folder names to lower case
+ * v check arg list
+ * v threads :(
+ * v move the timeStamp func to userCommon so it will we accessible from gameManager
+ * v change the folder names to lower case
  * v func that builds the list to run
  * v make class "gameContainer" that holds: relevant gameManager, map ..., GameResult. has func run */
 

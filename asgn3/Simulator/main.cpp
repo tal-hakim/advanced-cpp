@@ -159,14 +159,14 @@ int main(int argc, char* argv[]) {
             const std::string& alg1 = argMap["algorithm1"];
             const std::string& alg2 = argMap["algorithm2"];
 
-            ComparativeSimulator sim(gameMap, gameManagersFolder, alg1, alg2, verbose);
+            ComparativeSimulator sim(gameMap, gameManagersFolder, alg1, alg2, verbose, num_threads);
             sim.simulate();
         } else { // isCompetition
             const std::string& gameMapsFolder = argMap["game_maps_folder"];
             const std::string& algorithmsFolder = argMap["algorithms_folder"];
             const std::string& gameManagerFile = argMap["game_manager"];
 
-            CompetitiveSimulator sim(gameMapsFolder, gameManagerFile, algorithmsFolder, verbose);
+            CompetitiveSimulator sim(gameMapsFolder, gameManagerFile, algorithmsFolder, verbose, num_threads);
             sim.simulate();
         }
     }

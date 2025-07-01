@@ -173,11 +173,42 @@ void Simulator::loadAlgorithmSharedObjectsFromFiles() {
 }
 
 
-void Simulator::runAllGames(){
-    for (auto& game : gameContainers) {
-        game.startGame();
+void Simulator::runGamesWorker(std::atomic<size_t>& nextIndex) {
+    size_t nGames = gameContainers.size(); // Just get it here!
+    while (true) {
+        size_t i = nextIndex.fetch_add(1, std::memory_order_relaxed);
+        if (i >= nGames) break;
+        gameContainers[i].startGame();
+    }
+}
+
+void Simulator::runAllGames() {
+    size_t nGames = gameContainers.size();
+    int threadsToUse = numThreads;
+
+    if (threadsToUse == 1) {
+        // Single-threaded execution
+        for (auto& game : gameContainers)
+            game.startGame();
+        return;
     }
 
+    // Make sure not to spawn more threads than games
+    threadsToUse = std::min<int>(threadsToUse, nGames);
+
+    // Shared atomic counter for all threads
+    std::atomic<size_t> nextIndex{0};
+    std::vector<std::jthread> workers;
+
+    // Start the threads
+    for (int t = 0; t < threadsToUse; ++t)
+        workers.emplace_back([this, &nextIndex]() {
+            runGamesWorker(nextIndex);
+        });
+
+    // All threads automatically join at the end of scope (std::jthread feature)
+    for (auto& t : workers)
+        t.join();
 }
 
 void Simulator::simulate() {

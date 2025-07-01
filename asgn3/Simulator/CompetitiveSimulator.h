@@ -23,12 +23,12 @@ private:
 
 public:
     CompetitiveSimulator(const std::string &mapsFolder, const std::string &gameManagerFile,
-                         const std::string &algsFolder, bool verbose) : Simulator(verbose),
+                         const std::string &algsFolder, bool verbose, int numThreads) : Simulator(verbose, numThreads),
                          gameManagerFile(gameManagerFile), mapsFolder(mapsFolder), algorithmsFolder(algsFolder) {
         algorithmsSONames = getSoFilesInFolder(algorithmsFolder);
         if (algorithmsSONames.size() < 2)
         {
-            throw MissingFilesException("Not enough algorithms in folder: " + algsFolder);
+            throw MissingFilesException("Less than 2 algorithms in folder: " + algsFolder);
         }
         gameManagerSONames = {gameManagerFile};
         mapsNames = getFilenamesInFolder(mapsFolder);

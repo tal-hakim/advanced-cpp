@@ -28,12 +28,17 @@
 #include <memory>
 #include "../common/GameResult.h"
 #include "../UserCommon/utils/timeUtil.h"
+#include <atomic>
+#include <thread>
+
 using namespace UserCommon_322213836_212054837;
 
 using std::string;
 class Simulator {
 
 private:
+
+    int numThreads;
 
     void setup();
 
@@ -45,6 +50,7 @@ private:
 
     void closeAllSharedObjects();
 
+    void runGamesWorker(std::atomic<size_t>& nextIndex);
 
 
 protected:
@@ -68,7 +74,7 @@ protected:
 
 public:
 
-    Simulator(bool verbose) : verbose(verbose) {
+    Simulator(bool verbose, int numThreads) : verbose(verbose), numThreads(numThreads) {
     };
     void simulate();
 
