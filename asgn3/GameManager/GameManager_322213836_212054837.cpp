@@ -35,7 +35,7 @@ bool GameManager::isPlayerTurn() const {
 bool GameManager::isMaxStepsReached() {
     if (getGameStep() >= maxSteps) {
         std::string result = "Tie, reached max steps = " + std::to_string(maxSteps);
-        for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
+        for (size_t i = 0; i < aliveTanksPerPlayer.size(); i++) {
             result += ", player " + std::to_string(i + 1) + " has " + std::to_string(aliveTanksPerPlayer[i]) + " tanks";
         }
         if (verbose) logger.logResult(result);
@@ -62,14 +62,14 @@ bool GameManager::isGameOver() {
         return true;
     }
     if (isStalemate()) {
-        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
+        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep()};
         return true;
     }
 
     bool anyPlayerHasTanks = false;
     int playersWithTanks = 0;
 
-    for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
+    for (size_t i = 0; i < aliveTanksPerPlayer.size(); i++) {
         auto tankCount = aliveTanksPerPlayer[i];
         if (tankCount > 0) {
             anyPlayerHasTanks = true;
@@ -78,18 +78,18 @@ bool GameManager::isGameOver() {
     }
 
     if (!anyPlayerHasTanks) {
-        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
+        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep()};
         if (verbose) logger.logResult("Tie, both players have zero tanks");
         return true;
     }
 
     if (playersWithTanks == 1) {
         // Find the winning player
-        for (int i = 0; i < aliveTanksPerPlayer.size(); i++) {
+        for (size_t i = 0; i < aliveTanksPerPlayer.size(); i++) {
             auto playerId = i + 1;
             auto tankCount = aliveTanksPerPlayer[i];
             if (tankCount > 0) {
-                finalResult = {playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
+                finalResult = {(int)playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep()};
                 if (verbose) logger.logResult("Player " + std::to_string(playerId) + " won with " + std::to_string(tankCount) + " tanks still alive");
                 return true;
             }
@@ -446,7 +446,7 @@ std::unique_ptr<SatelliteView> GameManager::getSatelliteView(const std::shared_p
     if (tank) { // Only if tank is provided
         Position pos = tank->getPosition();
 
-        if (pos.y < board.getHeight() && pos.x < board.getWidth()) {
+        if (pos.y < static_cast<int>(board.getHeight()) && pos.x < static_cast<int>(board.getWidth())) {
             boardMat[pos.x][pos.y] = CURR_TANK;
         }
     }
@@ -500,12 +500,17 @@ void GameManager::readSatelliteView(const SatelliteView& view, size_t numShells,
 }
 
 
-int GameManager::getGameStep() const {
+size_t GameManager::getGameStep() const {
     return stepCount / 2;  // Each game step consists of two stepCount increments
 }
 
-GameResult GameManager::run(size_t map_width, size_t map_height, const SatelliteView &map, size_t max_steps, size_t num_shells,
-                            Player &player1, Player &player2, TankAlgorithmFactory player1_tank_algo_factory, TankAlgorithmFactory player2_tank_algo_factory) {
+GameResult GameManager::run( size_t map_width, size_t map_height,
+                             const SatelliteView& map, // <= a snapshot, NOT updated
+                             string map_name,
+                             size_t max_steps, size_t num_shells,
+                             Player& player1, string name1, Player& player2, string name2,
+                             TankAlgorithmFactory player1_tank_algo_factory,
+                             TankAlgorithmFactory player2_tank_algo_factory) {
 
     // Clear
     players.clear();
@@ -517,7 +522,7 @@ GameResult GameManager::run(size_t map_width, size_t map_height, const Satellite
     maxSteps = max_steps;
     if (verbose){
 //        logger.setLogFile(typeid(player1).name()); // TODO: name the log file
-        logger.setLogFile(getCurrentTimeString());
+        logger.setLogFile(map_name + "_" + name1 + "_" + name2 + "_" + getCurrentTimeString());
     }
     // initialize board
     board = GameBoard(map_width, map_height);

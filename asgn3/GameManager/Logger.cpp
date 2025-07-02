@@ -8,7 +8,7 @@ namespace GameManager_322213836_212054837 {
 void Logger::setLogFile(const std::string &inputFile) {
     std::filesystem::path inputPath(inputFile);
     inputFilename = inputPath.filename().string();
-    std::string outputFile = "GameManager_322213836_212054837_Log_" + inputFilename;
+    std::string outputFile = "GameManager_322213836_212054837_" + inputFilename + ".txt";
     outputLog.open(outputFile);
 }
 

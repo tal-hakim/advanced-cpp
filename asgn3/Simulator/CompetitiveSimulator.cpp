@@ -18,7 +18,7 @@ void CompetitiveSimulator::buildGameContainers() {
     for (int k = 0; k < K; ++k) {
         for (int i = 0; i < N; ++i) {
             int j = (i + 1 + k % (N - 1)) % N;
-            if (N % 2 == 0 && k == N/2 - 1 && i > j) continue; // avoid duplicate matches when N even
+            if (N % 2 == 0 && k % (N-1) == N/2 - 1 && i > j) continue; // avoid duplicate matches when N even
 
             auto& alg1Entry = *(algoRegistrar.begin() + i);
             auto& alg2Entry = *(algoRegistrar.begin() + j);
@@ -70,10 +70,6 @@ void CompetitiveSimulator::logResults() {
 
     // Accumulate scores
     std::map<std::string, int> totalScores;
-    for (const auto& alg : algorithmsSONames){
-        std::filesystem::path algPath(alg);
-        totalScores[algPath.filename()] = 0;
-    }
          // ensure all algorithms appear, even if they lost all games
 
     for (const auto& gc : gameContainers) {

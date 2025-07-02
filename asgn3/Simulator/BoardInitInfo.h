@@ -11,11 +11,12 @@
 using namespace UserCommon_322213836_212054837;
 
 struct BoardInitInfo {
-    int width = 0;
-    int height = 0;
-    int maxSteps = 0;
-    int numShells = 0;
+    size_t width = 0;
+    size_t height = 0;
+    size_t maxSteps = 0;
+    size_t numShells = 0;
     std::unique_ptr<BoardSatelliteView> satelliteView;
+    std::string mapFilename;
     std::string mapName;
 };
 #endif //SIMULATOR_BOARDINITINFO_H

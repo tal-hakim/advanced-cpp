@@ -57,6 +57,7 @@ class TankAlgorithm_322213836_212054837 : public TankAlgorithm {
             playerState.turnId = tank_index;  // Set turnId to be the tank's globalIndex
             tankState.roundCounter = UNINITIALIZED;
             tankState.remainingShells = UNINITIALIZED;
+            tankState.tankDir = (player_index == PLAYER_1_ID) ? Direction::L : Direction::R;
         }
         virtual ~TankAlgorithm_322213836_212054837() = default;
 

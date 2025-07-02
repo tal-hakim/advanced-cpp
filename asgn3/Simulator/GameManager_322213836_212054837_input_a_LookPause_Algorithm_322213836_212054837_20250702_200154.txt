@@ -1,0 +1,32 @@
+DoNothing, GetBattleInfo, DoNothing, GetBattleInfo, GetBattleInfo, DoNothing
+RotateRight45, RotateRight45, RotateRight45, GetBattleInfo, RotateRight90, RotateRight45
+DoNothing, Shoot, DoNothing, RotateRight90, GetBattleInfo, DoNothing
+RotateRight45, GetBattleInfo, RotateRight45, Shoot, MoveForward, RotateRight45
+DoNothing, RotateRight90, DoNothing, GetBattleInfo, RotateRight45, DoNothing
+RotateRight45, RotateRight45, RotateRight45, RotateLeft90, GetBattleInfo, RotateRight45
+DoNothing, GetBattleInfo, DoNothing, MoveForward, MoveForward, DoNothing
+RotateRight45, RotateLeft90, RotateRight45, GetBattleInfo, RotateRight90, RotateRight45
+DoNothing, RotateLeft45, DoNothing, RotateRight90, GetBattleInfo, DoNothing
+RotateRight45, GetBattleInfo, RotateRight45, MoveForward, RotateRight90, RotateRight45
+DoNothing, RotateLeft90, DoNothing, GetBattleInfo, RotateRight45, DoNothing
+RotateRight45, Shoot, RotateRight45, RotateRight45, GetBattleInfo, RotateRight45
+DoNothing, GetBattleInfo, DoNothing, MoveForward, Shoot, DoNothing (killed)
+RotateRight45, MoveForward, RotateRight45, GetBattleInfo, RotateLeft90, killed
+DoNothing, MoveForward, DoNothing, RotateRight90, GetBattleInfo, killed
+RotateRight45, GetBattleInfo, RotateRight45, RotateRight90, RotateRight45, killed
+DoNothing, RotateRight45, DoNothing, GetBattleInfo, MoveForward, killed
+RotateRight45, Shoot, RotateRight45 (killed), RotateRight45, GetBattleInfo, killed
+DoNothing, killed, killed, Shoot, RotateLeft45, killed
+RotateRight45, killed, killed, GetBattleInfo, MoveForward (killed), killed
+DoNothing, killed, killed, GetBattleInfo, killed, killed
+RotateRight45, killed, killed, GetBattleInfo, killed, killed
+DoNothing, killed, killed, RotateLeft90, killed, killed
+RotateRight45, killed, killed, MoveForward, killed, killed
+DoNothing, killed, killed, GetBattleInfo, killed, killed
+RotateRight45, killed, killed, RotateRight45, killed, killed
+DoNothing, killed, killed, MoveForward, killed, killed
+RotateRight45, killed, killed, GetBattleInfo, killed, killed
+DoNothing, killed, killed, RotateLeft45, killed, killed
+RotateRight45, killed, killed, Shoot, killed, killed
+DoNothing, killed, killed, GetBattleInfo, killed, killed
+Player 1 won with 1 tanks still alive

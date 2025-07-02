@@ -1,13 +1,13 @@
 game_map=../maps/input_a.txt
-algorithm1=Algorithm_322213836_212054837
+algorithm1=LookPause
 algorithm2=Algorithm_322213836_212054837
 
 GameManager_322213836_212054837
-Player 2 wins: All tanks dead
-13
+Player 1 wins: All tanks dead
+31
+1           
+     # #   #
             
-      # #   
-            
- 2 @     @  
-      ##    
+   @     @  
+     ##     
             

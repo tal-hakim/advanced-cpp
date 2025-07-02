@@ -186,12 +186,13 @@ bool GameManager_322213836_212054837::readBoard(const std::string& inputFile) {
  * v CompareSim and CompetitiveSim derived classes
  * v log results
  * TODO: log errors (maybe we missed some errors ?)
- * TODO: fix API with Amir's changes
+ * v fix API with Amir's changes
  * TODO: go over assignment again
  * TODO: ask Chat to help us write tests
     * TODO: test competitive
     * TODO: test threads
  * TODO: make sure the algorithm / player meet the requirements
+ * TODO: separate the chase and shoot logic in tank alg in a way that closest enemy "shhot-wise" is not closest "bfs-wise"
  * v main
  * v check arg list
  * v threads :(

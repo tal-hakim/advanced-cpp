@@ -38,6 +38,8 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
         // handle error, log, etc.
         return info;
     }
+    std::filesystem::path p(inputFile);
+    info.mapFilename = p.stem().string();
 
     std::string line;
 
@@ -53,22 +55,22 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
     // Read MaxSteps
     if (!std::getline(file, line)) return info;
     removeSpaces(line);
-    if (sscanf(line.c_str(), "MaxSteps=%d", &info.maxSteps) != 1) return info;
+    if (sscanf(line.c_str(), "MaxSteps=%zu", &info.maxSteps) != 1) return info;
 
     // Read NumShells
     if (!std::getline(file, line)) return info;
     removeSpaces(line);
-    if (sscanf(line.c_str(), "NumShells=%d", &info.numShells) != 1) return info;
+    if (sscanf(line.c_str(), "NumShells=%zu", &info.numShells) != 1) return info;
 
     // Read Rows
     if (!std::getline(file, line)) return info;
     removeSpaces(line);
-    if (sscanf(line.c_str(), "Rows=%d", &info.height) != 1) return info;
+    if (sscanf(line.c_str(), "Rows=%zu", &info.height) != 1) return info;
 
     // Read Cols
     if (!std::getline(file, line)) return info;
     removeSpaces(line);
-    if (sscanf(line.c_str(), "Cols=%d", &info.width) != 1) return info;
+    if (sscanf(line.c_str(), "Cols=%zu", &info.width) != 1) return info;
 
     if (info.height <= 0 || info.width <= 0) return info;
 
@@ -79,10 +81,10 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
     }
 
     std::vector<std::vector<char>> boardView(info.width, std::vector<char>(info.height, ' '));
-    for (int y = 0; y < info.height; ++y) {
-        std::string currentLine = (y < (int)mapLines.size()) ? mapLines[y] : "";
-        for (int x = 0; x < info.width; ++x) {
-            char cell = (x < (int)currentLine.size()) ? currentLine[x] : ' ';
+    for (size_t y = 0; y < info.height; ++y) {
+        std::string currentLine = (y < mapLines.size()) ? mapLines[y] : "";
+        for (size_t x = 0; x < info.width; ++x) {
+            char cell = (x < currentLine.size()) ? currentLine[x] : ' ';
             boardView[x][y] = cell;
         }
     }
@@ -100,7 +102,7 @@ void Simulator::loadSharedObject(const std::string& soName) {
     if (!handle) {
         throw std::runtime_error(dlerror()); // You can handle/log error differently if you prefer
     }
-    handles.push_back(handle);
+    handles.add(handle);
 }
 
 void Simulator::loadGameManagerSharedObjectsFromFiles() {
@@ -215,17 +217,17 @@ void Simulator::simulate() {
     setup();
     runAllGames();
     logResults();
-    closeAllSharedObjects();
+//    closeAllSharedObjects();
 }
 
-void Simulator::closeAllSharedObjects() {
-    for (void* handle : handles) {
-        if (handle) {
-            dlclose(handle);
-        }
-    }
-    handles.clear();
-}
+//void Simulator::closeAllSharedObjects() {
+//    for (void* handle : handles) {
+//        if (handle) {
+//            dlclose(handle);
+//        }
+//    }
+//    handles.clear();
+//}
 
 void Simulator::setup() {
     readAllMaps();

@@ -161,6 +161,7 @@ int main(int argc, char* argv[]) {
 
             ComparativeSimulator sim(gameMap, gameManagersFolder, alg1, alg2, verbose, num_threads);
             sim.simulate();
+
         } else { // isCompetition
             const std::string& gameMapsFolder = argMap["game_maps_folder"];
             const std::string& algorithmsFolder = argMap["algorithms_folder"];

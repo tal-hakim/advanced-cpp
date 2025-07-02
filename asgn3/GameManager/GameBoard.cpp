@@ -27,8 +27,8 @@ void GameBoard::moveObj(const std::shared_ptr<MovingElement>& elem) {
 }
 
 void GameBoard::printBoard() const {
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
+    for (size_t y = 0; y < height; ++y) {
+        for (size_t x = 0; x < width; ++x) {
             if (!grid[x][y].empty())
                 std::cout << grid[x][y].back()->getSymbol();  // print top-most object
             else
@@ -95,8 +95,8 @@ bool GameBoard::isTank(const Position& pos) const {
 std::vector<std::vector<char>> GameBoard::getBoardMat() const {
     std::vector<std::vector<char>> mat(width, std::vector<char>(height, EMPTY));
 
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
+    for (size_t y = 0; y < height; ++y) {
+        for (size_t x = 0; x < width; ++x) {
             const auto& cell = grid[x][y];
             if (!cell.empty()) {
                 mat[x][y] = cell.back()->getSymbol();  // draw top-most object

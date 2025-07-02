@@ -35,12 +35,13 @@ class Player_322213836_212054837: public Player {
     protected:
         int playerId;
         void analyzeWindowAroundObject(const Position& pos, int windowSize, const std::vector<std::vector<char>>& map);
-        ConcreteBattleInfo::PlayerUpdates playerState;
+
         size_t boardWidth;
         size_t boardHeight;
         std::unordered_map<int, int> tankTurns;
         void handleTankTurnReordering(int tankId);
         size_t roundCounter = 0;
+        ConcreteBattleInfo::PlayerUpdates playerState;
         std::map<int, int> remainingShells;
 
 

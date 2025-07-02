@@ -48,19 +48,30 @@ private:
 
     void runAllGames();
 
-    void closeAllSharedObjects();
-
     void runGamesWorker(std::atomic<size_t>& nextIndex);
 
 
 protected:
+    struct Handles {
+        std::vector<void*> v;
+
+        // Add a handle
+        void add(void* h) { if (h) v.push_back(h); }
+
+        // We don't need to dlclose - the OS will handle cleanup
+        ~Handles() = default;
+    };
+
+    Handles handles;
     std::vector<BoardInitInfo> boards;
-    std::vector<void*> handles;
     std::vector<GameContainer> gameContainers;
     bool verbose;
     std::vector<string> algorithmsSONames;
     std::vector<string> gameManagerSONames;
     std::vector<string> mapsNames;
+
+
+    // TODO: make strcut Handle where the destructor is dlclose
     BoardInitInfo readMapFromFile(const string& inputFile);
 
     void readAllMaps();
@@ -74,8 +85,9 @@ protected:
 
 public:
 
-    Simulator(bool verbose, int numThreads) : verbose(verbose), numThreads(numThreads) {
+    Simulator(bool verbose, int numThreads) : numThreads(numThreads), verbose(verbose) {
     };
+
     void simulate();
 
 

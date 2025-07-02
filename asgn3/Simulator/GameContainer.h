@@ -52,11 +52,12 @@ public:
         gameResult = gameManager->run(
                 initInfo.width,
                 initInfo.height,
-                *(initInfo.satelliteView), // Assuming SatelliteView is the base of BoardSatelliteView
+                *(initInfo.satelliteView),
+                initInfo.mapFilename,// Assuming SatelliteView is the base of BoardSatelliteView
                 initInfo.maxSteps,
                 initInfo.numShells,
-                *player1,
-                *player2,
+                *player1, alg1Name,
+                *player2, alg2Name,
                 player1AlgoFactory,
                 player2AlgoFactory
         );

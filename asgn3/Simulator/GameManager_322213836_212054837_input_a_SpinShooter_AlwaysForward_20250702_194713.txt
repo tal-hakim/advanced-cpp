@@ -1,0 +1,29 @@
+RotateRight90, MoveForward, RotateRight90, MoveForward, MoveForward, RotateRight90
+RotateLeft90, MoveForward, RotateLeft90, MoveForward, MoveForward, RotateLeft90
+Shoot, MoveForward, Shoot, MoveForward, MoveForward, Shoot
+RotateRight90 (killed), MoveForward (ignored), RotateRight90, MoveForward (killed), killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward (ignored), Shoot (ignored), killed, killed, Shoot (ignored)
+killed, MoveForward (ignored), RotateRight90, killed, killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward (ignored), Shoot, killed, killed, Shoot
+killed, MoveForward (ignored), RotateRight90, killed, killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward (ignored), Shoot (ignored), killed, killed, Shoot (ignored)
+killed, MoveForward (ignored), RotateRight90, killed, killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward (ignored), Shoot, killed, killed, Shoot
+killed, MoveForward (ignored), RotateRight90, killed, killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward (ignored), Shoot (ignored), killed, killed, Shoot (ignored)
+killed, MoveForward (ignored), RotateRight90, killed, killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward (ignored), Shoot, killed, killed, Shoot
+killed, MoveForward (ignored), RotateRight90, killed, killed, RotateRight90
+killed, MoveForward (ignored), RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward, Shoot (ignored), killed, killed, Shoot (ignored)
+killed, MoveForward, RotateRight90, killed, killed, RotateRight90
+killed, MoveForward, RotateLeft90, killed, killed, RotateLeft90
+killed, MoveForward, Shoot, killed, killed, Shoot
+killed, MoveForward (killed), RotateRight90, killed, killed, RotateRight90
+Player 1 won with 2 tanks still alive

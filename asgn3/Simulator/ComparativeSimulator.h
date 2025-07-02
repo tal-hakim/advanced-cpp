@@ -21,8 +21,8 @@ public:
             bool verbose,
             int numThreads
     ) : Simulator(verbose, numThreads),
-        gameManagersFolder(gameManagersFolder),
-        mapFile(mapFile)
+        mapFile(mapFile),
+        gameManagersFolder(gameManagersFolder)
     {
         gameManagerSONames = getSoFilesInFolder(gameManagersFolder);
         if (gameManagerSONames.empty()) {

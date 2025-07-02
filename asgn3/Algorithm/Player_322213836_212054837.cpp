@@ -25,7 +25,8 @@ namespace Algorithm_322213836_212054837 {
     using namespace MapUtils;  // Add MapUtils namespace at file scope
 
     Player_322213836_212054837::Player_322213836_212054837(int playerIndex, size_t x, size_t y, size_t maxSteps, size_t numShells)
-            : playerId(playerIndex), boardWidth(x), boardHeight(y), maxSteps(maxSteps), numShells(numShells), aliveTanks(UNINITIALIZED), reorderTurns(false){
+            : maxSteps(maxSteps), numShells(numShells), aliveTanks(UNINITIALIZED), reorderTurns(false), 
+              playerId(playerIndex), boardWidth(x), boardHeight(y) {
         // Initialize context with empty state
         playerState.latestMap.resize(x, std::vector<char>(y, EMPTY));
         playerState.initShells = numShells;
@@ -248,7 +249,7 @@ namespace Algorithm_322213836_212054837 {
                                         (y + searchDy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
 
                                 char searchObj = newMap[searchX][searchY];
-                                if (searchObj == '1' || searchObj == '2' || searchObj == '0' + playerId) {
+                                if (searchObj == PLAYER1_TANK || searchObj == PLAYER2_TANK || searchObj == '0' + playerId) {
                                     // Calculate distance (manhattan distance is fine for this)
                                     int distance = std::abs(searchDx) + std::abs(searchDy);
                                     if (distance < minDistance) {
@@ -265,7 +266,7 @@ namespace Algorithm_322213836_212054837 {
                             playerState.shellInfo[shellPos] = shellDir;
                         }
                     }
-                } else if (newMap[x][y] == '1' || newMap[x][y] == '2') {
+                } else if (newMap[x][y] == PLAYER1_TANK || newMap[x][y] == PLAYER2_TANK) {
                     // For tanks, analyze 1 cell in each direction
                     Position pos{static_cast<int>(x), static_cast<int>(y)};
                     analyzeWindowAroundObject(pos, 1, newMap);
@@ -278,9 +279,9 @@ namespace Algorithm_322213836_212054837 {
             bool foundEnemy = false;
 
             // Check in all 8 directions around the old position (including diagonals)
-            for (int dy = -1; dy <= 1; ++dy) {
+                for (int dy = -1; dy <= 1; ++dy) {
                 for (int dx = -1; dx <= 1; ++dx) {
-                    int checkX = (oldPos.x + dx + static_cast<int>(boardWidth)) % static_cast<int>(boardWidth);
+                     int checkX = (oldPos.x + dx + static_cast<int>(boardWidth)) % static_cast<int>(boardWidth);
                     int checkY = (oldPos.y + dy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
 
                     char obj = newMap[checkX][checkY];
