@@ -32,16 +32,18 @@ void GameBoard::printBoard() const {
             if (!grid[x][y].empty())
                 std::cout << grid[x][y].back()->getSymbol();  // print top-most object
             else
-                std::cout << " ";
+                std::cout << "_";
         }
         std::cout << std::endl;
     }
 }
 
 Position GameBoard::wrap(Position p) const {
-    int x = ((p.x % width) + width) % width;
-    int y = ((p.y % height) + height) % height;
-    return Position(x, y);
+    int h = static_cast<int>(height);
+    int w = static_cast<int>(width);
+    int x = ((p.x % w) + w) % w;
+    int y = ((p.y % h) + h) % h;
+    return {x, y};
 }
 
 bool GameBoard::isWall(const Position& pos) const {

@@ -17,6 +17,8 @@ namespace Algorithm_322213836_212054837 {
             return ActionRequest::MoveForward;
         }
 
+
+
         int currentAngle = static_cast<int>(current);
         int targetAngle = static_cast<int>(target);
         int diff = (targetAngle - currentAngle + NUM_DIRECTIONS) % NUM_DIRECTIONS;
@@ -51,6 +53,7 @@ namespace Algorithm_322213836_212054837 {
     ActionRequest TankAlgorithm_322213836_212054837::getAction() {
         tankState.roundCounter++;
 
+
         // Update shell positions at the start of each action
         updateShellPositions();
 
@@ -60,7 +63,9 @@ namespace Algorithm_322213836_212054837 {
 
         Position myPos = playerState.myTanksInfo[tankId].first;
         Direction myDir = tankState.tankDir;
-
+        if(tankId == 0){
+            std::cout << "bla" << std::endl;
+        }
         ThreatInfo threat = detectThreat(myPos);
         if (tankState.remainingShells <= 0) {
             // When out of ammo, use getNearestEnemy to find a threat
@@ -76,7 +81,9 @@ namespace Algorithm_322213836_212054837 {
         if (threat.exists || tankState.remainingShells <= 0) {
             return evadeThreat(threat, myPos, myDir);
         }
-
+        if(tryShoot(std::max(mapWidth, mapHeight))){
+            return shoot();
+        }
         return chaseEnemy(myPos, myDir);
     }
 
@@ -293,14 +300,39 @@ namespace Algorithm_322213836_212054837 {
         playerState.shellInfo = std::move(updatedShells);
     }
 
+//    std::optional<Position> TankAlgorithm_322213836_212054837::getNearestEnemy(const Position &myPos) {
+//        // Find the nearest enemy
+//        Position nearestPos;
+//        int minDistance = std::numeric_limits<int>::max();
+//        bool foundEnemy = false;
+//
+//        for (const auto &[pos, _]: playerState.enemyTanksInfo) {
+//            int distance = std::abs(pos.x - myPos.x) + std::abs(pos.y - myPos.y);
+//            if (distance < minDistance) {
+//                minDistance = distance;
+//                nearestPos = pos;
+//                foundEnemy = true;
+//            }
+//        }
+//
+//        return foundEnemy ? std::optional<Position>(nearestPos) : std::nullopt;
+//    }
     std::optional<Position> TankAlgorithm_322213836_212054837::getNearestEnemy(const Position &myPos) {
-        // Find the nearest enemy
         Position nearestPos;
         int minDistance = std::numeric_limits<int>::max();
         bool foundEnemy = false;
+        int w = static_cast<int>(mapWidth);
+        int h = static_cast<int>(mapWidth);
 
         for (const auto &[pos, _]: playerState.enemyTanksInfo) {
-            int distance = std::abs(pos.x - myPos.x) + std::abs(pos.y - myPos.y);
+            int dx = std::abs(pos.x - myPos.x);
+            int dy = std::abs(pos.y - myPos.y);
+
+            dx = std::min(dx, w - dx);
+            dy = std::min(dy, h - dy);
+
+            int distance = dx + dy;
+
             if (distance < minDistance) {
                 minDistance = distance;
                 nearestPos = pos;
@@ -310,6 +342,7 @@ namespace Algorithm_322213836_212054837 {
 
         return foundEnemy ? std::optional<Position>(nearestPos) : std::nullopt;
     }
+
 
     bool TankAlgorithm_322213836_212054837::shouldRecalculatePath(const Position &enemyPos) const {
         return bfsPath.empty() || lastEnemyPos != enemyPos || pathBlocked(bfsPath);
@@ -356,6 +389,22 @@ namespace Algorithm_322213836_212054837 {
         return dirs;
     }
 
+    bool TankAlgorithm_322213836_212054837::tryShoot(int maxSteps){
+        if(!canShoot()){
+            return false;
+        }
+        auto current = playerState.myTanksInfo[tankId].first;
+        auto dir = tankState.tankDir;
+        int steps = 0;
+        while (steps++ < maxSteps) {
+            current = wrap(current + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
+            auto currObj = playerState.latestMap[current.x][current.y];
+            if (isEnemyTank(currObj, playerId)) {return true;}
+            if (isWall(playerState.latestMap, current) || isMyTank(currObj, playerId)) return false;
+        }
+        return false;
+    }
+
     bool TankAlgorithm_322213836_212054837::canShootEnemy(Direction dir, const Position &myPos,
                                                           const Position &enemyPos) const {
         if (!canShoot()) return false;
@@ -367,7 +416,8 @@ namespace Algorithm_322213836_212054837 {
         while (steps++ < maxSteps) {
             current = wrap(current + DirectionUtils::dirToVector(dir), mapWidth, mapHeight);
             if (current == enemyPos) return true;
-            if (isWall(playerState.latestMap, current)) return false;
+            auto currObj = playerState.latestMap[current.x][current.y];
+            if (isWall(playerState.latestMap, current) || isMyTank(currObj, playerId)) return false;
         }
 
         return false; // didn't hit anything, assume can't shoot

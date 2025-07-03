@@ -28,6 +28,10 @@ namespace UserCommon_322213836_212054837 {
             return obj != '0' + playerId && (obj == PLAYER1_TANK || obj == PLAYER2_TANK);
         }
 
+        inline bool isMyTank(char obj, int playerId) {
+            return obj == '0' + playerId;
+        }
+
         inline bool isTank(char obj) {
             return (obj == PLAYER1_TANK || obj == PLAYER2_TANK);
         }

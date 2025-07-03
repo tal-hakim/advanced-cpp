@@ -17,6 +17,7 @@
 #include <optional>
 #include <queue>
 #include <limits>
+#include <algorithm>
 
 using namespace UserCommon_322213836_212054837;
 
@@ -94,7 +95,9 @@ class TankAlgorithm_322213836_212054837 : public TankAlgorithm {
         ActionRequest rotateToward(Direction current, Direction target);
 
         bool canMoveForward(Position myPos, Direction myDir);
-    };
+
+    bool tryShoot(int maxSteps);
+};
 
 }
 

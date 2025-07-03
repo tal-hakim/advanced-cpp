@@ -72,3 +72,36 @@ set(LOOKPAUSE_SRC
 add_library(LookPause SHARED ${LOOKPAUSE_SRC})
 target_link_libraries(LookPause)
 set_target_properties(LookPause PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON)
+
+# ---------- SmartHunt Plugin (.so) ----------
+# Source/header for SmartHunt
+set(HUNTER_SRC
+        SmartHunt.cpp
+        SmartHunt.h
+)
+
+add_library(SmartHunt SHARED ${HUNTER_SRC})
+target_link_libraries(SmartHunt)
+set_target_properties(SmartHunt PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON)
+
+# ---------- SmartEvader Plugin (.so) ----------
+# Source/header for SmartHunt
+set(EVADER_SRC
+        SmartEvader.cpp
+        SmartEvader.h
+)
+
+add_library(SmartEvader SHARED ${EVADER_SRC})
+target_link_libraries(SmartEvader)
+set_target_properties(SmartEvader PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON)
+
+# ---------- SmartHybridAlg Plugin (.so) ----------
+# Source/header for SmartHunt
+set(HYBRID_SRC
+        SmartHybridAlg.cpp
+        SmartHybridAlg.h
+)
+
+add_library(SmartHybridAlg SHARED ${HYBRID_SRC})
+target_link_libraries(SmartHybridAlg)
+set_target_properties(SmartHybridAlg PROPERTIES PREFIX "" POSITION_INDEPENDENT_CODE ON)

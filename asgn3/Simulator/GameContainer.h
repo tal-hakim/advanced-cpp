@@ -61,6 +61,9 @@ public:
                 player1AlgoFactory,
                 player2AlgoFactory
         );
+        std::cout << alg1Name << " vs " << alg2Name << " in map: " << initInfo.mapFilename << std::endl;
+        std::cout << "Winner: " << gameResult.winner << std::endl;
+        std::cout << " ====================== " << std::endl;
     }
 
 

@@ -130,7 +130,11 @@ void GameManager::runGame() {
         for (const auto& obj : markedForDestruction) {
             destroyAndRemove(obj);
         }
+
         if(isPlayerTurn() && verbose){
+            std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+            std::cout << "Game Step" << getGameStep() << std::endl;
+            board.printBoard();
             logger.logActions();
             logger.clearActions();
         }
@@ -491,8 +495,8 @@ void GameManager::processMapCell(char cell, const Position& pos, size_t numShell
 void GameManager::readSatelliteView(const SatelliteView& view, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {
     // Read the map content
 
-    for(size_t i = 0; i < board.getWidth() ; i++){
-        for (size_t j = 0; j <board.getHeight(); ++j) {
+    for(size_t j = 0; j < board.getHeight() ; j++){
+        for (size_t i = 0; i <board.getWidth(); ++i) {
             char cell = view.getObjectAt(i, j);
             processMapCell(cell, {i, j}, numShells, algOneFactory, algTwoFactory);
         }

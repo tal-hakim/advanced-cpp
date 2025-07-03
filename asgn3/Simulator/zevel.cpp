@@ -192,7 +192,10 @@ bool GameManager_322213836_212054837::readBoard(const std::string& inputFile) {
     * TODO: test competitive
     * TODO: test threads
  * TODO: make sure the algorithm / player meet the requirements
- * TODO: separate the chase and shoot logic in tank alg in a way that closest enemy "shhot-wise" is not closest "bfs-wise"
+ * TODO: see why our game manager doesnt run
+ * TODO: fix our Player - somewhere we override the real position with a guessed one
+ * TODO: test the threads
+ * v separate the chase and shoot logic in tank alg in a way that closest enemy "shhot-wise" is not closest "bfs-wise"
  * v main
  * v check arg list
  * v threads :(

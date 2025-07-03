@@ -38,7 +38,9 @@ namespace Algorithm_322213836_212054837 {
         // player updates
         auto *tankPtr = dynamic_cast<TankAlgorithm_322213836_212054837 *>(&tank);
         int tankId = tankPtr->getTankId();
-
+        if(tankId == 0){
+            std::cout << "bla" << std::endl;
+        }
         analyzeBoard(tankId, satellite_view);
         handleTankTurnReordering(tankId);
         playerState.turnId = tankTurns[tankId];
@@ -134,23 +136,8 @@ namespace Algorithm_322213836_212054837 {
                         }
 
                         if (isNewShell) {
-                            // Search for tanks in a 2-cell radius to determine shell direction
-                            bool foundTank = false;
-                            for (int searchDy = -2; searchDy <= 2 && !foundTank; ++searchDy) {
-                                for (int searchDx = -2; searchDx <= 2 && !foundTank; ++searchDx) {
-                                    Position searchPos = wrap(Position{windowPos.x + searchDx, windowPos.y + searchDy},
-                                                              boardWidth, boardHeight);
+                            playerState.shellInfo[windowPos] = dir;
 
-                                    char searchObj = map[searchPos.x][searchPos.y];
-                                    if (searchObj == PLAYER1_TANK || searchObj == PLAYER2_TANK ||
-                                        searchObj == '0' + playerId) {
-                                        // Found a tank, calculate direction from tank to shell
-                                        Direction shellDir = DirectionUtils::directionFromTo(searchPos, windowPos);
-                                        playerState.shellInfo[windowPos] = shellDir;
-                                        foundTank = true;
-                                    }
-                                }
-                            }
                         } else {
                             // Shell was already here, keep its previous direction
                             if (playerState.shellInfo.find(windowPos) != playerState.shellInfo.end()) {
@@ -185,6 +172,7 @@ namespace Algorithm_322213836_212054837 {
                         }
                     }
                 }
+
             }
         }
     }
