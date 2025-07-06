@@ -1,0 +1,5 @@
+MoveForward, RotateRight90, MoveForward, RotateRight90, RotateRight90, MoveForward
+MoveForward, RotateLeft90, MoveForward, RotateLeft90, RotateLeft90, MoveForward
+RotateRight90, Shoot, RotateRight90, Shoot, Shoot, RotateRight90
+killed, RotateRight90, MoveForward (killed), RotateRight90, RotateRight90, MoveForward (killed)
+Player 2 won with 3 tanks still alive

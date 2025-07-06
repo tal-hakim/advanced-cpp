@@ -1,0 +1,51 @@
+DoNothing, MoveForward, DoNothing, MoveForward, MoveForward, DoNothing
+RotateRight45, MoveForward, RotateRight45, MoveForward, MoveForward, RotateRight45
+DoNothing, MoveForward, DoNothing, MoveForward, MoveForward, DoNothing
+RotateRight45 (killed), MoveForward (killed), RotateRight45, MoveForward, MoveForward (ignored), RotateRight45
+killed, killed, DoNothing (killed), MoveForward (killed), MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+killed, killed, killed, killed, MoveForward (ignored), DoNothing
+killed, killed, killed, killed, MoveForward (ignored), RotateRight45
+Tie, reached max steps = 50, player 1 has 1 tanks, player 2 has 1 tanks

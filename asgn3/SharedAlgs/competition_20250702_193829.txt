@@ -1,8 +1,0 @@
-game_maps_folder=../maps
-game_manager=GameManager_322213836_212054837
-
-LookPause 10
-AlgorithmFake 8
-SpinShooter 8
-Algorithm_322213836_212054837 7
-AlwaysForward 4

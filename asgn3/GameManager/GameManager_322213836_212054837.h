@@ -29,7 +29,7 @@ namespace GameManager_322213836_212054837 {
 
     using GameObjectPtr = std::shared_ptr<GameObject>;
 
-    class GameManager : public AbstractGameManager{
+    class GameManager_212054837_322213836 : public AbstractGameManager{
         private:
             GameBoard board{0, 0};  // Initialize with 0x0 dimensions, will be properly set in readBoard
             Logger logger;
@@ -78,9 +78,9 @@ namespace GameManager_322213836_212054837 {
             void runGame();
 
         public:
-            GameManager(bool verbose) : verbose(verbose) {
+            GameManager_212054837_322213836(bool verbose) : verbose(verbose) {
             };
-            ~GameManager() = default;
+            ~GameManager_212054837_322213836() = default;
             GameResult run( size_t map_width, size_t map_height,
                             const SatelliteView& map, // <= a snapshot, NOT updated
                             string map_name,

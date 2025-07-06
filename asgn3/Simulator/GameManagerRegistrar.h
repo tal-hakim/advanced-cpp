@@ -35,7 +35,7 @@ private:
     static GameManagerRegistrar registrar;
 public:
     static GameManagerRegistrar& getGameManagerRegistrar();
-    void createAlgorithmFactoryEntry(const std::string& name) {
+    void createGameManagerFactoryEntry(const std::string& name) {
         managers.emplace_back(name);
     }
     void addGameManagerFactoryToLastEntry(GameManagerFactory&& factory) {

@@ -1,7 +1,0 @@
-game_maps_folder=../maps
-game_manager=GameManager_322213836_212054837
-
-Algorithm_322213836_212054837 5
-AlgorithmFake 2
-AlgorithmFake.so 0
-Algorithm_322213836_212054837.so 0

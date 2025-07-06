@@ -2,7 +2,7 @@ game_map=../maps/input_a.txt
 algorithm1=Algorithm_322996059_211779582
 algorithm2=Algorithm_322213836_212054837
 
-GameManager_322996059_211779582,GameManager_322213836_212054837
+GameManager_322996059_211779582
 Player 2 wins: All tanks dead
 27
             

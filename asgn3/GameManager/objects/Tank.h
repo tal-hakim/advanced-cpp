@@ -12,10 +12,10 @@ namespace GameManager_322213836_212054837 {
     using std::unique_ptr;
     using namespace UserCommon_322213836_212054837;
 
-    class GameManager;  // Forward declaration
+    class GameManager_212054837_322213836;  // Forward declaration
 
     class Tank : public MovingElement {
-        friend class GameManager;  // Allow GameManager to access protected members
+        friend class GameManager_212054837_322213836;  // Allow GameManager to access protected members
     protected:
         size_t shellsRemaining;
         int shootCooldown = 0;

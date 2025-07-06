@@ -98,11 +98,11 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
 
 
 void Simulator::loadSharedObject(const std::string& soName) {
-    void* handle = dlopen(soName.c_str(), RTLD_LAZY | RTLD_GLOBAL);
-    if (!handle) {
-        throw std::runtime_error(dlerror()); // You can handle/log error differently if you prefer
-    }
-    handles.add(handle);
+//    void* handle = dlopen(soName.c_str(), RTLD_LAZY | RTLD_GLOBAL);
+//    if (!handle) {
+//        throw std::runtime_error(dlerror()); // You can handle/log error differently if you prefer
+//    }
+    handles.add(soName);
 }
 
 void Simulator::loadGameManagerSharedObjectsFromFiles() {
@@ -113,7 +113,7 @@ void Simulator::loadGameManagerSharedObjectsFromFiles() {
             std::string filename = std::filesystem::path(filePath).filename().string();
             std::string managerName = filename.substr(0, filename.find_last_of('.')); // remove .so
 
-            registrar.createAlgorithmFactoryEntry(managerName);
+            registrar.createGameManagerFactoryEntry(managerName);
 
             try {
                 loadSharedObject(filePath);
