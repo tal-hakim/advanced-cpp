@@ -18,13 +18,13 @@ namespace Algorithm_322213836_212054837 {
     public:
         struct PlayerUpdates {
             // Changed to match BattleInfo format: playerId -> vector of (position, direction) pairs
-            std::vector<std::pair<Position, Direction>> myTanksInfo;
+            Position currTankPos;
+            size_t myTanksNum;
             std::vector<std::pair<Position, Direction>> enemyTanksInfo;
             std::vector<std::vector<char>> latestMap;
             std::unordered_map<Position, Direction> shellInfo;  // Maps shell positions to their directions
             size_t turnId;
             int initShells;
-            std::vector<Position> bfsToEnemy;  // Store the BFS path to the enemy
         };
         struct TankUpdates {
             Direction tankDir;

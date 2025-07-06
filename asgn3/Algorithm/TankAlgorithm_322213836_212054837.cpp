@@ -61,7 +61,7 @@ namespace Algorithm_322213836_212054837 {
             return ActionRequest::GetBattleInfo;
         }
 
-        Position myPos = playerState.myTanksInfo[tankId].first;
+        Position myPos = playerState.currTankPos;
         Direction myDir = tankState.tankDir;
         if(tankId == 0){
             std::cout << "bla" << std::endl;
@@ -124,7 +124,7 @@ namespace Algorithm_322213836_212054837 {
     bool TankAlgorithm_322213836_212054837::canMoveForward(Position myPos, Direction myDir) {
         Position forward = wrap(myPos + DirectionUtils::dirToVector(myDir), mapWidth, mapHeight);
         if (isWalkable(forward, playerState.latestMap) && !isTank(playerState.latestMap[forward.x][forward.y])) {
-            playerState.myTanksInfo[tankId].first = forward;
+            playerState.currTankPos = forward;
             return true;
         }
         return false;
@@ -393,7 +393,7 @@ namespace Algorithm_322213836_212054837 {
         if(!canShoot()){
             return false;
         }
-        auto current = playerState.myTanksInfo[tankId].first;
+        auto current = playerState.currTankPos;
         auto dir = tankState.tankDir;
         int steps = 0;
         while (steps++ < maxSteps) {
@@ -435,7 +435,7 @@ namespace Algorithm_322213836_212054837 {
             // Update our state with the copies we made
             playerState = playerUpdates;
             concreteInfo->setTankUpdates(tankState);
-            numTanks = playerState.myTanksInfo.size();
+            numTanks = playerState.myTanksNum;
             if (tankState.remainingShells == UNINITIALIZED) {
                 tankState.remainingShells = playerState.initShells;
             }
