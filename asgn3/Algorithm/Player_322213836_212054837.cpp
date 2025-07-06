@@ -38,10 +38,8 @@ namespace Algorithm_322213836_212054837 {
         // player updates
         auto *tankPtr = dynamic_cast<TankAlgorithm_322213836_212054837 *>(&tank);
         int tankId = tankPtr->getTankId();
-        if(tankId == 0){
-            std::cout << "bla" << std::endl;
-        }
-        analyzeBoard(tankId, satellite_view);
+        analyzeBoard(satellite_view);
+
         handleTankTurnReordering(tankId);
         playerState.turnId = tankTurns[tankId];
 
@@ -54,14 +52,12 @@ namespace Algorithm_322213836_212054837 {
 
         remainingShells[tankId] = tankUpdates.remainingShells;
         roundCounter = tankUpdates.roundCounter;
-        playerState.myTanksInfo[tankId].second = tankUpdates.tankDir;
     }
 
 
-    std::vector<std::vector<char>> Player_322213836_212054837::readView(int tankId, SatelliteView &view) {
+    std::vector<std::vector<char>> Player_322213836_212054837::readView(SatelliteView &view) {
         std::vector<std::vector<char>> map(boardWidth, std::vector<char>(boardHeight, EMPTY));
         int currAliveTanks = 0;
-
         // First pass: count tanks
         for (size_t i = 0; i < boardWidth; i++) {
             for (size_t j = 0; j < boardHeight; ++j) {
@@ -69,12 +65,13 @@ namespace Algorithm_322213836_212054837 {
                 if (currObj == '0' + playerId || currObj == CURR_TANK) {
                     currAliveTanks++;
                 }
+
             }
         }
+        bool updateEnemies = playerState.enemyTanksInfo.empty();
 
         // Initialize or resize myTanksInfo if needed
         if (this->aliveTanks == UNINITIALIZED) {
-            playerState.myTanksInfo.resize(currAliveTanks, {Position{0, 0}, Direction::R});
             this->aliveTanks = currAliveTanks;
             // Initialize tankTurns with sequential ordering (0:0, 1:1, etc.) when we first know the actual number of tanks
             if (tankTurns.empty()) {
@@ -90,14 +87,19 @@ namespace Algorithm_322213836_212054837 {
             for (size_t j = 0; j < boardHeight; ++j) {
                 char currObj = view.getObjectAt(i, j);
                 if (currObj == CURR_TANK) {
-                    playerState.myTanksInfo[tankId].first = Position{static_cast<int>(i), static_cast<int>(j)};
+                    playerState.currTankPos = {i, j};
                     map[i][j] = '0' + playerId;
+                } else if (isEnemyTank(currObj, playerId) && updateEnemies){
+                    Position pos = {i, j};
+                    Direction enemyDir = (playerId == PLAYER_1_ID) ? Direction::R : Direction::L;
+                    playerState.enemyTanksInfo.emplace_back(pos, enemyDir);
+                    map[i][j] = currObj;
                 } else {
                     map[i][j] = currObj;
                 }
             }
         }
-
+        playerState.myTanksNum = currAliveTanks;
         if (currAliveTanks != this->aliveTanks) {
             this->aliveTanks = currAliveTanks;
             reorderTurns = true;
@@ -145,18 +147,6 @@ namespace Algorithm_322213836_212054837 {
                                 continue;
                             }
                         }
-                    } else if (obj == '0' + playerId) {
-                        // For our tanks, check if position changed before updating direction
-                        bool tankMoved = true;
-                        for (const auto &[tankPos, _]: playerState.myTanksInfo) {
-                            if (tankPos == windowPos) {
-                                tankMoved = false;
-                                break;
-                            }
-                        }
-                        if (tankMoved) {
-                            playerState.myTanksInfo.push_back({windowPos, dir});
-                        }
                     } else if (isEnemyTank(obj, playerId)) {
                         // For enemy tanks, check if position changed before updating direction
                         bool tankMoved = true;
@@ -187,9 +177,9 @@ namespace Algorithm_322213836_212054837 {
         }
     }
 
-    void Player_322213836_212054837::analyzeBoard(int tankId, SatelliteView &view) {
+    void Player_322213836_212054837::analyzeBoard(SatelliteView &view) {
         /* TODO: make analyze board keep track of same id tanks, also try to find the killed tanks and remove them */
-        auto newMap = readView(tankId, view);
+        auto newMap = readView(view);
 
         // Store old enemy positions before clearing
         std::vector<std::pair<Position, Direction>> oldEnemyTanks = std::move(playerState.enemyTanksInfo);
@@ -213,7 +203,7 @@ namespace Algorithm_322213836_212054837 {
 
         // Update shell info with the ones we found
         playerState.shellInfo = std::move(updatedShells);
-        playerState.myTanksInfo.clear();
+//        playerState.myTanksInfo.clear();
         playerState.enemyTanksInfo.clear();
 
         // Now find any new shells on the map and analyze tanks
@@ -237,7 +227,7 @@ namespace Algorithm_322213836_212054837 {
                                         (y + searchDy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
 
                                 char searchObj = newMap[searchX][searchY];
-                                if (searchObj == PLAYER1_TANK || searchObj == PLAYER2_TANK || searchObj == '0' + playerId) {
+                                if (searchObj == PLAYER1_TANK || searchObj == PLAYER2_TANK) {
                                     // Calculate distance (manhattan distance is fine for this)
                                     int distance = std::abs(searchDx) + std::abs(searchDy);
                                     if (distance < minDistance) {
@@ -254,21 +244,26 @@ namespace Algorithm_322213836_212054837 {
                             playerState.shellInfo[shellPos] = shellDir;
                         }
                     }
-                } else if (newMap[x][y] == PLAYER1_TANK || newMap[x][y] == PLAYER2_TANK) {
-                    // For tanks, analyze 1 cell in each direction
-                    Position pos{static_cast<int>(x), static_cast<int>(y)};
-                    analyzeWindowAroundObject(pos, 1, newMap);
                 }
+//                } else if (isEnemyTank(newMap[x][y], playerId)) {
+//                    // For tanks, analyze 1 cell in each direction
+//                    Position pos{static_cast<int>(x), static_cast<int>(y)};
+//                    analyzeWindowAroundObject(pos, 1, newMap);
+//                }
             }
         }
 
         // Check each old enemy tank's position and its surroundings
         for (const auto &[oldPos, oldDir]: oldEnemyTanks) {
+            if (isEnemyTank(newMap[oldPos.x][oldPos.y], playerId)){ playerState.enemyTanksInfo.push_back({oldPos, oldDir});}
             bool foundEnemy = false;
 
             // Check in all 8 directions around the old position (including diagonals)
-                for (int dy = -1; dy <= 1; ++dy) {
+            for (int dy = -1; dy <= 1; ++dy) {
                 for (int dx = -1; dx <= 1; ++dx) {
+                    if (dx == 0 && dy == 0){
+                        continue;
+                    }
                      int checkX = (oldPos.x + dx + static_cast<int>(boardWidth)) % static_cast<int>(boardWidth);
                     int checkY = (oldPos.y + dy + static_cast<int>(boardHeight)) % static_cast<int>(boardHeight);
 
@@ -276,8 +271,7 @@ namespace Algorithm_322213836_212054837 {
                     if (isEnemyTank(obj, playerId)) {
                         // Found an enemy tank in the surrounding area
                         Position newPos{checkX, checkY};
-                        Direction newDir = (dx == 0 && dy == 0) ? oldDir : DirectionUtils::directionFromTo(oldPos,
-                                                                                                           newPos);
+                        Direction newDir = DirectionUtils::directionFromTo(oldPos, newPos);
 
                         // Check if this position is already in our enemyTanksInfo
                         bool alreadyTracked = false;
@@ -303,6 +297,16 @@ namespace Algorithm_322213836_212054837 {
                 playerState.enemyTanksInfo.push_back({Position{-1, -1}, oldDir});
             }
         }
+
+        playerState.enemyTanksInfo.erase(
+                std::remove_if(
+                        playerState.enemyTanksInfo.begin(),
+                        playerState.enemyTanksInfo.end(),
+                        [](const std::pair<Position, Direction>& tank) {
+                            return tank.first.x == -1 && tank.first.y == -1;
+                        }),
+                playerState.enemyTanksInfo.end()
+        );
 
         playerState.latestMap = std::move(newMap);
     }
