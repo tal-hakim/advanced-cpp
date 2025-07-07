@@ -94,17 +94,6 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
 }
 
 
-
-
-
-void Simulator::loadSharedObject(const std::string& soName) {
-//    void* handle = dlopen(soName.c_str(), RTLD_LAZY | RTLD_GLOBAL);
-//    if (!handle) {
-//        throw std::runtime_error(dlerror()); // You can handle/log error differently if you prefer
-//    }
-    handles.add(soName);
-}
-
 void Simulator::loadGameManagerSharedObjectsFromFiles() {
     auto& registrar = GameManagerRegistrar::getGameManagerRegistrar();
 
@@ -112,11 +101,9 @@ void Simulator::loadGameManagerSharedObjectsFromFiles() {
         if (std::filesystem::path(filePath).extension() == ".so") {
             std::string filename = std::filesystem::path(filePath).filename().string();
             std::string managerName = filename.substr(0, filename.find_last_of('.')); // remove .so
-
             registrar.createGameManagerFactoryEntry(managerName);
-
             try {
-                loadSharedObject(filePath);
+                registrar.loadGameManagerSO(filePath);
                 std::cout << "Loaded game manager: " << filePath << std::endl;
             } catch (const std::exception& ex) {
                 std::cerr << "Failed to load " << filePath << ": " << ex.what() << std::endl;
@@ -147,11 +134,9 @@ void Simulator::loadAlgorithmSharedObjectsFromFiles() {
         if (std::filesystem::path(filePath).extension() == ".so") {
             std::string filename = std::filesystem::path(filePath).filename().string();
             std::string algName = filename.substr(0, filename.find_last_of('.')); // remove .so
-
             registrar.createAlgorithmFactoryEntry(algName);
-
             try {
-                loadSharedObject(filePath);
+                registrar.loadAlgorithmSO(filePath);
                 std::cout << "Loaded algorithm: " << filePath << std::endl;
             } catch (const std::exception& ex) {
                 std::cerr << "Failed to load " << filePath << ": " << ex.what() << std::endl;
@@ -176,6 +161,10 @@ void Simulator::loadAlgorithmSharedObjectsFromFiles() {
 
 
 void Simulator::runGamesWorker(std::atomic<size_t>& nextIndex) {
+    // TEST THREADS
+    std::lock_guard<std::mutex> lock(observed_mutex);
+    observed_worker_threads.insert(std::this_thread::get_id());
+    // END TEST THREADS
     size_t nGames = gameContainers.size(); // Just get it here!
     while (true) {
         size_t i = nextIndex.fetch_add(1, std::memory_order_relaxed);
@@ -195,6 +184,7 @@ void Simulator::runAllGames() {
         return;
     }
 
+
     // Make sure not to spawn more threads than games
     threadsToUse = std::min<int>(threadsToUse, nGames);
 
@@ -211,23 +201,17 @@ void Simulator::runAllGames() {
     // All threads automatically join at the end of scope (std::jthread feature)
     for (auto& t : workers)
         t.join();
+//    std::cout << "Observed " << observed_worker_threads.size() << " unique worker threads." << std::endl;
+    assert(static_cast<int>(observed_worker_threads.size()) == threadsToUse); // num_threads is your configured worker count
+
 }
 
 void Simulator::simulate() {
     setup();
     runAllGames();
     logResults();
-//    closeAllSharedObjects();
 }
 
-//void Simulator::closeAllSharedObjects() {
-//    for (void* handle : handles) {
-//        if (handle) {
-//            dlclose(handle);
-//        }
-//    }
-//    handles.clear();
-//}
 
 void Simulator::setup() {
     readAllMaps();

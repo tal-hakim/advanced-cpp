@@ -19,6 +19,7 @@ set(REGISTRATION_SOURCE_FILES
     GameManagerRegistrar.cpp
 )
 
+
 # Create registration shared library
 add_library(SimulatorRegistration SHARED ${REGISTRATION_SOURCE_FILES})
 target_link_libraries(SimulatorRegistration PRIVATE dl)
@@ -36,6 +37,7 @@ set(SIMULATOR_SOURCE_FILES
     GameContainer.cpp
     main.cpp
         ../UserCommon/utils/timeUtil.cpp
+
 )
 
 # Header files
@@ -50,10 +52,11 @@ set(HEADER_FILES
     GameContainer.h
     BoardInitInfo.h
         ../UserCommon/utils/timeUtil.h
+        SOHandle.h
 )
 
 # Create executable
 add_executable(${PROJECT_NAME} ${SIMULATOR_SOURCE_FILES} ${HEADER_FILES})
 
 # Link against registration library and other dependencies
-target_link_libraries(${PROJECT_NAME} PRIVATE SimulatorRegistration dl pthread)
+target_link_libraries(${PROJECT_NAME} PRIVATE SimulatorRegistration pthread)

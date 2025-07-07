@@ -52,35 +52,10 @@ private:
 
 
 protected:
-    struct Handles {
-        std::vector<void*> v;
-
-        // Add a handle
-//        void add(void* h) { if (h) v.push_back(h); }
-        void add(std::string soName){
-            void* handle = dlopen(soName.c_str(), RTLD_LAZY | RTLD_GLOBAL);
-            v.push_back(handle); // Add regardless of nullptr
-
-            // Check if last element is nullptr and handle error
-            if (v.back() == nullptr) {
-                std::string err = dlerror();
-                throw std::runtime_error("dlopen failed for " + soName + ": " + err);
-            }
-        }
-        // We don't need to dlclose - the OS will handle cleanup
-        ~Handles() {
-            AlgorithmRegistrar::getAlgorithmRegistrar().clear();
-            GameManagerRegistrar::getGameManagerRegistrar().clear();
-            for (void* handle : v) {
-                if (handle) {
-                    dlclose(handle);
-                }
-            }
-            v.clear();
-        }
-    };
-
-    Handles handles;
+    // TESTING LOGIC
+    std::set<std::thread::id> observed_worker_threads;
+    std::mutex observed_mutex;
+    // END TEST
     std::vector<BoardInitInfo> boards;
     std::vector<GameContainer> gameContainers;
     bool verbose;

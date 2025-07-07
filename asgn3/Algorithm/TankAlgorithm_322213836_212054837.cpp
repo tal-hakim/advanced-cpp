@@ -63,9 +63,6 @@ namespace Algorithm_322213836_212054837 {
 
         Position myPos = playerState.currTankPos;
         Direction myDir = tankState.tankDir;
-        if(tankId == 0){
-            std::cout << "bla" << std::endl;
-        }
         ThreatInfo threat = detectThreat(myPos);
         if (tankState.remainingShells <= 0) {
             // When out of ammo, use getNearestEnemy to find a threat

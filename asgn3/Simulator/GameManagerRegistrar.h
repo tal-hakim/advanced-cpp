@@ -7,7 +7,7 @@
 
 
 #include "../common/AbstractGameManager.h"
-
+#include "SOHandle.h"
 #include <cassert>
 #include <vector>
 
@@ -15,12 +15,17 @@ class GameManagerRegistrar {
 public:
     class GameManagerEntry {
         std::string so_name;
+        std::unique_ptr<SOHandle> soHandle;
         GameManagerFactory gameManagerFactory;
     public:
-        GameManagerEntry(const std::string& so_name) : so_name(so_name) {}
+        GameManagerEntry(const std::string& so_name) : so_name(so_name), soHandle(nullptr) {}
         void setGameManagerFactory(GameManagerFactory&& factory) {
             assert(gameManagerFactory == nullptr);
             gameManagerFactory = std::move(factory);
+        }
+        void setSOHandle(const std::string& so_path) {
+            assert(!soHandle);  // or: assert(!soHandle || !soHandle->isInitialized());
+            soHandle = std::make_unique<SOHandle>(so_path);
         }
         const std::string& name() const { return so_name; }
         std::unique_ptr<AbstractGameManager> createGameManager(bool verbose) const {
@@ -38,6 +43,11 @@ public:
     void createGameManagerFactoryEntry(const std::string& name) {
         managers.emplace_back(name);
     }
+
+    void loadGameManagerSO(const std::string& name) {
+        managers.back().setSOHandle(name);
+    }
+
     void addGameManagerFactoryToLastEntry(GameManagerFactory&& factory) {
         managers.back().setGameManagerFactory(std::move(factory));
     }

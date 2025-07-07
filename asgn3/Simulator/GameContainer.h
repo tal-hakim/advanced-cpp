@@ -61,9 +61,18 @@ public:
                 player1AlgoFactory,
                 player2AlgoFactory
         );
-        std::cout << alg1Name << " vs " << alg2Name << " in map: " << initInfo.mapFilename << std::endl;
-        std::cout << "Winner: " << gameResult.winner << std::endl;
-        std::cout << " ====================== " << std::endl;
+//        std::cout << alg1Name << " vs " << alg2Name << " in map: " << initInfo.mapFilename << std::endl;
+//        std::cout << "Winner: " << gameResult.winner << std::endl;
+        std::string winner = "tie";
+        if (gameResult.winner == 1) {
+            winner = alg1Name;
+        } else if (gameResult.winner == 2){
+            winner = alg2Name;
+        }
+        if (winner != "Algorithm_322213836_212054837") {
+            std::cerr << "ASSERT FAIL: this alg won: " <<  winner << std::endl;
+            // Optionally: exit(1);
+        }
     }
 
 

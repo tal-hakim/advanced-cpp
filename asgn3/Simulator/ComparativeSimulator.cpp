@@ -104,7 +104,7 @@ void ComparativeSimulator::logResults(){
                 outStream << row << "\n";
             }
         }
-        break;
+
         // Separate groups with a blank line if there are more groups
         if (left > 0)
             outStream << "\n";

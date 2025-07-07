@@ -132,9 +132,9 @@ void GameManager_212054837_322213836::runGame() {
         }
 
         if(isPlayerTurn() && verbose){
-            std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-            std::cout << "Game Step " << getGameStep() << std::endl;
-            board.printBoard();
+//            std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+//            std::cout << "Game Step " << getGameStep() << std::endl;
+//            board.printBoard();
             logger.logActions();
             logger.clearActions();
         }

@@ -11,15 +11,17 @@
 #include <cassert>
 #include <vector>
 #include <string>
+#include "SOHandle.h"
 
 class AlgorithmRegistrar {
 public:
     class AlgorithmAndPlayerFactories {
         std::string so_name;
+        std::unique_ptr<SOHandle> soHandle;
         TankAlgorithmFactory tankAlgorithmFactory;
         PlayerFactory playerFactory;
     public:
-        AlgorithmAndPlayerFactories(const std::string& so_name) : so_name(so_name) {}
+        AlgorithmAndPlayerFactories(const std::string& so_name) : so_name(so_name), soHandle(nullptr) {}
         void setTankAlgorithmFactory(TankAlgorithmFactory&& factory) {
             assert(tankAlgorithmFactory == nullptr);
             tankAlgorithmFactory = std::move(factory);
@@ -31,6 +33,10 @@ public:
         const std::string& name() const { return so_name; }
         std::unique_ptr<Player> createPlayer(int player_index, size_t x, size_t y, size_t max_steps, size_t num_shells) const {
             return playerFactory(player_index, x, y, max_steps, num_shells);
+        }
+        void setSOHandle(const std::string& so_path) {
+            assert(!soHandle);  // or: assert(!soHandle || !soHandle->isInitialized());
+            soHandle = std::make_unique<SOHandle>(so_path);
         }
         const TankAlgorithmFactory& getTankAlgorithmFactory() const {
             return tankAlgorithmFactory;
@@ -49,6 +55,9 @@ public:
     static AlgorithmRegistrar& getAlgorithmRegistrar();
     void createAlgorithmFactoryEntry(const std::string& name) {
         algorithms.emplace_back(name);
+    }
+    void loadAlgorithmSO(const std::string& name) {
+        algorithms.back().setSOHandle(name);
     }
     void addPlayerFactoryToLastEntry(PlayerFactory&& factory) {
         algorithms.back().setPlayerFactory(std::move(factory));
