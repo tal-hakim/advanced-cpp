@@ -96,7 +96,7 @@ BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
 
 void Simulator::loadGameManagerSharedObjectsFromFiles() {
     auto& registrar = GameManagerRegistrar::getGameManagerRegistrar();
-
+    std::vector<std::string> loadedManagers;
     for (const auto& filePath : gameManagerSONames) {
         if (std::filesystem::path(filePath).extension() == ".so") {
             std::string filename = std::filesystem::path(filePath).filename().string();
@@ -120,21 +120,26 @@ void Simulator::loadGameManagerSharedObjectsFromFiles() {
                 std::cout << "Has GameManager factory? " << std::boolalpha << e.hasGameManagerFactory << std::endl;
                 std::cout << "---------------------------------" << std::endl;
                 registrar.removeLast();
+                continue;
             }
+            loadedManagers.push_back(filePath);
         }
     }
+    gameManagerSONames = std::move(loadedManagers);
 }
 
 
 // Function to load all .so files in a folder
 void Simulator::loadAlgorithmSharedObjectsFromFiles() {
     auto& registrar = AlgorithmRegistrar::getAlgorithmRegistrar();
+    std::vector<std::string> loadedAlgorithms;
 
     for (const auto& filePath : algorithmsSONames) {
         if (std::filesystem::path(filePath).extension() == ".so") {
             std::string filename = std::filesystem::path(filePath).filename().string();
             std::string algName = filename.substr(0, filename.find_last_of('.')); // remove .so
             registrar.createAlgorithmFactoryEntry(algName);
+
             try {
                 registrar.loadAlgorithmSO(filePath);
                 std::cout << "Loaded algorithm: " << filePath << std::endl;
@@ -154,10 +159,14 @@ void Simulator::loadAlgorithmSharedObjectsFromFiles() {
                 std::cout << "Has Player factory? " << std::boolalpha << e.hasPlayerFactory << std::endl;
                 std::cout << "---------------------------------" << std::endl;
                 registrar.removeLast();
+                continue;
             }
+            loadedAlgorithms.push_back(filePath);
         }
     }
+    algorithmsSONames = std::move(loadedAlgorithms); // now contains only the valid, loaded ones
 }
+
 
 
 void Simulator::runGamesWorker(std::atomic<size_t>& nextIndex) {

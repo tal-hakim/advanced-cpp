@@ -69,10 +69,10 @@ public:
         } else if (gameResult.winner == 2){
             winner = alg2Name;
         }
-        if (winner != "Algorithm_322213836_212054837") {
-            std::cerr << "ASSERT FAIL: this alg won: " <<  winner << std::endl;
-            // Optionally: exit(1);
-        }
+//        if (winner != "Algorithm_322213836_212054837") {
+//            std::cerr << "ASSERT FAIL: this alg won: " <<  winner << std::endl;
+//            // Optionally: exit(1);
+//        }
     }
 
 
