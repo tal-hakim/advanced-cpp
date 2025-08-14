@@ -2,7 +2,7 @@ Open Chaos
 MaxSteps=250
 NumShells=4
 Rows=7
-Cols=14
+Cols=20
 ##############
 #1   @      2#
 #    ##  ##  #

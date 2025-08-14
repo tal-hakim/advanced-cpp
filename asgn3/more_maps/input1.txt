@@ -1,6 +1,6 @@
 Open Battlezone
 MaxSteps=500
-NumShells=7
+
 Rows=16
 Cols=28
 ############################

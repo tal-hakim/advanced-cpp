@@ -1,0 +1,13 @@
+game_maps_folder=../more_maps
+game_manager=GameManager_322573304_322647603
+
+Algorithm_322213836_212054837 23
+Algorithm_209399021_208239152 20
+AlgorithmFake 11
+Algorithm_322996059_211779582 11
+SmartEvader 10
+AlwaysForward 9
+SpinShooter 8
+LookPause 7
+SmartHunt 7
+SmartHybridAlg 5

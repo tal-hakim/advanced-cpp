@@ -37,6 +37,7 @@ set(SIMULATOR_SOURCE_FILES
     GameContainer.cpp
     main.cpp
         ../UserCommon/utils/timeUtil.cpp
+        ErrorLogger.cpp
 
 )
 
@@ -53,6 +54,7 @@ set(HEADER_FILES
     BoardInitInfo.h
         ../UserCommon/utils/timeUtil.h
         SOHandle.h
+        ErrorLogger.h
 )
 
 # Create executable

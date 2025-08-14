@@ -28,70 +28,189 @@ std::vector<std::string> Simulator::getSoFilesInFolder(const std::string& folder
     return soFiles;
 }
 
-
-BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
-    // TODO: handle input errors
+BoardInitInfo Simulator::readMapFromFile(const std::string& inputFile) {
     BoardInitInfo info;
 
     std::ifstream file(inputFile);
     if (!file.is_open()) {
-        // handle error, log, etc.
+        std::cerr << "Unrecoverable Error: Cannot open input file: " << inputFile << std::endl;
+        info.valid = false;
         return info;
     }
+
     std::filesystem::path p(inputFile);
-    info.mapFilename = p.stem().string();
+    std::string mapName = p.stem().string();
+    info.mapFilename = mapName;
+
+    logger.logMapName(mapName);  // This writes "Map: <name>" into the log file
 
     std::string line;
 
-    // Read map name/description (Line 1)
-    if (!std::getline(file, info.mapName))
+    if (!std::getline(file, info.mapName)) {
+        std::cerr << "Unrecoverable Error: Empty file or missing map name line. In input file: " << inputFile << std::endl;
+        info.valid = false;
         return info;
+    }
 
-    // Helper lambda to remove spaces
     auto removeSpaces = [](std::string& str) {
         str.erase(std::remove_if(str.begin(), str.end(), ::isspace), str.end());
     };
 
-    // Read MaxSteps
-    if (!std::getline(file, line)) return info;
+    if (!std::getline(file, line)) {
+        std::cerr << "Unrecoverable Error: Missing MaxSteps line. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
     removeSpaces(line);
-    if (sscanf(line.c_str(), "MaxSteps=%zu", &info.maxSteps) != 1) return info;
+    if (sscanf(line.c_str(), "MaxSteps=%zu", &info.maxSteps) != 1) {
+        std::cerr << "Unrecoverable Error: Invalid MaxSteps format. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
 
-    // Read NumShells
-    if (!std::getline(file, line)) return info;
+    if (!std::getline(file, line)) {
+        std::cerr << "Unrecoverable Error: Missing NumShells line. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
     removeSpaces(line);
-    if (sscanf(line.c_str(), "NumShells=%zu", &info.numShells) != 1) return info;
+    if (sscanf(line.c_str(), "NumShells=%zu", &info.numShells) != 1) {
+        std::cerr << "Unrecoverable Error: Invalid NumShells format. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
 
-    // Read Rows
-    if (!std::getline(file, line)) return info;
+    if (!std::getline(file, line)) {
+        std::cerr << "Unrecoverable Error: Missing Rows line. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
     removeSpaces(line);
-    if (sscanf(line.c_str(), "Rows=%zu", &info.height) != 1) return info;
+    if (sscanf(line.c_str(), "Rows=%zu", &info.height) != 1) {
+        std::cerr << "Unrecoverable Error: Invalid Rows format. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
 
-    // Read Cols
-    if (!std::getline(file, line)) return info;
+    if (!std::getline(file, line)) {
+        std::cerr << "Unrecoverable Error: Missing Cols line. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
     removeSpaces(line);
-    if (sscanf(line.c_str(), "Cols=%zu", &info.width) != 1) return info;
+    if (sscanf(line.c_str(), "Cols=%zu", &info.width) != 1) {
+        std::cerr << "Unrecoverable Error: Invalid Cols format. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
 
-    if (info.height <= 0 || info.width <= 0) return info;
+    if (info.height == 0 || info.width == 0) {
+        std::cerr << "Unrecoverable Error: Invalid map dimensions. In input file: " << inputFile << std::endl;
+        info.valid = false;
+        return info;
+    }
 
-    // Read map lines
     std::vector<std::string> mapLines;
     while (std::getline(file, line)) {
+        if (!line.empty() && line.back() == '\r') line.pop_back();
         mapLines.push_back(line);
     }
 
+    if (mapLines.size() > info.height) {
+        logger.logInputError("Input file has more lines than declared height. Ignoring extra lines.");
+    }
+
     std::vector<std::vector<char>> boardView(info.width, std::vector<char>(info.height, ' '));
+
     for (size_t y = 0; y < info.height; ++y) {
         std::string currentLine = (y < mapLines.size()) ? mapLines[y] : "";
+        if (currentLine.empty() && y < mapLines.size()) {
+            logger.logInputError("Empty line at y=" + std::to_string(y) + ". Filling with spaces.");
+        }
+
+        else if (currentLine.length() < info.width) {
+            logger.logInputError("Line too short at y=" + std::to_string(y) + ". Padding with spaces.");
+            currentLine += std::string(info.width - currentLine.length(), ' ');
+        }
+        else if (currentLine.length() > info.width) {
+            logger.logInputError("Line too long at y=" + std::to_string(y) + ". Truncating.");
+            currentLine = currentLine.substr(0, info.width);
+        }
+
         for (size_t x = 0; x < info.width; ++x) {
-            char cell = (x < currentLine.size()) ? currentLine[x] : ' ';
-            boardView[x][y] = cell;
+            boardView[x][y] = currentLine[x];
         }
     }
 
     info.satelliteView = std::make_unique<UserCommon_322213836_212054837::BoardSatelliteView>(std::move(boardView));
+
     return info;
 }
+
+
+//BoardInitInfo Simulator::readMapFromFile(const string& inputFile) {
+//    // TODO: handle input errors
+//    BoardInitInfo info;
+//
+//    std::ifstream file(inputFile);
+//    if (!file.is_open()) {
+//        // handle error, log, etc.
+//        return info;
+//    }
+//    std::filesystem::path p(inputFile);
+//    info.mapFilename = p.stem().string();
+//
+//    std::string line;
+//
+//    // Read map name/description (Line 1)
+//    if (!std::getline(file, info.mapName))
+//        return info;
+//
+//    // Helper lambda to remove spaces
+//    auto removeSpaces = [](std::string& str) {
+//        str.erase(std::remove_if(str.begin(), str.end(), ::isspace), str.end());
+//    };
+//
+//    // Read MaxSteps
+//    if (!std::getline(file, line)) return info;
+//    removeSpaces(line);
+//    if (sscanf(line.c_str(), "MaxSteps=%zu", &info.maxSteps) != 1) return info;
+//
+//    // Read NumShells
+//    if (!std::getline(file, line)) return info;
+//    removeSpaces(line);
+//    if (sscanf(line.c_str(), "NumShells=%zu", &info.numShells) != 1) return info;
+//
+//    // Read Rows
+//    if (!std::getline(file, line)) return info;
+//    removeSpaces(line);
+//    if (sscanf(line.c_str(), "Rows=%zu", &info.height) != 1) return info;
+//
+//    // Read Cols
+//    if (!std::getline(file, line)) return info;
+//    removeSpaces(line);
+//    if (sscanf(line.c_str(), "Cols=%zu", &info.width) != 1) return info;
+//
+//    if (info.height <= 0 || info.width <= 0) return info;
+//
+//    // Read map lines
+//    std::vector<std::string> mapLines;
+//    while (std::getline(file, line)) {
+//        mapLines.push_back(line);
+//    }
+//
+//    std::vector<std::vector<char>> boardView(info.width, std::vector<char>(info.height, ' '));
+//    for (size_t y = 0; y < info.height; ++y) {
+//        std::string currentLine = (y < mapLines.size()) ? mapLines[y] : "";
+//        for (size_t x = 0; x < info.width; ++x) {
+//            char cell = (x < currentLine.size()) ? currentLine[x] : ' ';
+//            boardView[x][y] = cell;
+//        }
+//    }
+//
+//    info.satelliteView = std::make_unique<UserCommon_322213836_212054837::BoardSatelliteView>(std::move(boardView));
+//    return info;
+//}
 
 
 void Simulator::loadGameManagerSharedObjectsFromFiles() {
@@ -185,6 +304,8 @@ void Simulator::runGamesWorker(std::atomic<size_t>& nextIndex) {
 void Simulator::runAllGames() {
     size_t nGames = gameContainers.size();
     int threadsToUse = numThreads;
+    // Make sure not to spawn more threads than games
+    threadsToUse = std::min<int>(threadsToUse, nGames);
 
     if (threadsToUse == 1) {
         // Single-threaded execution
@@ -192,10 +313,6 @@ void Simulator::runAllGames() {
             game.startGame();
         return;
     }
-
-
-    // Make sure not to spawn more threads than games
-    threadsToUse = std::min<int>(threadsToUse, nGames);
 
     // Shared atomic counter for all threads
     std::atomic<size_t> nextIndex{0};
@@ -224,6 +341,9 @@ void Simulator::simulate() {
 
 void Simulator::setup() {
     readAllMaps();
+    if(boards.empty()){
+        return;
+    }
     loadAlgorithmSharedObjectsFromFiles();
     loadGameManagerSharedObjectsFromFiles();
     buildGameContainers();
@@ -232,12 +352,13 @@ void Simulator::setup() {
 void Simulator::readAllMaps() {
     for (const auto& filePath : mapsNames) {
         BoardInitInfo info = readMapFromFile(filePath);
-        if (info.satelliteView) {
+        if (info.satelliteView && info.valid) {
             boards.push_back(std::move(info));
         } else {
             // std::cerr << "Failed to read board: " << filePath << std::endl;
         }
     }
+    logger.writeErrorsToFile();
 }
 
 

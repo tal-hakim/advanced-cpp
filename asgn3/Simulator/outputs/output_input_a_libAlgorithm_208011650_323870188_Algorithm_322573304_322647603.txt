@@ -1,0 +1,1 @@
+Starting game with input: input_a and players: libAlgorithm_208011650_323870188 and Algorithm_322573304_322647603

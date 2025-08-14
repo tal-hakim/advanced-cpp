@@ -525,13 +525,11 @@ GameResult GameManager_212054837_322213836::run(size_t map_width, size_t map_hei
     tankCountPerPlayer.clear();
     maxSteps = max_steps;
     if (verbose){
-//        logger.setLogFile(typeid(player1).name()); // TODO: name the log file
         logger.setLogFile(map_name + "_" + name1 + "_" + name2 + "_" + getCurrentTimeString());
     }
     // initialize board
     board = GameBoard(map_width, map_height);
     readSatelliteView(map, num_shells, player1_tank_algo_factory, player2_tank_algo_factory);
-
     // set players
     players.push_back(&player1);
     players.push_back(&player2);

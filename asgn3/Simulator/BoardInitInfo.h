@@ -18,5 +18,6 @@ struct BoardInitInfo {
     std::unique_ptr<BoardSatelliteView> satelliteView;
     std::string mapFilename;
     std::string mapName;
+    bool valid = true;
 };
 #endif //SIMULATOR_BOARDINITINFO_H

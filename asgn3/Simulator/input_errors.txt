@@ -1,0 +1,4 @@
+Map: input_b
+Recovered Errors:
+- [Input Error] Input file has more lines than declared height. Ignoring extra lines.
+

@@ -27,7 +27,15 @@ bool GameContainer::isSameResult(const GameContainer& other) const {
     if (a.winner != b.winner) return false;
     if (a.reason != b.reason) return false;
     if (a.rounds != b.rounds) return false;
-    if (a.remaining_tanks != b.remaining_tanks) return false;
+    if (a.remaining_tanks != b.remaining_tanks) {
+        // Check if both are either empty or contain only zeros
+        auto isEmptyOrAllZero = [](const std::vector<size_t>& vec) {
+            return vec.empty() || std::all_of(vec.begin(), vec.end(), [](int v) { return v == 0; });
+        };
+        if (!(isEmptyOrAllZero(a.remaining_tanks) && isEmptyOrAllZero(b.remaining_tanks))) {
+            return false;
+        }
+    }
 
     // Simplified board state check:
     if (bool(a.gameState) != bool(b.gameState)) return false;
@@ -58,7 +66,7 @@ bool GameContainer::checkGameValidity()
         return true;
 
     gameResult.remaining_tanks = {p1Tanks, p2Tanks};
-    gameResult.gameState = std::move(initInfo.satelliteView); // replace with your type
+    gameResult.gameState = std::make_unique<BoardSatelliteView>(*initInfo.satelliteView); // replace with your type
     gameResult.rounds = 0;
     gameResult.reason = GameResult::ALL_TANKS_DEAD;
 

@@ -23,6 +23,7 @@
 #include "AlgorithmRegistrar.h"
 #include "GameContainer.h"
 #include "BoardInitInfo.h"
+#include "ErrorLogger.h"
 #include <optional>
 #include <vector>
 #include <memory>
@@ -62,6 +63,8 @@ protected:
     std::vector<string> algorithmsSONames;
     std::vector<string> gameManagerSONames;
     std::vector<string> mapsNames;
+    ErrorLogger logger = ErrorLogger();
+
 
 
     // TODO: make strcut Handle where the destructor is dlclose

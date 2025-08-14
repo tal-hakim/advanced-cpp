@@ -2,7 +2,7 @@ Maze Battle
 MaxSteps= 300
 NumShells =3
 Rows = 8
-Cols=12
+Cols=120
 ############
 #1    #    #
 # ##  @  # #

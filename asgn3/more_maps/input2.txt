@@ -2,7 +2,7 @@ Maze Crossfire
 MaxSteps=600
 NumShells=9
 Rows=18
-Cols=32
+Cols=300
 ################################
 #1   #   #   @   #   # 2    # 1#
 #   ###    @    ######   ##   2#
