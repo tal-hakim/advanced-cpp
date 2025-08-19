@@ -187,8 +187,8 @@
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Simulator">
-				<Option output="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator" prefix_auto="0" extension_auto="0"/>
+			<Target title="simulator_322213836_212054837">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/Simulator/simulator_322213836_212054837" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Simulator"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -206,14 +206,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 Simulator"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 simulator_322213836_212054837"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="Simulator/fast">
-				<Option output="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator" prefix_auto="0" extension_auto="0"/>
+			<Target title="simulator_322213836_212054837/fast">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/Simulator/simulator_322213836_212054837" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Simulator"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -231,7 +231,7 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 Simulator/fast"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 simulator_322213836_212054837/fast"/>
 					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Simulator/Makefile&quot;  VERBOSE=1 clean"/>
@@ -302,40 +302,40 @@
 			<Option target="SimulatorRegistration"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/AlgorithmRegistrar.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/BoardInitInfo.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/ComparativeSimulator.cpp">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/ComparativeSimulator.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CompetitiveSimulator.cpp">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CompetitiveSimulator.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/ErrorLogger.cpp">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/ErrorLogger.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameContainer.cpp">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameContainer.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistrar.cpp">
 			<Option target="SimulatorRegistration"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistrar.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/GameManagerRegistration.cpp">
 			<Option target="SimulatorRegistration"/>
@@ -344,23 +344,23 @@
 			<Option target="SimulatorRegistration"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/SOHandle.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator.cpp">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/Simulator.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/TankAlgorithmRegistration.cpp">
 			<Option target="SimulatorRegistration"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/main.cpp">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/BoardSatelliteView.h">
 			<Option target="GameManager_322213836_212054837"/>
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/Direction.h">
 			<Option target="Algorithm_322213836_212054837"/>
@@ -368,7 +368,7 @@
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.cpp">
 			<Option target="Algorithm_322213836_212054837"/>
 			<Option target="GameManager_322213836_212054837"/>
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.h">
 			<Option target="Algorithm_322213836_212054837"/>
@@ -389,11 +389,11 @@
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/timeUtil.cpp">
 			<Option target="GameManager_322213836_212054837"/>
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/timeUtil.h">
 			<Option target="GameManager_322213836_212054837"/>
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/GameManagerRegistration.h">
 			<Option target="GameManager_322213836_212054837"/>
@@ -406,7 +406,7 @@
 			<Option target="GameManager_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/SatelliteView.h">
-			<Option target="Simulator"/>
+			<Option target="simulator_322213836_212054837"/>
 		</Unit>
 		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/TankAlgorithmRegistration.h">
 			<Option target="GameManager_322213836_212054837"/>

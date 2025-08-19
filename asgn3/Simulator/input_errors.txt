@@ -1,4 +1,47 @@
+Map: input_a
+Recovered Errors:
+- [Input Error] Line too short at y=0. Padding with spaces.
+- [Input Error] Line too short at y=3. Padding with spaces.
+- [Input Error] Empty line at y=5. Filling with spaces.
+
+Map: input_c
+Recovered Errors:
+- [Input Error] Line too short at y=2. Padding with spaces.
+- [Input Error] Line too short at y=3. Padding with spaces.
+- [Input Error] Line too short at y=4. Padding with spaces.
+- [Input Error] Line too short at y=5. Padding with spaces.
+- [Input Error] Line too short at y=6. Padding with spaces.
+- [Input Error] Line too short at y=8. Padding with spaces.
+- [Input Error] Line too short at y=9. Padding with spaces.
+- [Input Error] Line too short at y=10. Padding with spaces.
+- [Input Error] Line too short at y=11. Padding with spaces.
+- [Input Error] Line too short at y=12. Padding with spaces.
+- [Input Error] Line too short at y=13. Padding with spaces.
+- [Input Error] Line too short at y=14. Padding with spaces.
+- [Input Error] Line too short at y=15. Padding with spaces.
+- [Input Error] Line too short at y=16. Padding with spaces.
+- [Input Error] Line too short at y=17. Padding with spaces.
+- [Input Error] Line too short at y=18. Padding with spaces.
+- [Input Error] Line too short at y=19. Padding with spaces.
+
 Map: input_b
 Recovered Errors:
-- [Input Error] Input file has more lines than declared height. Ignoring extra lines.
+- [Input Error] Line too long at y=2. Truncating.
+- [Input Error] Line too long at y=3. Truncating.
+- [Input Error] Line too long at y=4. Truncating.
+- [Input Error] Line too long at y=5. Truncating.
+- [Input Error] Line too long at y=6. Truncating.
+- [Input Error] Line too long at y=7. Truncating.
+- [Input Error] Line too short at y=8. Padding with spaces.
+- [Input Error] Line too long at y=9. Truncating.
+- [Input Error] Line too short at y=10. Padding with spaces.
+- [Input Error] Line too long at y=11. Truncating.
+- [Input Error] Line too long at y=12. Truncating.
+- [Input Error] Line too long at y=13. Truncating.
+- [Input Error] Line too long at y=14. Truncating.
+- [Input Error] Line too long at y=15. Truncating.
+- [Input Error] Line too long at y=16. Truncating.
+- [Input Error] Line too long at y=17. Truncating.
+- [Input Error] Line too long at y=18. Truncating.
+- [Input Error] Line too long at y=19. Truncating.
 

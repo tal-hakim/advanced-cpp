@@ -1,0 +1,23 @@
+GetBattleInfo, Shoot, GetBattleInfo, Shoot, Shoot, GetBattleInfo, Shoot, GetBattleInfo
+GetBattleInfo, Shoot (ignored), RotateRight45, Shoot (ignored), Shoot (ignored), RotateLeft90, Shoot (ignored), RotateLeft90
+killed, Shoot (ignored), GetBattleInfo (killed), Shoot (ignored), Shoot (ignored), Shoot, Shoot (ignored), RotateLeft45 (killed)
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), DoNothing, Shoot (ignored), killed
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), GetBattleInfo, Shoot (ignored), killed
+killed, Shoot, killed, Shoot, Shoot, DoNothing, Shoot, killed
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), DoNothing, Shoot (ignored), killed
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), Shoot, Shoot (ignored), killed
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), DoNothing, Shoot (ignored), killed
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), GetBattleInfo, Shoot (ignored), killed
+killed, Shoot, killed, Shoot, Shoot, DoNothing, Shoot, killed
+killed, killed, killed, killed, Shoot (ignored), DoNothing, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot (ignored), Shoot, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot (ignored), DoNothing, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot (ignored), GetBattleInfo, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot, DoNothing, Shoot, killed
+killed, killed, killed, killed, Shoot (ignored), DoNothing, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot (ignored), GetBattleInfo, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot (ignored), MoveForward, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot (ignored), Shoot, Shoot (ignored), killed
+killed, killed, killed, killed, Shoot, GetBattleInfo, Shoot, killed
+killed, killed, killed, killed, Shoot (ignored), DoNothing, Shoot (ignored), killed
+Player 2 won with 2 tanks still alive

@@ -1,0 +1,25 @@
+MoveForward, GetBattleInfo, MoveForward, GetBattleInfo, GetBattleInfo, MoveForward, GetBattleInfo, MoveForward
+MoveForward, RotateRight45, MoveForward, RotateRight90, MoveForward, MoveForward, RotateRight45, MoveForward
+MoveForward, Shoot, MoveForward, Shoot, RotateRight45, MoveForward, RotateRight90, MoveForward
+MoveForward (killed), GetBattleInfo (killed), MoveForward, GetBattleInfo, GetBattleInfo, MoveForward, GetBattleInfo, MoveForward
+killed, killed, MoveForward (killed), RotateLeft45 (killed), RotateLeft45, MoveForward (ignored), RotateLeft45 (killed), MoveForward (ignored)
+killed, killed, killed, killed, MoveForward, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, GetBattleInfo, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, RotateLeft90, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, RotateLeft90, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, GetBattleInfo, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, Shoot, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, DoNothing, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, GetBattleInfo, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, DoNothing, MoveForward (ignored), killed, MoveForward (ignored)
+killed, killed, killed, killed, DoNothing, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, GetBattleInfo, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, RotateLeft45, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, MoveForward, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, GetBattleInfo, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, RotateRight45, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, Shoot, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, GetBattleInfo, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, DoNothing, killed, killed, MoveForward (ignored)
+killed, killed, killed, killed, DoNothing, killed, killed, MoveForward (ignored) (killed)
+Player 2 won with 1 tanks still alive

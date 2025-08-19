@@ -105,11 +105,7 @@ void GameManager_212054837_322213836::runGame() {
     }
     stalemateSteps = UNINITIALIZED;  // Initialize stalemate steps
     while (!isGameOver()) {
-        std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-        std::cout << "Game Step " << getGameStep() << std::endl;
-        board.printBoard();
         boardMatSnapshot = board.getBoardMat();
-
 
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
@@ -174,7 +170,7 @@ ActionRequest GameManager_212054837_322213836::requestTankAction(const std::shar
     }
 
     tank->decreaseBackwardTimer();
-    if (!tank->isLastStepBack(getGameStep())) {
+    if (!tank->isLastStepBack(static_cast<int>(getGameStep()))) {
         if (tank->getBackwardTimer() == 0) {
             return ActionRequest::MoveBackward;
         }
@@ -234,9 +230,7 @@ void GameManager_212054837_322213836::executeAction(const std::shared_ptr<Tank>&
             break;
         case ActionRequest::GetBattleInfo:
         {
-            if(getGameStep() == 35){
-                std::cout << "Game Step " << getGameStep() << std::endl;
-            }
+
             satelliteView = getSatelliteView(tank, boardMatSnapshot);
             int pid = tank->getPlayerId();  // Should be 1 or 2
 

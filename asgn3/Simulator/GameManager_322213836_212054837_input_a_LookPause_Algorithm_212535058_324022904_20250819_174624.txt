@@ -1,0 +1,18 @@
+DoNothing, GetBattleInfo, DoNothing, GetBattleInfo, GetBattleInfo, DoNothing, GetBattleInfo, DoNothing
+RotateRight45, RotateRight45, RotateRight45, MoveForward, RotateLeft90, RotateRight45, RotateLeft90, RotateRight45
+DoNothing, MoveForward, DoNothing, Shoot, RotateLeft45, DoNothing, RotateLeft45, DoNothing
+RotateRight45, MoveForward, RotateRight45, RotateRight90, MoveForward, RotateRight45, MoveForward, RotateRight45
+DoNothing, MoveForward, killed, MoveForward (killed), RotateLeft45 (killed), DoNothing, RotateLeft45, DoNothing
+RotateRight45, GetBattleInfo, killed, killed, killed, RotateRight45 (killed), MoveForward (killed), RotateRight45
+DoNothing, Shoot, killed, killed, killed, killed, killed, DoNothing
+RotateRight45, RotateRight90, killed, killed, killed, killed, killed, RotateRight45
+DoNothing, MoveForward, killed, killed, killed, killed, killed, DoNothing
+RotateRight45, RotateRight45, killed, killed, killed, killed, killed, RotateRight45
+DoNothing, GetBattleInfo, killed, killed, killed, killed, killed, DoNothing
+RotateRight45, MoveForward, killed, killed, killed, killed, killed, RotateRight45
+DoNothing, RotateRight45, killed, killed, killed, killed, killed, DoNothing
+RotateRight45, RotateRight45, killed, killed, killed, killed, killed, RotateRight45
+DoNothing, Shoot, killed, killed, killed, killed, killed, DoNothing
+RotateRight45, GetBattleInfo, killed, killed, killed, killed, killed, RotateRight45
+DoNothing, RotateRight45, killed, killed, killed, killed, killed, DoNothing
+Player 1 won with 2 tanks still alive

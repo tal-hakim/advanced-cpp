@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Algorithm_322213836_212054837"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\Algorithm\;CMake Files\GameManager\;CMake Files\Simulator\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Algorithm"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Algorithm_322213836_212054837">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/Algorithm/Algorithm_322213836_212054837.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Algorithm"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 Algorithm_322213836_212054837"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Algorithm_322213836_212054837/fast">
+				<Option output="/home/tal/dev/advanced-cpp/asgn3/Algorithm/Algorithm_322213836_212054837.so" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tal/dev/advanced-cpp/asgn3/Algorithm"/>
+				<Option object_output="./"/>
+				<Option type="3"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/.."/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../common"/>
+					<Add directory="/home/tal/dev/advanced-cpp/asgn3/../UserCommon"/>
+					<Add directory="/usr/include/c++/13"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/13"/>
+					<Add directory="/usr/include/c++/13/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/13/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 Algorithm_322213836_212054837/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tal/dev/advanced-cpp/asgn3/Algorithm/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/ConcreteBattleInfo.cpp">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/ConcreteBattleInfo.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/Player_322213836_212054837.cpp">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/Player_322213836_212054837.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/TankAlgorithm_322213836_212054837.cpp">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/TankAlgorithm_322213836_212054837.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/Direction.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.cpp">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/DirectionUtils.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/MapUtils.cpp">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/MapUtils.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/UserCommon/utils/Position.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/Player.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/common/PlayerRegistration.h">
+			<Option target="Algorithm_322213836_212054837"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Algorithm/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Algorithm\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/GameManager/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\GameManager\"/>
+		</Unit>
+		<Unit filename="/home/tal/dev/advanced-cpp/asgn3/Simulator/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\Simulator\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

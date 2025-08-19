@@ -1,0 +1,5 @@
+Some extra work we put into this assignment:
+
+- We organized and managed a shared drive for the so files for all participants of the course.
+
+- Our simulator supports spaces around the "=" in the command line arguments

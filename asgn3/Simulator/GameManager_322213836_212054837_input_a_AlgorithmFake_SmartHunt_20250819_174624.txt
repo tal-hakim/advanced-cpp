@@ -1,0 +1,22 @@
+Shoot, MoveForward, Shoot, MoveForward, MoveForward, Shoot, MoveForward, Shoot
+Shoot (ignored), MoveForward (killed), Shoot (ignored), MoveForward (killed), MoveForward, Shoot (ignored), MoveForward, Shoot (ignored)
+Shoot (ignored), killed, Shoot (ignored), killed, RotateRight90, Shoot (ignored), RotateRight90, Shoot (ignored)
+Shoot (ignored), killed, Shoot (ignored), killed, MoveForward, Shoot (ignored), MoveForward, Shoot (ignored)
+Shoot (ignored), killed, Shoot (ignored), killed, MoveForward, Shoot (ignored), MoveForward, Shoot (ignored)
+Shoot, killed, Shoot, killed, RotateRight90, Shoot, RotateRight90, Shoot
+Shoot (ignored), killed, Shoot (ignored), killed, MoveForward, Shoot (ignored), MoveForward, Shoot (ignored)
+Shoot (ignored), killed, Shoot (ignored), killed, MoveForward, Shoot (ignored), MoveForward, Shoot (ignored)
+Shoot (ignored), killed, Shoot (ignored), killed, RotateRight90, Shoot (ignored), RotateRight90, Shoot (ignored)
+Shoot (ignored), killed, Shoot (ignored), killed, MoveForward, Shoot (ignored), MoveForward, Shoot (ignored)
+Shoot, killed, Shoot, killed, MoveForward, Shoot, MoveForward (killed), Shoot
+Shoot (ignored), killed, killed, killed, RotateRight90, Shoot (ignored), killed, Shoot (ignored)
+Shoot (ignored), killed, killed, killed, MoveForward, Shoot (ignored), killed, Shoot (ignored)
+Shoot (ignored), killed, killed, killed, MoveForward, Shoot (ignored), killed, Shoot (ignored)
+Shoot (ignored), killed, killed, killed, RotateRight90, Shoot (ignored), killed, Shoot (ignored)
+Shoot, killed, killed, killed, MoveForward, Shoot, killed, Shoot
+killed, killed, killed, killed, MoveForward, Shoot (ignored), killed, Shoot (ignored)
+killed, killed, killed, killed, RotateRight90, Shoot (ignored), killed, Shoot (ignored)
+killed, killed, killed, killed, MoveForward, Shoot (ignored), killed, Shoot (ignored)
+killed, killed, killed, killed, MoveForward, Shoot (ignored), killed, Shoot (ignored)
+killed, killed, killed, killed, RotateRight90 (killed), Shoot, killed, Shoot
+Player 1 won with 2 tanks still alive

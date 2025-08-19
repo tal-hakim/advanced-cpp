@@ -1,0 +1,28 @@
+MoveForward, RotateRight90, MoveForward, RotateRight90, RotateRight90, MoveForward, RotateRight90, MoveForward
+MoveForward, RotateLeft90, MoveForward, RotateLeft90, RotateLeft90, MoveForward, RotateLeft90, MoveForward
+MoveForward (killed), Shoot, MoveForward, Shoot, Shoot, MoveForward, Shoot, MoveForward
+killed, RotateRight90, killed, RotateRight90, RotateRight90, MoveForward, RotateRight90, MoveForward
+killed, RotateLeft90, killed, RotateLeft90, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward (ignored), Shoot (ignored), MoveForward (ignored)
+killed, RotateRight90, killed, RotateRight90, RotateRight90, MoveForward (ignored), RotateRight90, MoveForward (ignored)
+killed, RotateLeft90, killed, RotateLeft90, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, Shoot, killed, Shoot, Shoot, MoveForward (ignored), Shoot, MoveForward (ignored)
+killed, RotateRight90, killed, RotateRight90, RotateRight90, MoveForward (ignored), RotateRight90, MoveForward (ignored)
+killed, RotateLeft90, killed, RotateLeft90, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward (ignored), Shoot (ignored), MoveForward (ignored)
+killed, RotateRight90, killed, RotateRight90, RotateRight90, MoveForward (ignored), RotateRight90, MoveForward (ignored)
+killed, RotateLeft90, killed, RotateLeft90, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, killed, killed, killed, Shoot, MoveForward (ignored), Shoot, MoveForward (ignored)
+killed, killed, killed, killed, RotateRight90, MoveForward (ignored), RotateRight90, MoveForward (ignored)
+killed, killed, killed, killed, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, killed, killed, killed, Shoot (ignored), MoveForward (ignored), Shoot (ignored), MoveForward (ignored)
+killed, killed, killed, killed, RotateRight90, MoveForward (ignored), RotateRight90, MoveForward (ignored)
+killed, killed, killed, killed, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, killed, killed, killed, Shoot, MoveForward (ignored), Shoot, MoveForward (ignored)
+killed, killed, killed, killed, RotateRight90, MoveForward (ignored), RotateRight90, MoveForward (ignored)
+killed, killed, killed, killed, RotateLeft90, MoveForward (ignored), RotateLeft90, MoveForward (ignored)
+killed, killed, killed, killed, Shoot (ignored), MoveForward, Shoot (ignored), MoveForward
+killed, killed, killed, killed, RotateRight90, MoveForward, RotateRight90, MoveForward
+killed, killed, killed, killed, RotateLeft90, MoveForward, RotateLeft90, MoveForward
+killed, killed, killed, killed, Shoot, MoveForward, Shoot, MoveForward
+Player 2 won with 2 tanks still alive

@@ -61,8 +61,6 @@ public:
                 player1AlgoFactory,
                 player2AlgoFactory
         );
-//        std::cout << alg1Name << " vs " << alg2Name << " in map: " << initInfo.mapFilename << std::endl;
-//        std::cout << "Winner: " << gameResult.winner << std::endl;
         std::string winner = "tie";
         if (gameResult.winner == 1) {
             winner = alg1Name;
