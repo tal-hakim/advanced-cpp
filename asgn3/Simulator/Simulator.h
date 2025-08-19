@@ -66,8 +66,6 @@ protected:
     ErrorLogger logger = ErrorLogger();
 
 
-
-    // TODO: make strcut Handle where the destructor is dlclose
     BoardInitInfo readMapFromFile(const string& inputFile);
 
     void readAllMaps();

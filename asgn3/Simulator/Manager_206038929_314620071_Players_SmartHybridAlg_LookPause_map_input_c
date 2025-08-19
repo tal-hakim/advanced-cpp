@@ -1,0 +1,11 @@
+MoveForward, MoveForward, DoNothing, DoNothing
+MoveForward, MoveForward (killed), RotateRight45, RotateRight45
+MoveForward, killed, DoNothing, DoNothing
+MoveForward, killed, RotateRight45, RotateRight45
+MoveForward, killed, DoNothing, DoNothing
+MoveForward, killed, RotateRight45, RotateRight45
+MoveForward, killed, DoNothing, DoNothing
+MoveForward, killed, RotateRight45, RotateRight45
+MoveForward, killed, DoNothing, DoNothing
+MoveForward, killed, RotateRight45, RotateRight45
+Tie, reached max steps = 10, Player 1 has 1 tanks, Player 2 has 2 tanks

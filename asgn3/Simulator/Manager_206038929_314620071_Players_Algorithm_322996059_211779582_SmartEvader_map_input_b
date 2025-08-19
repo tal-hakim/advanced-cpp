@@ -1,0 +1,42 @@
+GetBattleInfo, MoveForward
+GetBattleInfo, MoveForward
+Shoot, MoveForward
+GetBattleInfo, MoveForward
+DoNothing, MoveForward
+GetBattleInfo, MoveForward
+DoNothing, MoveForward
+GetBattleInfo, MoveForward
+Shoot, MoveForward
+GetBattleInfo, MoveForward
+DoNothing, MoveForward
+GetBattleInfo, MoveForward
+DoNothing, MoveForward
+GetBattleInfo, MoveForward
+Shoot, MoveForward
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+Shoot, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+Shoot, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+Shoot, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+Shoot, MoveForward (ignored)
+GetBattleInfo, MoveForward (ignored)
+DoNothing (killed), MoveForward (ignored)
+Player 2 won with 1 tanks still alive

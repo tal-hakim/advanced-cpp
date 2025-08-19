@@ -13,7 +13,6 @@ namespace Algorithm_322213836_212054837 {
 // Helper function to determine rotation action
     ActionRequest TankAlgorithm_322213836_212054837::rotateToward(Direction current, Direction target) {
         if (current == target) {
-            // TODO: if cant move forward - handle it
             return ActionRequest::MoveForward;
         }
 

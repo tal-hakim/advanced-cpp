@@ -1,0 +1,11 @@
+GetBattleInfo, GetBattleInfo, DoNothing, DoNothing
+GetBattleInfo, RotateLeft90, RotateRight45, RotateRight45
+MoveForward, GetBattleInfo, DoNothing, DoNothing
+MoveForward, RotateLeft90, RotateRight45, RotateRight45
+GetBattleInfo, GetBattleInfo, DoNothing, DoNothing
+MoveForward, Shoot, RotateRight45 (killed), RotateRight45
+GetBattleInfo, GetBattleInfo, killed, DoNothing
+MoveForward, RotateRight90, killed, RotateRight45
+GetBattleInfo, GetBattleInfo, killed, DoNothing
+MoveForward, RotateRight45, killed, RotateRight45
+Tie, reached max steps = 10, Player 1 has 2 tanks, Player 2 has 1 tanks

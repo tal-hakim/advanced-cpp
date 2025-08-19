@@ -1,0 +1,44 @@
+GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo, GetBattleInfo
+RotateLeft45, RotateLeft45, RotateLeft90, RotateLeft90, GetBattleInfo, RotateLeft45, RotateLeft45, RotateLeft45, RotateLeft45, RotateLeft45, RotateLeft45, RotateLeft45
+RotateLeft90, RotateLeft90, Shoot, Shoot (killed), RotateLeft45, GetBattleInfo, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+GetBattleInfo, GetBattleInfo, GetBattleInfo, killed, MoveForward, MoveForward, GetBattleInfo, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+MoveForward, RotateRight90, RotateLeft45, killed, MoveForward, MoveForward, MoveForward, GetBattleInfo, MoveForward, MoveForward, MoveForward, MoveForward
+RotateRight45, MoveForward, MoveForward, killed, RotateLeft45, MoveForward, MoveForward, MoveForward, GetBattleInfo, RotateLeft45, MoveForward, MoveForward
+GetBattleInfo, GetBattleInfo, GetBattleInfo, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, GetBattleInfo, RotateLeft45, MoveForward
+RotateLeft45, MoveForward, RotateRight90, killed, RotateRight45, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, GetBattleInfo, MoveForward
+MoveForward, RotateLeft45, MoveForward, killed, MoveForward, MoveForward, RotateLeft45, MoveForward, MoveForward (killed), MoveForward (killed), MoveForward, GetBattleInfo (killed)
+GetBattleInfo, GetBattleInfo, GetBattleInfo, killed, GetBattleInfo, MoveForward, MoveForward, RotateLeft45, killed, killed, RotateRight45, killed
+MoveForward, RotateLeft45, MoveForward, killed, MoveForward, GetBattleInfo, MoveForward, MoveForward, killed, killed, MoveForward, killed
+MoveForward, MoveForward, RotateLeft45, killed, MoveForward, MoveForward, GetBattleInfo, RotateRight45, killed, killed, RotateLeft45, killed
+GetBattleInfo, GetBattleInfo, GetBattleInfo, killed, MoveForward, MoveForward, MoveForward, GetBattleInfo, killed, killed, Shoot, killed
+RotateRight45, MoveForward, Shoot, killed, MoveForward, MoveForward, MoveForward, MoveForward, killed, killed, MoveForward, killed
+MoveForward, MoveForward, DoNothing, killed, GetBattleInfo, MoveForward, RotateLeft45, MoveForward, killed, killed, RotateRight45, killed
+GetBattleInfo, GetBattleInfo, GetBattleInfo, killed, RotateLeft45, GetBattleInfo, Shoot, MoveForward, killed, killed, GetBattleInfo, killed
+MoveForward, MoveForward, MoveForward, killed, MoveForward (killed), RotateLeft45, GetBattleInfo, MoveForward, killed, killed, MoveForward, killed
+MoveForward, MoveForward, RotateLeft45, killed, killed, MoveForward, RotateRight45, GetBattleInfo, killed, killed, RotateLeft45, killed
+GetBattleInfo, GetBattleInfo, GetBattleInfo, killed, killed, RotateLeft45, MoveForward, Shoot, killed, killed, MoveForward, killed
+RotateRight90, Shoot, MoveForward, killed, killed, Shoot, RotateLeft45, RotateLeft90 (killed), killed, killed, RotateLeft45, killed
+MoveForward (killed), DoNothing, MoveForward, killed, killed, GetBattleInfo, MoveForward, killed, killed, killed, GetBattleInfo, killed
+killed, GetBattleInfo, GetBattleInfo, killed, killed, MoveForward, GetBattleInfo, killed, killed, killed, MoveForward, killed
+killed, RotateRight45, RotateLeft45, killed, killed, RotateLeft45, MoveForward, killed, killed, killed, MoveForward, killed
+killed, MoveForward, Shoot, killed, killed, GetBattleInfo, MoveForward, killed, killed, killed, GetBattleInfo, killed
+killed, GetBattleInfo, GetBattleInfo, killed, killed, RotateLeft90, GetBattleInfo, killed, killed, killed, MoveForward, killed
+killed, RotateLeft45, RotateLeft90 (killed), killed, killed, Shoot, RotateLeft90, killed, killed, killed, RotateRight45, killed
+killed, Shoot, killed, killed, killed, GetBattleInfo, Shoot, killed, killed, killed, GetBattleInfo (killed), killed
+killed, GetBattleInfo, killed, killed, killed, RotateRight90, GetBattleInfo, killed, killed, killed, killed, killed
+killed, RotateLeft90, killed, killed, killed, RotateRight45, RotateRight90, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, GetBattleInfo, killed, killed, killed, MoveForward, MoveForward, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, MoveForward, MoveForward, killed, killed, killed, killed, killed
+killed, GetBattleInfo, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, MoveForward, MoveForward, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, GetBattleInfo, killed, killed, killed, MoveForward, MoveForward, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, RotateRight45, killed, killed, killed, MoveForward, MoveForward, killed, killed, killed, killed, killed
+killed, GetBattleInfo, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, MoveForward, killed, killed, killed, RotateLeft90, RotateLeft90, killed, killed, killed, killed, killed
+killed, RotateLeft45, killed, killed, killed, GetBattleInfo, GetBattleInfo, killed, killed, killed, killed, killed
+killed, GetBattleInfo (killed), killed, killed, killed, Shoot, MoveForward, killed, killed, killed, killed, killed
+Player 2 won with 2 tanks still alive

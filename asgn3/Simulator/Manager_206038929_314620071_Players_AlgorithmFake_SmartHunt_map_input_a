@@ -1,0 +1,36 @@
+Shoot, Shoot, Shoot, Shoot, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), Shoot (ignored), Shoot (ignored), Shoot (ignored), MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), Shoot (ignored), Shoot (ignored), Shoot (ignored), RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), Shoot (ignored), Shoot (ignored), Shoot (ignored), MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), Shoot (ignored), Shoot (ignored), Shoot (ignored), MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward (ignored), MoveForward (ignored)
+Shoot, Shoot, Shoot, Shoot, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), Shoot (ignored), Shoot (ignored), Shoot (ignored), MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), Shoot (ignored) (killed), Shoot (ignored), Shoot (ignored), MoveForward, MoveForward (killed), MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot, killed, Shoot, Shoot, MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot, killed, Shoot, Shoot, MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot, killed, Shoot, Shoot, RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot, killed, Shoot, Shoot, MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored), Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, Shoot (ignored) (killed), Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot, killed, killed, Shoot, MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, killed, Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored), killed, killed, Shoot (ignored), RotateRight90, killed, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90, RotateRight90
+Shoot (ignored), killed, killed, Shoot (ignored), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Shoot (ignored) (killed), killed, killed, Shoot (ignored) (killed), MoveForward, killed, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward, MoveForward
+Player 2 won with 7 tanks still alive

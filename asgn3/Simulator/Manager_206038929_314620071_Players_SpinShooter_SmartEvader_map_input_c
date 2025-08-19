@@ -1,0 +1,11 @@
+RotateRight90, RotateRight90, MoveForward, MoveForward
+RotateLeft90, RotateLeft90, MoveForward, MoveForward
+Shoot, Shoot, MoveForward, MoveForward
+RotateRight90, RotateRight90, MoveForward, MoveForward
+RotateLeft90, RotateLeft90, MoveForward, MoveForward
+Shoot (ignored), Shoot (ignored), MoveForward, MoveForward
+RotateRight90, RotateRight90, MoveForward, MoveForward
+RotateLeft90, RotateLeft90, MoveForward, MoveForward
+Shoot, Shoot, MoveForward, MoveForward
+RotateRight90, RotateRight90, MoveForward, MoveForward
+Tie, reached max steps = 10, Player 1 has 2 tanks, Player 2 has 2 tanks

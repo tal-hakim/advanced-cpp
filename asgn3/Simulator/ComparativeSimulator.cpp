@@ -43,8 +43,7 @@ void ComparativeSimulator::logResults(){
     if (gameContainers.empty()) return;
 
     // 1. Output file name
-//    std::string outFile = gameManagersFolder + "/comparative_results_" + getCurrentTimeString() + ".txt";
-    std::string outFile = gameManagersFolder + "/comparative_results.txt";
+    std::string outFile = gameManagersFolder + "/comparative_results_" + getCurrentTimeString() + ".txt";
     std::ofstream out(outFile);
     bool toScreen = false;
     if (!out) {

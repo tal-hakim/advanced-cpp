@@ -105,6 +105,9 @@ void GameManager_212054837_322213836::runGame() {
     }
     stalemateSteps = UNINITIALIZED;  // Initialize stalemate steps
     while (!isGameOver()) {
+        std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+        std::cout << "Game Step " << getGameStep() << std::endl;
+        board.printBoard();
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
 
@@ -132,9 +135,6 @@ void GameManager_212054837_322213836::runGame() {
         }
 
         if(isPlayerTurn() && verbose){
-//            std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-//            std::cout << "Game Step " << getGameStep() << std::endl;
-//            board.printBoard();
             logger.logActions();
             logger.clearActions();
         }
@@ -231,6 +231,9 @@ void GameManager_212054837_322213836::executeAction(const std::shared_ptr<Tank>&
             break;
         case ActionRequest::GetBattleInfo:
         {
+            if(getGameStep() == 35){
+                std::cout << "Game Step " << getGameStep() << std::endl;
+            }
             satelliteView = getSatelliteView(tank);
             int pid = tank->getPlayerId();  // Should be 1 or 2
 

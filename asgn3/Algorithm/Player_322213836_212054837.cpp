@@ -178,7 +178,6 @@ namespace Algorithm_322213836_212054837 {
     }
 
     void Player_322213836_212054837::analyzeBoard(SatelliteView &view) {
-        /* TODO: make analyze board keep track of same id tanks, also try to find the killed tanks and remove them */
         auto newMap = readView(view);
 
         // Store old enemy positions before clearing

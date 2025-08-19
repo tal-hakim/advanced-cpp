@@ -29,33 +29,114 @@ bool folderHasFiles(const std::string& path) {
     return false;
 }
 
-std::unordered_map<std::string, std::string> parseArgs(int argc, char* argv[], std::vector<std::string>& flags, std::string& unrecognized) {
+//std::unordered_map<std::string, std::string> parseArgs(int argc, char* argv[], std::vector<std::string>& flags, std::string& unrecognized) {
+//    std::unordered_map<std::string, std::string> argMap;
+//    for (int i = 1; i < argc; ++i) {
+//        std::string s = argv[i];
+//        s.erase(0, s.find_first_not_of(' ')); // Trim leading
+//        s.erase(s.find_last_not_of(' ') + 1); // Trim trailing
+//
+//        if (s[0] == '-') {
+//            flags.push_back(s);
+//        } else {
+//            auto pos = s.find('=');
+//            if (pos == std::string::npos) {
+//                unrecognized = s;
+//                continue;
+//            }
+//            auto key = s.substr(0, pos);
+//            auto val = s.substr(pos+1);
+//            // Trim spaces around '='
+//            key.erase(key.find_last_not_of(' ')+1);
+//            key.erase(0, key.find_first_not_of(' '));
+//            val.erase(val.find_last_not_of(' ')+1);
+//            val.erase(0, val.find_first_not_of(' '));
+//            argMap[key] = val;
+//        }
+//    }
+//    return argMap;
+//}
+
+
+std::unordered_map<std::string, std::string>
+parseArgs(int argc, char* argv[], std::vector<std::string>& flags, std::string& unrecognized) {
+    auto trim = [](std::string& t) {
+        auto l = t.find_first_not_of(' ');
+        auto r = t.find_last_not_of(' ');
+        if (l == std::string::npos) { t.clear(); return; }
+        t = t.substr(l, r - l + 1);
+    };
+
     std::unordered_map<std::string, std::string> argMap;
+    std::string pendingKey;
+    bool waitingForValueAfterEquals = false;
+
     for (int i = 1; i < argc; ++i) {
         std::string s = argv[i];
-        s.erase(0, s.find_first_not_of(' ')); // Trim leading
-        s.erase(s.find_last_not_of(' ') + 1); // Trim trailing
+        trim(s);
+        if (s.empty()) continue;
 
-        if (s[0] == '-') {
+        if (s[0] == '-') {  // flag
             flags.push_back(s);
-        } else {
-            auto pos = s.find('=');
-            if (pos == std::string::npos) {
-                unrecognized = s;
+            continue;
+        }
+
+        if (!pendingKey.empty()) {
+            // We had "key" (maybe saw "=" already). Consume '=' or value.
+            if (waitingForValueAfterEquals) {
+                // We expect the value now.
+                trim(s);
+                if (s == "=") { unrecognized = "="; break; }
+                argMap[pendingKey] = s;
+                pendingKey.clear();
+                waitingForValueAfterEquals = false;
                 continue;
+            } else if (s == "=") {
+                // Pattern: key = ...
+                waitingForValueAfterEquals = true;
+                continue;
+            } else {
+                // Pattern: key value   (not supported) -> error
+                unrecognized = s;
+                break;
             }
-            auto key = s.substr(0, pos);
-            auto val = s.substr(pos+1);
-            // Trim spaces around '='
-            key.erase(key.find_last_not_of(' ')+1);
-            key.erase(0, key.find_first_not_of(' '));
-            val.erase(val.find_last_not_of(' ')+1);
-            val.erase(0, val.find_first_not_of(' '));
-            argMap[key] = val;
+        }
+
+        // No pending key. Try forms with '=' in the same token.
+        auto pos = s.find('=');
+        if (pos != std::string::npos) {
+            std::string key = s.substr(0, pos);
+            std::string val = s.substr(pos + 1);
+            trim(key); trim(val);
+            if (key.empty()) { unrecognized = s; break; }
+
+            if (!val.empty()) {
+                argMap[key] = val;
+            } else {
+                // key=  value could be next token
+                waitingForValueAfterEquals = true;
+                pendingKey = key;
+            }
+            continue;
+        }
+
+        // Maybe it’s just a bare key and next token is '='.
+        pendingKey = s;
+    }
+
+    // If we ended while still expecting a value
+    if (!unrecognized.empty()) return argMap;
+    if (!pendingKey.empty()) {
+        if (waitingForValueAfterEquals) {
+            unrecognized = pendingKey + "=<missing>";
+        } else {
+            unrecognized = pendingKey; // bare key with no '='
         }
     }
+
     return argMap;
 }
+
 
 int main(int argc, char* argv[]) {
     try {
