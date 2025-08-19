@@ -45,6 +45,8 @@ namespace GameManager_322213836_212054837 {
             size_t totalShells = 0;  // Track total shells in the game
             bool validGame = true;
             GameResult finalResult;
+            std::vector<std::vector<char>> boardMatSnapshot;
+
             void executeTanksStep();
 
             bool shoot(const std::shared_ptr<Tank>& tank);
@@ -62,7 +64,8 @@ namespace GameManager_322213836_212054837 {
             std::string actionToString(ActionRequest action) const;
             bool canTankShoot(std::shared_ptr<Tank> tank);
             size_t getGameStep() const;
-            std::unique_ptr<SatelliteView> getSatelliteView(const std::shared_ptr<Tank>& tank) const;
+        std::unique_ptr<SatelliteView> getSatelliteView(const std::shared_ptr<Tank>& tank) const;
+            std::unique_ptr<SatelliteView> getSatelliteView(const std::shared_ptr<Tank>& tank, std::vector<std::vector<char>> boardMat) const;
             void decreaseTanksCooldown();
             ActionRequest requestTankAction(const std::shared_ptr<Tank>& tank);
             void executeAction(const std::shared_ptr<Tank>& tank, ActionRequest action);

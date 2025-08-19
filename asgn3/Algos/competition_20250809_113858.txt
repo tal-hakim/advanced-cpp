@@ -1,7 +1,0 @@
-game_maps_folder=../dan_maps
-game_manager=GameManager_322213836_212054837
-
-Algorithm_206038929_314620071_2 7
-Algorithm_206038929_314620071 6
-Algorithm_322213836_212054837 6
-Algorithm_206038929_314620071_3 4

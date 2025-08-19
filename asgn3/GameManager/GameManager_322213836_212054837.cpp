@@ -58,11 +58,11 @@ std::vector<size_t> GameManager_212054837_322213836::getPlayerTankCounts() const
 
 bool GameManager_212054837_322213836::isGameOver() {
     if (isMaxStepsReached()) {
-        finalResult = {TIE, GameResult::Reason::MAX_STEPS, aliveTanksPerPlayer, getSatelliteView(nullptr), static_cast<size_t>(getGameStep())};
+        finalResult = {TIE, GameResult::Reason::MAX_STEPS, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep() + 1};
         return true;
     }
     if (isStalemate()) {
-        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep()};
+        finalResult = {TIE, GameResult::Reason::ZERO_SHELLS, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep() + 1};
         return true;
     }
 
@@ -78,7 +78,7 @@ bool GameManager_212054837_322213836::isGameOver() {
     }
 
     if (!anyPlayerHasTanks) {
-        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep()};
+        finalResult = {TIE, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep() + 1};
         if (verbose) logger.logResult("Tie, both players have zero tanks");
         return true;
     }
@@ -89,7 +89,7 @@ bool GameManager_212054837_322213836::isGameOver() {
             auto playerId = i + 1;
             auto tankCount = aliveTanksPerPlayer[i];
             if (tankCount > 0) {
-                finalResult = {(int)playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep()};
+                finalResult = {(int)playerId, GameResult::Reason::ALL_TANKS_DEAD, aliveTanksPerPlayer, getSatelliteView(nullptr), getGameStep() + 1};
                 if (verbose) logger.logResult("Player " + std::to_string(playerId) + " won with " + std::to_string(tankCount) + " tanks still alive");
                 return true;
             }
@@ -108,6 +108,9 @@ void GameManager_212054837_322213836::runGame() {
         std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         std::cout << "Game Step " << getGameStep() << std::endl;
         board.printBoard();
+        boardMatSnapshot = board.getBoardMat();
+
+
         std::unordered_set<GameObjectPtr> markedForDestruction;
         moveShells();
 
@@ -234,7 +237,7 @@ void GameManager_212054837_322213836::executeAction(const std::shared_ptr<Tank>&
             if(getGameStep() == 35){
                 std::cout << "Game Step " << getGameStep() << std::endl;
             }
-            satelliteView = getSatelliteView(tank);
+            satelliteView = getSatelliteView(tank, boardMatSnapshot);
             int pid = tank->getPlayerId();  // Should be 1 or 2
 
             if (pid < 1 || pid > 2) {
@@ -447,8 +450,8 @@ void GameManager_212054837_322213836::destroyAndRemove(const GameObjectPtr& obj)
     }
 }
 
-std::unique_ptr<SatelliteView> GameManager_212054837_322213836::getSatelliteView(const std::shared_ptr<Tank>& tank) const {
-    auto boardMat = board.getBoardMat();
+std::unique_ptr<SatelliteView> GameManager_212054837_322213836::getSatelliteView(const std::shared_ptr<Tank>& tank, std::vector<std::vector<char>> boardMat) const {
+// auto boardMat = board.getBoardMat();
 
     if (tank) { // Only if tank is provided
         Position pos = tank->getPosition();
@@ -459,6 +462,20 @@ std::unique_ptr<SatelliteView> GameManager_212054837_322213836::getSatelliteView
     }
     return std::make_unique<BoardSatelliteView>(std::move(boardMat));
 }
+
+
+    std::unique_ptr<SatelliteView> GameManager_212054837_322213836::getSatelliteView(const std::shared_ptr<Tank>& tank) const {
+        auto boardMat = board.getBoardMat();
+
+        if (tank) { // Only if tank is provided
+            Position pos = tank->getPosition();
+
+            if (pos.y < static_cast<int>(board.getHeight()) && pos.x < static_cast<int>(board.getWidth())) {
+                boardMat[pos.x][pos.y] = CURR_TANK;
+            }
+        }
+        return std::make_unique<BoardSatelliteView>(std::move(boardMat));
+    }
 
 
 void GameManager_212054837_322213836::processMapCell(char cell, const Position& pos, size_t numShells, TankAlgorithmFactory& algOneFactory, TankAlgorithmFactory& algTwoFactory) {

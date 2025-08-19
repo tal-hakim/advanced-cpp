@@ -1,5 +1,0 @@
-game_maps_folder=../dan_maps
-game_manager=GameManager_206038929_314620071
-
-Algorithm_206038929_314620071 (2) 4
-SpinShooter 4
